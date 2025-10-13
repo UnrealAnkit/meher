@@ -193,23 +193,48 @@ export const Mehr = (): JSX.Element => {
               }}
             />
           </div>
+          
+          {/* Text Content Overlay */}
+          <div className="absolute inset-0 flex flex-col justify-center px-8 py-12">
+            <div className="max-w-4xl">
+              {/* ABOUT US */}
+              <div className="mb-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-bold text-white text-lg tracking-[2px] uppercase drop-shadow-lg">
+                  ABOUT US
+                </h3>
+              </div>
+              
+              {/* Main Title */}
+              <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-4xl md:text-5xl tracking-[1px] leading-tight mb-8 drop-shadow-2xl">
+                Not just a stay. A bridge to wholeness.
+              </h2>
+              
+              {/* Description */}
+              <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg md:text-xl leading-relaxed drop-shadow-lg">
+                At MEHR, every guest is invited to begin an inward journey. Whether
+                you are a patient needing long-term care, a wellness seeker looking
+                for detox, or simply someone wishing to pause for a night, MEHR
+                offers a space of peace, dignity, and belonging.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="relative w-full bg-[#ab4b28] py-[37px] mt-[100px]">
-        <div className="flex justify-center items-center gap-[341.2px] max-w-[1440px] mx-auto">
+        <div className="flex justify-center items-center gap-[20px] sm:gap-[40px] md:gap-[60px] lg:gap-[80px] xl:gap-[120px] max-w-[1200px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
           {statsData.map((stat, index) => (
             <React.Fragment key={index}>
-              <div className="flex flex-col items-center">
-                <div className="[font-family:'Poppins',Helvetica] font-normal text-[76px] text-center leading-[91px] text-white tracking-[0] whitespace-nowrap">
+              <div className="flex flex-col items-center flex-1 min-w-0">
+                <div className="[font-family:'Poppins',Helvetica] font-normal text-[60px] sm:text-[70px] lg:text-[76px] text-center leading-[70px] sm:leading-[80px] lg:leading-[91px] text-white tracking-[0] whitespace-nowrap">
                   {stat.number}
                 </div>
-                <div className="[font-family:'Poppins',Helvetica] font-light text-[28px] tracking-[0] leading-10 text-white text-center whitespace-nowrap">
+                <div className="[font-family:'Poppins',Helvetica] font-light text-[20px] sm:text-[24px] lg:text-[28px] tracking-[0] leading-8 sm:leading-9 lg:leading-10 text-white text-center whitespace-nowrap">
                   {stat.label}
                 </div>
               </div>
               {index < statsData.length - 1 && (
-                <div className="w-px h-[109px] bg-white" />
+                <div className="w-px h-[80px] sm:h-[90px] lg:h-[109px] bg-white flex-shrink-0" />
               )}
             </React.Fragment>
           ))}
