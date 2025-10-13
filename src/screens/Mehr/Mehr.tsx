@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
-import { AboutUsSection } from "./sections/AboutUsSection";
 import { ContactSection } from "./sections/ContactSection";
 import { FooterSection } from "./sections/FooterSection";
 import { GallerySection } from "./sections/GallerySection";
@@ -8,22 +7,27 @@ import { LaunchSection } from "./sections/LaunchSection";
 import { NavbarSection } from "./sections/NavbarSection";
 import { ServicesSection } from "./sections/ServicesSection";
 import { TestimonialsSection } from "./sections/TestimonialsSection";
+import TherapiesSection from "./sections/TherapiesSection/index";
 
 const statsData = [
   {
     number: "100+",
+    targetNumber: 100,
     label: "programs",
   },
   {
     number: "45+",
+    targetNumber: 45,
     label: "doctors",
   },
   {
     number: "17+",
+    targetNumber: 17,
     label: "skilled experts",
   },
   {
     number: "67+",
+    targetNumber: 67,
     label: "happy clients",
   },
 ];
@@ -32,6 +36,8 @@ const launchCategories = ["CORPORATE", "GROUPS", "FESTIVALS", "INTERNATIONAL"];
 
 export const Mehr = (): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [animatedNumbers, setAnimatedNumbers] = useState<number[]>([0, 0, 0, 0]);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -92,6 +98,57 @@ export const Mehr = (): JSX.Element => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Counting animation effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            
+            statsData.forEach((stat, index) => {
+              const duration = 2000; // 2 seconds
+              const steps = 60; // 60 steps for smooth animation
+              const stepDuration = duration / steps;
+              const increment = stat.targetNumber / steps;
+              
+              let currentStep = 0;
+              const timer = setInterval(() => {
+                currentStep++;
+                const currentValue = Math.min(
+                  Math.floor(increment * currentStep),
+                  stat.targetNumber
+                );
+                
+                setAnimatedNumbers(prev => {
+                  const newNumbers = [...prev];
+                  newNumbers[index] = currentValue;
+                  return newNumbers;
+                });
+                
+                if (currentStep >= steps) {
+                  clearInterval(timer);
+                }
+              }, stepDuration);
+            });
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const statsSection = document.querySelector('[data-stats-section]');
+    if (statsSection) {
+      observer.observe(statsSection);
+    }
+
+    return () => {
+      if (statsSection) {
+        observer.unobserve(statsSection);
+      }
+    };
+  }, [hasAnimated]);
 
   return (
     <div className="bg-[#f9d2a3] overflow-hidden w-full relative">
@@ -300,13 +357,13 @@ export const Mehr = (): JSX.Element => {
         </div>
       </section>
 
-      <section className="relative w-full bg-[#ab4b28] py-[37px] mt-[100px]">
+      <section className="relative w-full bg-[#ab4b28] py-[37px] mt-[100px]" data-stats-section>
         <div className="flex justify-center items-center gap-[20px] sm:gap-[40px] md:gap-[60px] lg:gap-[80px] xl:gap-[120px] max-w-[1200px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
           {statsData.map((stat, index) => (
             <React.Fragment key={index}>
               <div className="flex flex-col items-center flex-1 min-w-0">
                 <div className="[font-family:'Poppins',Helvetica] font-normal text-[60px] sm:text-[70px] lg:text-[76px] text-center leading-[70px] sm:leading-[80px] lg:leading-[91px] text-white tracking-[0] whitespace-nowrap">
-                  {stat.number}
+                  {hasAnimated ? `${animatedNumbers[index]}+` : "0+"}
                 </div>
                 <div className="[font-family:'Poppins',Helvetica] font-light text-[20px] sm:text-[24px] lg:text-[28px] tracking-[0] leading-8 sm:leading-9 lg:leading-10 text-white text-center whitespace-nowrap">
                   {stat.label}
@@ -384,6 +441,9 @@ export const Mehr = (): JSX.Element => {
         <ServicesSection />
       </section>
 
+      {/* THERAPIES & PROGRAMS section */}
+      <TherapiesSection />
+
       {/* PLAN YOUR RETREAT section */}
       <section className="relative w-full py-20 bg-[#ab4b28]">
         <div className="max-w-[887px] mx-auto mb-12">
@@ -416,7 +476,6 @@ export const Mehr = (): JSX.Element => {
         </div>
       </section>
 
-      <AboutUsSection />
 
       <section className="relative w-full py-20">
         <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
