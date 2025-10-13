@@ -48,7 +48,7 @@ const therapyData: TherapyCard[] = [
 ];
 
 const TherapiesSection: React.FC = () => {
-  const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   return (
     <section className="relative w-full bg-white py-20">
@@ -61,7 +61,7 @@ const TherapiesSection: React.FC = () => {
           {/* Background Image Layer */}
           <div className="absolute inset-0">
             <img
-              src={activeCard !== null ? therapyData[activeCard - 1].activeImage : "/Therapies-Programs.png"}
+              src={hoveredCard !== null ? therapyData[hoveredCard - 1].activeImage : "/Therapies-Programs.png"}
               alt="Background"
               className="w-full h-full object-cover transition-all duration-300"
             />
@@ -74,7 +74,8 @@ const TherapiesSection: React.FC = () => {
               <div
                 key={therapy.id}
                 className="relative flex-1 h-full cursor-pointer group"
-                onClick={() => setActiveCard(activeCard === therapy.id ? null : therapy.id)}
+                onMouseEnter={() => setHoveredCard(therapy.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
                 {/* Vertical Divider */}
                 {index > 0 && (
@@ -86,7 +87,7 @@ const TherapiesSection: React.FC = () => {
                   <motion.h3 
                     className="text-white text-2xl font-semibold mb-4 relative z-10"
                     animate={{ 
-                      y: activeCard === therapy.id ? -20 : 0,
+                      y: hoveredCard === therapy.id ? -20 : 0,
                       transition: { duration: 0.2 }
                     }}
                   >
@@ -94,7 +95,7 @@ const TherapiesSection: React.FC = () => {
                   </motion.h3>
                   
                   <AnimatePresence>
-                    {activeCard === therapy.id && (
+                    {hoveredCard === therapy.id && (
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -106,6 +107,33 @@ const TherapiesSection: React.FC = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
+
+                  {/* Arrow */}
+                  <motion.div
+                    className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ 
+                      opacity: hoveredCard === therapy.id ? 1 : 0,
+                      y: hoveredCard === therapy.id ? 0 : 10
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <svg 
+                      width="24" 
+                      height="24" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      className="text-white"
+                    >
+                      <path 
+                        d="M7 14L12 9L17 14" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                 </div>
 
                 {/* Hover Effect */}
@@ -113,8 +141,8 @@ const TherapiesSection: React.FC = () => {
                   className="absolute inset-0 bg-black"
                   initial={{ opacity: 0 }}
                   animate={{ 
-                    opacity: activeCard === therapy.id ? 0 : 
-                            activeCard === null ? 0 : 0.5 
+                    opacity: hoveredCard === therapy.id ? 0 : 
+                            hoveredCard === null ? 0 : 0.1 
                   }}
                   transition={{ duration: 0.2 }}
                 />
