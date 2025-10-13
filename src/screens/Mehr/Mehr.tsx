@@ -37,13 +37,24 @@ export const Mehr = (): JSX.Element => {
     const video = videoRef.current;
     if (!video) return;
 
-    const playVideo = () => {
-      video.play().catch(err => {
-        console.log('Autoplay failed, trying muted:', err);
-        // If autoplay fails, try muted
+    // Try to play with sound first
+    const playVideo = async () => {
+      try {
+        // First try to play with sound
+        video.muted = false;
+        await video.play();
+        console.log('Video playing with sound');
+      } catch (err) {
+        console.log('Unmuted autoplay failed, trying muted:', err);
+        // If that fails, try muted
         video.muted = true;
-        video.play().catch(console.error);
-      });
+        try {
+          await video.play();
+          console.log('Video playing muted');
+        } catch (mutedErr) {
+          console.error('Muted autoplay also failed:', mutedErr);
+        }
+      }
     };
 
     // Play when loaded
@@ -53,8 +64,32 @@ export const Mehr = (): JSX.Element => {
       video.addEventListener('loadeddata', playVideo);
     }
 
+    // Handle scroll-based muting
+    const handleScroll = () => {
+      const heroSection = video.closest('section');
+      if (!heroSection) return;
+
+      const rect = heroSection.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (isVisible) {
+        // Hero section is visible - unmute
+        video.muted = false;
+      } else {
+        // Hero section is not visible - mute
+        video.muted = true;
+      }
+    };
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial check
+    handleScroll();
+
     return () => {
       video.removeEventListener('loadeddata', playVideo);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
