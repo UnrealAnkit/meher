@@ -79,8 +79,8 @@ export const Mehr = (): JSX.Element => {
           Your browser does not support the video tag.
         </video>
 
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] text-center px-4">
-          <h1 className="[font-family:'Poppins',Helvetica] font-normal text-white text-[60px] md:text-[60px] sm:text-[45px] tracking-[2px] leading-[70px] md:leading-[70px] sm:leading-[60px] drop-shadow-2xl text-shadow-lg whitespace-nowrap">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] sm:max-w-[95vw] text-center px-4">
+          <h1 className="[font-family:'Poppins',Helvetica] font-light text-white text-[45px] lg:text-[45px] md:text-[40px] sm:text-[22px] tracking-[2px] md:tracking-[1px] sm:tracking-[0.5px] leading-[55px] md:leading-[50px] sm:leading-[30px] drop-shadow-2xl text-shadow-lg lg:whitespace-nowrap md:whitespace-normal">
             Stay. Heal. Rejuvenate. Celebrate.
           </h1>
         </div>
