@@ -117,7 +117,7 @@ export const Mehr = (): JSX.Element => {
           </h1>
         </div>
 
-        <div className="absolute bottom-[-50px] left-1/2 -translate-x-1/2 flex gap-[52px]">
+        <div className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 flex gap-[52px]">
           <Button className="w-[314px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
             <span className="[font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
               BOOK YOUR STAY
@@ -143,7 +143,60 @@ export const Mehr = (): JSX.Element => {
         </div>
       </section>
 
-      <section className="relative w-full bg-[#ab4b28] py-[37px]">
+      {/* Not Just a Stay Section */}
+      <section className="relative w-full flex justify-center">
+        <div className="relative w-[1340px] h-[500px] -mt-[50px] overflow-hidden rounded-lg">
+          {/* Base Image */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Not just a stay"
+              src="/not just a stay.png"
+            />
+          </div>
+          
+          {/* First Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 1"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.7,
+                mixBlendMode: 'overlay'
+              }}
+            />
+          </div>
+          
+          {/* Second Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 2"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.5,
+                mixBlendMode: 'multiply'
+              }}
+            />
+          </div>
+          
+          {/* Third Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 3"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.4,
+                mixBlendMode: 'soft-light'
+              }}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="relative w-full bg-[#ab4b28] py-[37px] mt-[100px]">
         <div className="flex justify-center items-center gap-[341.2px] max-w-[1440px] mx-auto">
           {statsData.map((stat, index) => (
             <React.Fragment key={index}>
