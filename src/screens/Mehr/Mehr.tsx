@@ -414,8 +414,6 @@ export const Mehr = (): JSX.Element => {
             </span>
           </Button>
         </div>
-
-        <LaunchSection />
       </section>
 
       <AboutUsSection />
