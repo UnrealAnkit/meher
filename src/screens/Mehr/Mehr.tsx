@@ -37,27 +37,24 @@ export const Mehr = (): JSX.Element => {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // Video is in viewport - unmute and play
-          video.muted = false;
-          video.play().catch(console.error);
-        } else {
-          // Video is out of viewport - mute
-          video.muted = true;
-        }
+    const playVideo = () => {
+      video.play().catch(err => {
+        console.log('Autoplay failed, trying muted:', err);
+        // If autoplay fails, try muted
+        video.muted = true;
+        video.play().catch(console.error);
       });
     };
 
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.5, // Trigger when 50% of video is visible
-    });
-
-    observer.observe(video);
+    // Play when loaded
+    if (video.readyState >= 2) {
+      playVideo();
+    } else {
+      video.addEventListener('loadeddata', playVideo);
+    }
 
     return () => {
-      observer.disconnect();
+      video.removeEventListener('loadeddata', playVideo);
     };
   }, []);
 
@@ -65,15 +62,15 @@ export const Mehr = (): JSX.Element => {
     <div className="bg-[#f9d2a3] overflow-hidden w-full relative">
       <NavbarSection />
 
-      <section className="relative w-full">
+      <section className="relative w-full bg-[#ab4b28]">
         <video
           ref={videoRef}
           className="w-full h-[600px] object-cover"
           autoPlay
-          muted
           loop
           playsInline
-          poster="/bg-video.png"
+          preload="auto"
+          style={{ backgroundColor: '#ab4b28' }}
         >
           <source src="/meher hero section.mp4" type="video/mp4" />
           Your browser does not support the video tag.
