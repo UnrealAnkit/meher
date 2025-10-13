@@ -194,6 +194,84 @@ export const Mehr = (): JSX.Element => {
             />
           </div>
           
+          {/* Fourth Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 4"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.3,
+                mixBlendMode: 'color-burn'
+              }}
+            />
+          </div>
+          
+          {/* Fifth Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 5"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.25,
+                mixBlendMode: 'hard-light'
+              }}
+            />
+          </div>
+          
+          {/* Sixth Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 6"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.2,
+                mixBlendMode: 'darken'
+              }}
+            />
+          </div>
+          
+          {/* Seventh Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 7"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.18,
+                mixBlendMode: 'screen'
+              }}
+            />
+          </div>
+          
+          {/* Eighth Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 8"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.15,
+                mixBlendMode: 'color-dodge'
+              }}
+            />
+          </div>
+          
+          {/* Ninth Gradient Image Overlay */}
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              alt="Gradient overlay 9"
+              src="/not just a stay gradient.png"
+              style={{
+                opacity: 0.12,
+                mixBlendMode: 'exclusion'
+              }}
+            />
+          </div>
+          
           {/* Text Content Overlay */}
           <div className="absolute inset-0 flex flex-col justify-center px-8 py-12">
             <div className="max-w-4xl">
@@ -206,7 +284,8 @@ export const Mehr = (): JSX.Element => {
               
               {/* Main Title */}
               <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-4xl md:text-5xl tracking-[1px] leading-tight mb-8 drop-shadow-2xl">
-                Not just a stay. A bridge to wholeness.
+                Not just a stay.<br />
+                <span className="block mt-2">A bridge to wholeness.</span>
               </h2>
               
               {/* Description */}
@@ -238,6 +317,62 @@ export const Mehr = (): JSX.Element => {
               )}
             </React.Fragment>
           ))}
+        </div>
+      </section>
+
+      {/* What makes MEHR unique section */}
+      <section className="relative w-full py-10 bg-[#f9d2a3]">
+        <div className="max-w-7xl mx-auto pl-6 pr-0">
+          <div className="bg-white rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-0 pb-0 pl-10 pr-0">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Text Content */}
+              <div className="pr-4">
+                <h2 className="[font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-3xl mb-8 leading-tight">
+                  What makes MEHR unique:
+                </h2>
+                
+                <ul className="space-y-6">
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mr-4 flex-shrink-0"></div>
+                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px] whitespace-nowrap">
+                      Located on the riverbanks in Koregaon Park – peace within the city.
+                    </p>
+                  </li>
+                  
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
+                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px]">
+                      Connected to CH2 World Foundation – access to 50+ therapies, expert doctors, and emotional wellness<br />
+                      programs.
+                    </p>
+                  </li>
+                  
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
+                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px]">
+                      Integrated with Raha – soulful evenings of music, dance, meditation, and art.
+                    </p>
+                  </li>
+                  
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
+                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px]">
+                      Not an escape from life, but an integration with yourself and your community.
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              
+              {/* Wellness Session Image */}
+              <div className="relative flex justify-end">
+                <img
+                  className="w-3/5 h-[400px] object-cover rounded-[12px] shadow-lg"
+                  alt="Wellness Session"
+                  src="/rectangle-3.png"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

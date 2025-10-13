@@ -18,7 +18,8 @@ export const StatsSection = (): JSX.Element => {
 
             <div className="flex flex-col gap-7">
               <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-[42px] tracking-[-0.88px] leading-[53px] max-w-[983px]">
-                Not just a stay. A bridge to wholeness.
+                Not just a stay.<br />
+                <span className="block mt-2">A bridge to wholeness.</span>
               </h3>
 
               <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-2xl tracking-[0] leading-[27px] max-w-[927px]">
