@@ -444,45 +444,89 @@ export const Mehr = (): JSX.Element => {
       {/* THERAPIES & PROGRAMS section */}
       <TherapiesSection />
 
-      {/* PLAN YOUR RETREAT section */}
-      <section className="relative w-full py-20 bg-[#ab4b28]">
-        <div className="max-w-[887px] mx-auto mb-12">
-          <p className="[font-family:'Poppins',Helvetica] font-medium text-[#7a574f] text-2xl text-center tracking-[0] leading-[27px]">
-            Mehr Curates Soulful Experiences — From Intimate Family Retreats To
-            Corporate Offsites And Wellness Festivals.
-          </p>
-        </div>
-
-        <div className="flex justify-center items-center gap-[91px] mb-12">
-          {launchCategories.map((category, index) => (
-            <div
-              key={index}
-              className="[font-family:'Poppins',Helvetica] font-medium text-white text-4xl text-center tracking-[0] leading-[65px] whitespace-nowrap"
-            >
-              {category}
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-center mb-12">
-          <Button
-            variant="outline"
-            className="w-[369px] h-11 rounded-[60px] border border-solid border-[#24312e] bg-transparent hover:bg-[#24312e]/10 h-auto"
-          >
-            <span className="[font-family:'Raleway',Helvetica] font-extrabold text-[#181818] text-sm text-center tracking-[0] leading-5">
-              PLAN YOUR RETREAT WITH US
-            </span>
-          </Button>
-        </div>
-      </section>
-
-
-      <section className="relative w-full py-20">
-        <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
-          MOMENTS OF HEALING
-        </h2>
+      {/* MOMENTS OF HEALING section */}
+      <section className="relative w-full py-10">
         <GallerySection />
       </section>
+
+      {/* PLAN YOUR RETREAT section */}
+      <section className="relative w-full pt-5 pb-20 bg-[#f9d2a3]">
+        <div className="max-w-[1440px] mx-auto px-4">
+          {/* Descriptive paragraph */}
+          <div className="text-center mb-6">
+            <p className="[font-family:'Poppins',Helvetica] font-medium text-[#7a574f] text-2xl tracking-[0] leading-[27px] max-w-[887px] mx-auto">
+              MEHR Curates Soulful Experiences — From Intimate Family Retreats To Corporate Offsites And Wellness Festivals.
+            </p>
+          </div>
+
+          {/* Four-column section */}
+          <div className="bg-[#ab4b28] rounded-[20px] p-12 mb-12">
+            <div className="flex flex-col lg:flex-row gap-0">
+              {/* CORPORATE */}
+              <div className="flex-1 flex flex-col px-6 py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+                  CORPORATE
+                </h3>
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                  Leadership Workshops, Stress Management, And Creativity Retreats Designed For Teams.
+                </p>
+              </div>
+
+              {/* Vertical separator */}
+              <div className="w-0.5 bg-white flex-shrink-0"></div>
+
+              {/* GROUPS */}
+              <div className="flex-1 flex flex-col px-6 py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+                  GROUPS
+                </h3>
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                  Intimate Retreats For Families, Communities, And Small Circles.
+                </p>
+              </div>
+
+              {/* Vertical separator */}
+              <div className="w-0.5 bg-white flex-shrink-0"></div>
+
+              {/* FESTIVALS */}
+              <div className="flex-1 flex flex-col px-6 py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+                  FESTIVALS
+                </h3>
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                  Immersive Wellness Festivals Blending Art, Music, Meditation, Therapies, And Soulful Food.
+                </p>
+              </div>
+
+              {/* Vertical separator */}
+              <div className="w-0.5 bg-white flex-shrink-0"></div>
+
+              {/* INTERNATIONAL */}
+              <div className="flex-1 flex flex-col px-6 py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+                  INTERNATIONAL
+                </h3>
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                  Curated Retreats Abroad — Starting In Thailand, Expanding Globally.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Button */}
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              className="w-[369px] h-11 rounded-[60px] border border-solid border-[#24312e] bg-white hover:bg-gray-50 h-auto"
+            >
+              <span className="[font-family:'Raleway',Helvetica] font-extrabold text-[#181818] text-sm text-center tracking-[0] leading-5">
+                PLAN YOUR RETREAT WITH US
+              </span>
+            </Button>
+          </div>
+        </div>
+      </section>
+
 
       <TestimonialsSection />
 
