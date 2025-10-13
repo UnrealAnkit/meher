@@ -327,21 +327,21 @@ export const Mehr = (): JSX.Element => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Text Content */}
               <div className="pr-4">
-                <h2 className="[font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-3xl mb-8 leading-tight">
+                <h2 className="[font-family:'Poppins'] font-bold text-[#ab4b28] text-3xl mb-8 leading-tight">
                   What makes MEHR unique:
                 </h2>
                 
                 <ul className="space-y-6">
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-[#ab4b28] rounded-full mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px] whitespace-nowrap">
+                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px] whitespace-nowrap">
                       Located on the riverbanks in Koregaon Park – peace within the city.
                     </p>
                   </li>
                   
                   <li className="flex items-start">
                     <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px]">
+                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px]">
                       Connected to CH2 World Foundation – access to 50+ therapies, expert doctors, and emotional wellness<br />
                       programs.
                     </p>
@@ -349,14 +349,14 @@ export const Mehr = (): JSX.Element => {
                   
                   <li className="flex items-start">
                     <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px]">
+                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px]">
                       Integrated with Raha – soulful evenings of music, dance, meditation, and art.
                     </p>
                   </li>
                   
                   <li className="flex items-start">
                     <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins',Helvetica] font-medium text-[#ab4b28] text-lg leading-[27px]">
+                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px]">
                       Not an escape from life, but an integration with yourself and your community.
                     </p>
                   </li>
@@ -376,8 +376,7 @@ export const Mehr = (): JSX.Element => {
         </div>
       </section>
 
-      <AboutUsSection />
-
+      {/* OUR SERVICES section */}
       <section className="relative w-full py-20">
         <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
           OUR SERVICES
@@ -385,6 +384,7 @@ export const Mehr = (): JSX.Element => {
         <ServicesSection />
       </section>
 
+      {/* PLAN YOUR RETREAT section */}
       <section className="relative w-full py-20 bg-[#ab4b28]">
         <div className="max-w-[887px] mx-auto mb-12">
           <p className="[font-family:'Poppins',Helvetica] font-medium text-[#7a574f] text-2xl text-center tracking-[0] leading-[27px]">
@@ -417,6 +417,8 @@ export const Mehr = (): JSX.Element => {
 
         <LaunchSection />
       </section>
+
+      <AboutUsSection />
 
       <section className="relative w-full py-20">
         <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
