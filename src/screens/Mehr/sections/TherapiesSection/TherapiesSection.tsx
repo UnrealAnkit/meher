@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '../../../../components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface TherapyCard {
   id: number;
@@ -49,6 +51,7 @@ const therapyData: TherapyCard[] = [
 
 const TherapiesSection: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   return (
     <section className="relative w-full bg-white py-20">
@@ -168,6 +171,16 @@ const TherapiesSection: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Explore Programs Button */}
+        <div className="flex justify-center mt-12">
+          <Button
+            onClick={() => navigate('/programs')}
+            className="w-[314px] h-11 bg-[#ab4b28] hover:bg-[#8f3e21] rounded-[60px] [font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]"
+          >
+            EXPLORE PROGRAMS
+          </Button>
         </div>
       </div>
     </section>
