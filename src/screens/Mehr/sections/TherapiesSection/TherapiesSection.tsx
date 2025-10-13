@@ -60,11 +60,30 @@ const TherapiesSection: React.FC = () => {
         <div className="relative w-full h-[500px] overflow-hidden">
           {/* Background Image Layer */}
           <div className="absolute inset-0">
-            <img
+            {/* Default Image */}
+            <motion.img
+              src="/Therapies-Programs.png"
+              alt="Background"
+              className="w-full h-full object-cover"
+              initial={{ opacity: 1 }}
+              animate={{ 
+                opacity: hoveredCard === null ? 1 : 0
+              }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            />
+            
+            {/* Active Image */}
+            <motion.img
               src={hoveredCard !== null ? therapyData[hoveredCard - 1].activeImage : "/Therapies-Programs.png"}
               alt="Background"
-              className="w-full h-full object-cover transition-all duration-300"
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: hoveredCard !== null ? 1 : 0
+              }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
             />
+            
             <div className="absolute inset-0 bg-black bg-opacity-40" />
           </div>
 
