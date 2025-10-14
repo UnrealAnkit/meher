@@ -57,7 +57,7 @@ export const TestimonialsSection = (): JSX.Element => {
           </div>
 
           {/* Bottom row - Image 6 (303x303) and Image 7 (636.3x303) */}
-          <div className="col-span-12 flex gap-16 justify-end ml-64 -mt-[300px]">
+          <div className="col-span-12 flex gap-8 -mt-[300px] pl-[450px]">
             <div className="w-[303px] h-[303px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 6.png" 
@@ -65,7 +65,7 @@ export const TestimonialsSection = (): JSX.Element => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="w-[636.3px] h-[303px] rounded-2xl overflow-hidden ml-24">
+            <div className="w-[636.3px] h-[303px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 7.png" 
                 alt="Healing moment 7" 
