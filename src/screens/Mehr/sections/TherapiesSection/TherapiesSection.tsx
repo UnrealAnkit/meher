@@ -72,7 +72,7 @@ const TherapiesSection: React.FC = () => {
               animate={{ 
                 opacity: hoveredCard === null ? 1 : 0
               }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
             />
             
             {/* Active Image */}
@@ -84,7 +84,7 @@ const TherapiesSection: React.FC = () => {
               animate={{ 
                 opacity: hoveredCard !== null ? 1 : 0
               }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
             />
             
             <div className="absolute inset-0 bg-black bg-opacity-40" />
@@ -109,20 +109,20 @@ const TherapiesSection: React.FC = () => {
                   <motion.h3 
                     className="text-white text-2xl font-semibold mb-4 relative z-10"
                     animate={{ 
-                      y: hoveredCard === therapy.id ? -20 : 0,
-                      transition: { duration: 0.2 }
+                      y: hoveredCard === therapy.id ? -10 : 0,
+                      transition: { duration: 0.3, ease: "easeInOut" }
                     }}
                   >
                     {therapy.title}
                   </motion.h3>
                   
-                  <AnimatePresence>
+                  <AnimatePresence mode="wait">
                     {hoveredCard === therapy.id && (
                       <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{ duration: 0.2 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="text-white text-sm leading-relaxed max-w-md"
                       >
                         {therapy.description}
@@ -138,7 +138,7 @@ const TherapiesSection: React.FC = () => {
                       opacity: hoveredCard === therapy.id ? 1 : 0,
                       y: hoveredCard === therapy.id ? 0 : 10
                     }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <svg 
                       width="24" 

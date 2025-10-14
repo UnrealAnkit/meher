@@ -460,7 +460,7 @@ export const Mehr = (): JSX.Element => {
           </div>
 
           {/* Four-column section */}
-          <div className="bg-[#ab4b28] rounded-[20px] p-12 mb-12">
+          <div className="bg-[#ab4b28] rounded-[20px] p-16 mb-12">
             <div className="flex flex-col lg:flex-row gap-0">
               {/* CORPORATE */}
               <div className="flex-1 flex flex-col px-6 py-4">
