@@ -29,7 +29,7 @@ export const TestimonialsSection = (): JSX.Element => {
 
           {/* Middle column - Image 2 (636.3x636.3) */}
           <div className="col-span-6">
-            <div className="w-[636.3px] h-[636.3px] rounded-2xl overflow-hidden">
+            <div className="w-[620px] h-[636.3px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 2.png" 
                 alt="Healing moment 2" 
@@ -39,7 +39,7 @@ export const TestimonialsSection = (): JSX.Element => {
           </div>
 
           {/* Last column - Image 3 (303x303) and Image 4 */}
-          <div className="col-span-3 space-y-4 ml-6">
+          <div className="col-span-3 space-y-4">
             <div className="w-[303px] h-[303px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 3.png" 
@@ -57,15 +57,15 @@ export const TestimonialsSection = (): JSX.Element => {
           </div>
 
           {/* Bottom row - Image 6 (303x303) and Image 7 (636.3x303) */}
-          <div className="col-span-12 flex gap-8 -mt-[300px] pl-[450px]">
-            <div className="w-[303px] h-[303px] rounded-2xl overflow-hidden">
+          <div className="col-span-12 flex gap-8 -mt-[300px] pl-[350px]">
+            <div className="w-[420px] h-[303px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 6.png" 
                 alt="Healing moment 6" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="w-[636.3px] h-[303px] rounded-2xl overflow-hidden">
+            <div className="w-[636px] h-[303px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 7.png" 
                 alt="Healing moment 7" 
