@@ -57,7 +57,7 @@ export const TestimonialsSection = (): JSX.Element => {
           </div>
 
           {/* Bottom row - Image 6 (303x303) and Image 7 (636.3x303) */}
-          <div className="col-span-12 flex gap-8 -mt-[300px] pl-[350px]">
+          <div className="col-span-12 flex gap-4 -mt-[300px] pl-[320px]">
             <div className="w-[420px] h-[303px] rounded-2xl overflow-hidden">
               <img 
                 src="/Moments of Healing 6.png" 

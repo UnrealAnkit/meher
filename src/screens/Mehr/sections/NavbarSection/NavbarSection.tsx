@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 const navItems = [
   { label: "HOME", path: "/" },
   { label: "ABOUT US", path: "/about" },
-  { label: "PROGRAMS", path: "/programs" },
+  { label: "BOOK A STAY", path: "/programs" },
   { label: "BLOGS", path: "/blogs" },
   { label: "CONTACT US", path: "/contact" },
 ];
@@ -36,7 +36,7 @@ export const NavbarSection = (): JSX.Element => {
           <Link
             key={index}
             to={item.path}
-            className="[font-family:'Poppins',Helvetica] font-light text-white text-[18px] tracking-[2px] leading-[26px] whitespace-nowrap hover:opacity-80 transition-opacity drop-shadow-lg"
+            className="[font-family:'Poppins'] font-light text-white text-[18px] tracking-[2px] leading-[26px] whitespace-nowrap hover:opacity-80 transition-opacity drop-shadow-lg"
           >
             {item.label}
           </Link>
@@ -60,7 +60,7 @@ export const NavbarSection = (): JSX.Element => {
               <Link
                 key={index}
                 to={item.path}
-                className="[font-family:'Poppins',Helvetica] font-light text-white text-[18px] tracking-[2px] leading-[26px] px-4 py-3 hover:bg-[#8d3d20] transition-colors text-left drop-shadow-lg"
+                className="[font-family:'Poppins'] font-light text-white text-[18px] tracking-[2px] leading-[26px] px-4 py-3 hover:bg-[#8d3d20] transition-colors text-left drop-shadow-lg"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.label}
