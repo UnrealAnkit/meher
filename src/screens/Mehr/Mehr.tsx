@@ -174,14 +174,14 @@ export const Mehr = (): JSX.Element => {
           </h1>
         </div>
 
-        <div className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 flex gap-[52px]">
-          <Button className="w-[314px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-[52px]">
+          <Button className="w-[350px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
             <span className="[font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
               BOOK YOUR STAY
             </span>
           </Button>
 
-          <Button className="w-[321px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
+          <Button className="w-[360px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
             <span className="[font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
               EXPLORE THERAPIES
             </span>
