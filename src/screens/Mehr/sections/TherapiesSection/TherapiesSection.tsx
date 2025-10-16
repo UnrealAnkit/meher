@@ -72,7 +72,7 @@ const TherapiesSection: React.FC = () => {
               animate={{ 
                 opacity: hoveredCard === null ? 1 : 0
               }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             />
             
             {/* Active Image */}
@@ -84,7 +84,7 @@ const TherapiesSection: React.FC = () => {
               animate={{ 
                 opacity: hoveredCard !== null ? 1 : 0
               }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             />
             
             <div className="absolute inset-0 bg-black bg-opacity-40" />
