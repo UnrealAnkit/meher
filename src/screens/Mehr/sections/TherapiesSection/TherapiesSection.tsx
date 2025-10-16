@@ -64,28 +64,25 @@ const TherapiesSection: React.FC = () => {
           {/* Background Image Layer */}
           <div className="absolute inset-0">
             {/* Default Image */}
-            <motion.img
+            <img
               src="/Therapies-Programs.png"
               alt="Background"
-              className="w-full h-full object-cover"
-              initial={{ opacity: 1 }}
-              animate={{ 
-                opacity: hoveredCard === null ? 1 : 0
-              }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className={`w-full h-full object-cover transition-opacity duration-300 ${
+                hoveredCard === null ? 'opacity-100' : 'opacity-0'
+              }`}
             />
             
-            {/* Active Image */}
-            <motion.img
-              src={hoveredCard !== null ? therapyData[hoveredCard - 1].activeImage : "/Therapies-Programs.png"}
-              alt="Background"
-              className="absolute inset-0 w-full h-full object-cover"
-              initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: hoveredCard !== null ? 1 : 0
-              }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            />
+            {/* Active Images */}
+            {therapyData.map((therapy) => (
+              <img
+                key={therapy.id}
+                src={therapy.activeImage}
+                alt={therapy.title}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                  hoveredCard === therapy.id ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            ))}
             
             <div className="absolute inset-0 bg-black bg-opacity-40" />
           </div>
