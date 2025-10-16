@@ -51,7 +51,30 @@ const therapyData: TherapyCard[] = [
 
 const TherapiesSection: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
+
+  // Preload all images
+  React.useEffect(() => {
+    const preloadImages = async () => {
+      const imageUrls = [
+        '/Therapies-Programs.png',
+        ...therapyData.map(therapy => therapy.activeImage)
+      ];
+
+      const loadImage = (url: string): Promise<void> =>
+        new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve();
+          img.src = url;
+        });
+
+      await Promise.all(imageUrls.map(loadImage));
+      setIsLoaded(true);
+    };
+
+    preloadImages();
+  }, []);
 
   return (
     <section className="relative w-full bg-white py-20">
@@ -61,30 +84,44 @@ const TherapiesSection: React.FC = () => {
         </h2>
         
         <div className="relative w-full h-[500px] overflow-hidden">
-          {/* Background Image Layer */}
-          <div className="absolute inset-0">
-            {/* Default Image */}
-            <img
-              src="/Therapies-Programs.png"
-              alt="Background"
-              className={`w-full h-full object-cover transition-opacity duration-300 ${
-                hoveredCard === null ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-            
-            {/* Active Images */}
-            {therapyData.map((therapy) => (
-              <img
-                key={therapy.id}
-                src={therapy.activeImage}
-                alt={therapy.title}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-                  hoveredCard === therapy.id ? 'opacity-100' : 'opacity-0'
-                }`}
-              />
-            ))}
-            
-            <div className="absolute inset-0 bg-black bg-opacity-40" />
+           {/* Background Image Layer */}
+           <div className="absolute inset-0">
+             {isLoaded && (
+               <>
+                 {/* Default Image */}
+                 <motion.div
+                   className="absolute inset-0"
+                   initial={false}
+                   animate={{ opacity: hoveredCard === null ? 1 : 0 }}
+                   transition={{ duration: 0.2 }}
+                 >
+                   <img
+                     src="/Therapies-Programs.png"
+                     alt="Background"
+                     className="w-full h-full object-cover"
+                   />
+                 </motion.div>
+
+                 {/* Active Images */}
+                 {therapyData.map((therapy) => (
+                   <motion.div
+                     key={therapy.id}
+                     className="absolute inset-0"
+                     initial={false}
+                     animate={{ opacity: hoveredCard === therapy.id ? 1 : 0 }}
+                     transition={{ duration: 0.2 }}
+                   >
+                     <img
+                       src={therapy.activeImage}
+                       alt={therapy.title}
+                       className="w-full h-full object-cover"
+                     />
+                   </motion.div>
+                 ))}
+               </>
+             )}
+             
+             <div className="absolute inset-0 bg-black bg-opacity-40" />
           </div>
 
           {/* Interactive Sections */}
