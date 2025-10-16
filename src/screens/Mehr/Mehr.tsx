@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
-import { ContactSection } from "./sections/ContactSection";
 import { FooterSection } from "./sections/FooterSection";
 import { GallerySection } from "./sections/GallerySection";
 import { LaunchSection } from "./sections/LaunchSection";
@@ -529,8 +528,6 @@ export const Mehr = (): JSX.Element => {
 
 
       <TestimonialsSection />
-
-      <ContactSection />
 
       <FooterSection />
     </div>
