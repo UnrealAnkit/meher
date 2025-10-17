@@ -36,7 +36,7 @@ export const ServicesSection = (): JSX.Element => {
           {cardsData.map((card, index) => (
             <Card
               key={index}
-              className="w-full max-w-[565px] h-[702px] bg-[#f9d2a3] rounded-[15px] shadow-[0px_0px_4px_#00000040] overflow-hidden"
+              className="w-full max-w-[565px] h-[702px] bg-white rounded-[15px] shadow-[0px_0px_4px_#00000040] overflow-hidden"
             >
               <CardContent className="p-0 h-full flex flex-col">
                 <img
@@ -46,7 +46,7 @@ export const ServicesSection = (): JSX.Element => {
                 />
 
                 <div className="flex-1 flex flex-col items-center px-4 pt-[18px]">
-                  <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-[32px] tracking-[0] leading-8 text-center whitespace-nowrap">
+                  <h3 className="[font-family:'Poppins',Helvetica] font-bold text-white text-[32px] tracking-[0] leading-8 text-center whitespace-nowrap">
                     {card.title}
                   </h3>
 
