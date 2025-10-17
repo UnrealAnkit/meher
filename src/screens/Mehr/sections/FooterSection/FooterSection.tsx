@@ -69,7 +69,7 @@ export const FooterSection = (): JSX.Element => {
                   JOIN US ON OUR BELONGING PROJECT
                 </div>
                 <Button className="w-[233px] h-[38px] rounded-[50px] shadow-[0px_4px_4px_#00000040] bg-[#ab4b28] hover:bg-[#8f3e20] [font-family:'Arial-Bold',Helvetica] font-bold text-white text-[17.5px] tracking-[0] leading-6">
-                  BOOK YOUR STAY
+                  BOOK AN EXPERIENCE
                 </Button>
               </div>
 
