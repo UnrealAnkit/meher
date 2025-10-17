@@ -22,7 +22,7 @@ const footerLinks = [{ text: "Privacy Policy" }, { text: "Contact" }];
 export const FooterSection = (): JSX.Element => {
   return (
     <footer className="relative w-full bg-transparent">
-      <div className="relative w-full bg-white">
+      <div className="relative w-full bg-[#f9d2a3]">
         <div className="container mx-auto px-[22px] py-[51px]">
           <div className="grid grid-cols-1 lg:grid-cols-[387px_1fr_343px] gap-8 lg:gap-[115px]">
             <div className="flex justify-start">

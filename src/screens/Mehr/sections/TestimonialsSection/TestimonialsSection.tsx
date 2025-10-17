@@ -2,7 +2,7 @@ import React from "react";
 
 export const TestimonialsSection = (): JSX.Element => {
   return (
-    <section className="w-full bg-[#f9d2a3] py-20">
+    <section className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-[48px] mb-16">
           MOMENTS OF HEALING
