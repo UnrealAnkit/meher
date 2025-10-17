@@ -150,10 +150,10 @@ export const Mehr = (): JSX.Element => {
   }, [hasAnimated]);
 
   return (
-    <div className="bg-[#f9d2a3] overflow-hidden w-full relative">
+    <div className="bg-white overflow-hidden w-full relative">
       <NavbarSection />
 
-      <section className="relative w-full bg-[#ab4b28]">
+      <section className="relative w-full bg-white">
         <video
           ref={videoRef}
           className="w-full h-[600px] object-cover"
@@ -173,23 +173,10 @@ export const Mehr = (): JSX.Element => {
           </h1>
         </div>
 
-        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-[52px]">
-          <Button className="w-[350px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
-            <span className="[font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
-              BOOK YOUR STAY
-            </span>
-          </Button>
-
-          <Button className="w-[360px] h-11 rounded-[60px] bg-[#ab4b28] hover:bg-[#8d3d20] h-auto">
-            <span className="[font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
-              EXPLORE THERAPIES
-            </span>
-          </Button>
-        </div>
       </section>
 
-      <section className="relative w-full flex justify-center mt-[94px] mb-[72px]">
-        <div className="w-[1340px] shadow-[0px_4px_4px_#00000040] bg-white py-[58px] px-[220px]">
+      <section className="relative w-full flex justify-center mt-[94px] mb-[72px] bg-white">
+        <div className="w-[1340px] shadow-[0px_4px_4px_#00000040] bg-[#f9d2a3] py-[58px] px-[220px]">
           <p className="[font-family:'Poppins',Helvetica] font-semibold text-[#24312e] text-xl text-center tracking-[0] leading-10">
             At MEHR, every guest is invited to begin an inward journey. Whether
             you are a patient needing long-term care, a wellness seeker looking
@@ -200,7 +187,7 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* Not Just a Stay Section */}
-      <section className="relative w-full flex justify-center">
+      <section className="relative w-full flex justify-center bg-white">
         <div className="relative w-[1340px] h-[500px] -mt-[50px] overflow-hidden rounded-lg">
           {/* Base Image */}
           <div className="absolute inset-0">
@@ -356,6 +343,9 @@ export const Mehr = (): JSX.Element => {
         </div>
       </section>
 
+      {/* White background section to eliminate pink strip */}
+      <section className="relative w-full bg-white h-[100px]"></section>
+
       <section className="relative w-full bg-[#ab4b28] py-[37px] mt-[100px]" data-stats-section>
         <div className="flex justify-center items-center gap-[20px] sm:gap-[40px] md:gap-[60px] lg:gap-[80px] xl:gap-[120px] max-w-[1200px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
           {statsData.map((stat, index) => (
@@ -377,9 +367,9 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* What makes MEHR unique section */}
-      <section className="relative w-full py-10 bg-[#f9d2a3]">
+      <section className="relative w-full py-10 bg-white">
         <div className="max-w-7xl mx-auto pl-6 pr-0">
-          <div className="bg-white rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-0 pb-0 pl-10 pr-0">
+          <div className="bg-[#f9d2a3] rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-0 pb-0 pl-10 pr-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Text Content */}
               <div className="pr-4">
@@ -433,7 +423,7 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* OUR SERVICES section */}
-      <section className="relative w-full py-20">
+      <section className="relative w-full py-20 bg-white">
         <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
           OUR SERVICES
         </h2>
@@ -444,12 +434,12 @@ export const Mehr = (): JSX.Element => {
       <TherapiesSection />
 
       {/* MOMENTS OF HEALING section */}
-      <section className="relative w-full py-10">
+      <section className="relative w-full py-10 bg-white">
         <GallerySection />
       </section>
 
       {/* PLAN YOUR RETREAT section */}
-      <section className="relative w-full pt-5 pb-20 bg-[#f9d2a3]">
+      <section className="relative w-full pt-5 pb-20 bg-white">
         <div className="max-w-[1440px] mx-auto px-4">
           {/* Descriptive paragraph */}
           <div className="text-center mb-6">

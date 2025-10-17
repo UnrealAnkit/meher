@@ -77,9 +77,9 @@ const TherapiesSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative w-full bg-white py-20">
+    <section className="relative w-full bg-[#f9d2a3] py-20">
       <div className="max-w-[1440px] mx-auto">
-        <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-16">
+        <h2 className="text-center [font-family:'Poppins',Helvetica] font-light text-black text-[40px] tracking-[0] leading-5 mb-16">
           THERAPIES & PROGRAMS
         </h2>
         
@@ -211,7 +211,7 @@ const TherapiesSection: React.FC = () => {
         <div className="flex justify-center mt-12">
           <Button
             onClick={() => navigate('/programs')}
-            className="w-[314px] h-11 bg-[#ab4b28] hover:bg-[#8f3e21] rounded-[60px] [font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]"
+            className="w-[314px] h-11 bg-[#f9d2a3] hover:bg-[#f5c88f] border border-black rounded-[60px] [font-family:'Poppins',Helvetica] font-light text-black text-xl tracking-[0.50px] leading-[22px]"
           >
             EXPLORE PROGRAMS
           </Button>
