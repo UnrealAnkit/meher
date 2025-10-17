@@ -373,7 +373,7 @@ export const Mehr = (): JSX.Element => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Text Content */}
               <div className="pr-4">
-                <h2 className="[font-family:'Poppins'] font-bold text-[#ab4b28] text-3xl mb-8 leading-tight">
+                <h2 className="[font-family:'Poppins'] font-light text-black text-3xl mb-8 leading-tight">
                   What makes MEHR unique:
                 </h2>
                 
