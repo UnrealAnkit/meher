@@ -84,22 +84,25 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
   return (
     <div className="w-full max-w-[300px] bg-[#f9d2a3] py-4 pr-4 pl-4 rounded-lg">
       {/* Toggle buttons */}
-      <div className="flex mb-6 bg-white rounded-lg p-1">
+      <div className="flex gap-2 mb-4 justify-center">
         <button
           onClick={() => setView('upcoming')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors [font-family:'Poppins',Helvetica]
-            ${view === 'upcoming' ? 'bg-[#ab4b28] text-white' : 'text-[#ab4b28]'}`}
+          className={`py-2 px-4 rounded-md text-sm font-medium transition-colors [font-family:'Poppins',Helvetica] min-w-[100px] text-center
+            ${view === 'upcoming' ? 'bg-[#ab4b28] text-white' : 'bg-white text-[#ab4b28] border border-[#ab4b28]'}`}
         >
           UPCOMING
         </button>
         <button
           onClick={() => setView('past')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors [font-family:'Poppins',Helvetica]
-            ${view === 'past' ? 'bg-[#ab4b28] text-white' : 'text-[#ab4b28]'}`}
+          className={`py-2 px-4 rounded-md text-sm font-medium transition-colors [font-family:'Poppins',Helvetica] min-w-[100px] text-center
+            ${view === 'past' ? 'bg-[#ab4b28] text-white' : 'bg-white text-[#ab4b28] border border-[#ab4b28]'}`}
         >
           PAST
         </button>
       </div>
+      
+      {/* Thin line below buttons */}
+      <div className="w-full h-px bg-black mb-4"></div>
 
       {/* Month navigation */}
       <div className="flex items-center justify-between mb-4">
