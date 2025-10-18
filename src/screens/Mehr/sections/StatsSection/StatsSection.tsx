@@ -23,10 +23,7 @@ export const StatsSection = (): JSX.Element => {
               </h3>
 
               <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-2xl tracking-[0] leading-[27px] max-w-[927px]">
-                At MEHR, every guest is invited to begin an inward journey.
-                Whether you are a patient needing long-term care, a wellness
-                seeker looking for detox, or simply someone wishing to pause for
-                a night, MEHR offers a space of peace, dignity, and belonging.
+                MEHR (Mandala Estate for Healing & Rejuvenation) is a living ecosystem of healing estates and rejuvenation experiences! Be it short breaks from daily routine at our 'in city' retreats or our 'in nature' estates, or our deep healing journeys, we provide a one-stop solution to your needs.
               </p>
             </div>
           </div>

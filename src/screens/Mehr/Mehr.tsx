@@ -178,10 +178,7 @@ export const Mehr = (): JSX.Element => {
       <section className="relative w-full flex justify-center mt-[94px] mb-[72px] bg-white">
         <div className="w-[1340px] shadow-[0px_4px_4px_#00000040] bg-[#f9d2a3] py-[58px] px-[220px]">
           <p className="[font-family:'Poppins',Helvetica] font-semibold text-[#24312e] text-xl text-center tracking-[0] leading-10">
-            At MEHR, every guest is invited to begin an inward journey. Whether
-            you are a patient needing long-term care, a wellness seeker looking
-            for detox, or simply someone wishing to pause for a night, MEHR
-            offers a space of peace, dignity, and belonging.
+            MEHR (Mandala Estate for Healing & Rejuvenation) is a living ecosystem of healing estates and rejuvenation experiences! Be it short breaks from daily routine at our 'in city' retreats or our 'in nature' estates, or our deep healing journeys, we provide a one-stop solution to your needs.
           </p>
         </div>
       </section>
