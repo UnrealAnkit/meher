@@ -89,11 +89,21 @@ export const Mehr = (): JSX.Element => {
     // Add scroll listener
     window.addEventListener('scroll', handleScroll);
     
+    // Handle video time to exclude last 10 seconds
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 10) {
+        video.currentTime = 0; // Restart from beginning
+      }
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    
     // Initial check
     handleScroll();
 
     return () => {
       video.removeEventListener('loadeddata', playVideo);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
