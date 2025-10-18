@@ -2,9 +2,35 @@ import React, { useRef, useEffect } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar } from "../components/Calendar/Calendar";
+import { EventCard } from "../components/EventCard";
 
 export const CalendarPage = (): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Sample event data
+  const events = [
+    {
+      title: "LITURGY & IGNATIAN SPIRITUALITY",
+      description: "Mass & Ignatian Reflections in October",
+      tag: "IN-PERSON",
+      dateTime: "Daytime | October 7, 2025 - October 28, 2025, 8:00am - 8:45am",
+      image: "/rectangle-1.png"
+    },
+    {
+      title: "LITURGY & IGNATIAN SPIRITUALITY",
+      description: "Mass & Ignatian Reflections in October",
+      tag: "IN-PERSON",
+      dateTime: "Daytime | October 7, 2025 - October 28, 2025, 8:00am - 8:45am",
+      image: "/rectangle-2.png"
+    },
+    {
+      title: "LITURGY & IGNATIAN SPIRITUALITY",
+      description: "Mass & Ignatian Reflections in October",
+      tag: "IN-PERSON",
+      dateTime: "Daytime | October 7, 2025 - October 28, 2025, 8:00am - 8:45am",
+      image: "/rectangle-3.png"
+    }
+  ];
 
   useEffect(() => {
     const video = videoRef.current;
@@ -102,10 +128,21 @@ export const CalendarPage = (): JSX.Element => {
             <Calendar />
           </div>
             
-          {/* Content Section - Will be used for displaying events */}
-          <div className="flex-1 bg-[#f9d2a3] rounded-lg p-6 lg:mr-8">
-            <h2 className="text-2xl font-semibold text-[#ab4b28] mb-4">Upcoming Events</h2>
-            {/* Event listings will go here */}
+          {/* Content Section - Event Cards */}
+          <div className="flex-1 bg-white p-6 lg:mr-8">
+            <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">October 2025</h2>
+            <div className="space-y-4">
+              {events.map((event, index) => (
+                <EventCard
+                  key={index}
+                  title={event.title}
+                  description={event.description}
+                  tag={event.tag}
+                  dateTime={event.dateTime}
+                  image={event.image}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
