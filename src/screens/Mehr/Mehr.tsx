@@ -183,6 +183,27 @@ export const Mehr = (): JSX.Element => {
         </div>
       </section>
 
+      {/* Buttons Section - Outside the description card */}
+      <section className="relative w-full flex justify-center -mt-8 mb-[72px] bg-white">
+        <div className="flex justify-center gap-6">
+          <Button 
+            className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white px-8 py-4 text-lg font-bold rounded-full transition-all duration-300 shadow-lg"
+          >
+            BOOK YOUR STAY
+          </Button>
+          <Button 
+            className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white px-8 py-4 text-lg font-bold rounded-full transition-all duration-300 shadow-lg"
+          >
+            EXPLORE THERAPIES
+          </Button>
+          <Button 
+            className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white px-8 py-4 text-lg font-bold rounded-full transition-all duration-300 shadow-lg"
+          >
+            EXPLORE EVENTS
+          </Button>
+        </div>
+      </section>
+
       {/* Not Just a Stay Section */}
       <section className="relative w-full flex justify-center bg-white">
         <div className="relative w-[1340px] h-[500px] -mt-[50px] overflow-hidden rounded-lg">
