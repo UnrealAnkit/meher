@@ -397,52 +397,59 @@ export const Mehr = (): JSX.Element => {
       {/* What makes MEHR unique section */}
       <section className="relative w-full py-10 bg-white">
         <div className="max-w-7xl mx-auto pl-6 pr-0">
-          <div className="bg-[#f9d2a3] rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-0 pb-0 pl-10 pr-0">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Text Content */}
-              <div className="pr-4">
-                <h2 className="[font-family:'Poppins'] font-light text-black text-3xl mb-8 leading-tight">
-                  What makes MEHR unique:
-                </h2>
+           <div className="bg-[#f9d2a3] rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-8 px-8 pb-0 overflow-hidden">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+               {/* Text Content */}
+               <div className="pr-4 pt-4 pb-8">
+                  <h2 className="[font-family:'Poppins'] font-light text-black text-2xl mb-6 leading-tight">
+                    What makes MEHR unique:
+                  </h2>
                 
-                <ul className="space-y-6">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px] whitespace-nowrap">
-                      Located on the riverbanks in Koregaon Park – peace within the city.
-                    </p>
-                  </li>
-                  
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px]">
-                      Connected to CH2 World Foundation – access to 50+ therapies, expert doctors, and emotional wellness<br />
-                      programs.
-                    </p>
-                  </li>
-                  
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px]">
-                      Integrated with Raha – soulful evenings of music, dance, meditation, and art.
-                    </p>
-                  </li>
-                  
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-[#ab4b28] rounded-full mt-3 mr-4 flex-shrink-0"></div>
-                    <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-lg leading-[27px]">
-                      Not an escape from life, but an integration with yourself and your community.
-                    </p>
-                  </li>
-                </ul>
+                  <ul className="space-y-4">
+                   <li className="flex items-start">
+                     <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                       Located on the riverbanks in Koregaon Park provides peace within the city.
+                      </p>
+                    </li>
+                    
+                    <li className="flex items-start">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                       Connected to CH2 World Foundation gives you access to 50+ therapies, expert doctors, and emotional wellness programs.
+                      </p>
+                    </li>
+                    
+                    <li className="flex items-start">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                       Integrated with Raaha which is a community space with soulful experiences of music, dance, meditation, and art.
+                      </p>
+                    </li>
+                    
+                    <li className="flex items-start">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                        Not an escape from life, but an integration with yourself and your community.
+                      </p>
+                    </li>
+
+                    <li className="flex items-start">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                        20 mins from Pune International Airport, 3.5 hours from Mumbai International Airport
+                      </p>
+                    </li>
+                  </ul>
               </div>
               
               {/* Wellness Session Image */}
-              <div className="relative flex justify-end">
-                <img
-                  className="w-3/5 h-[400px] object-cover rounded-[12px] shadow-lg"
-                  alt="Wellness Session"
-                  src="/rectangle-3.png"
+                <div className="relative flex justify-end h-full -mr-8 -mt-8">
+                  <img
+                   className="w-4/5 h-[120%] object-cover rounded-tl-[12px] rounded-tr-[12px] shadow-lg translate-y-[-8%]"
+                    alt="Wellness Session"
+                    src="/rectangle-3.png"
+                    style={{ marginBottom: '-20%' }}
                 />
               </div>
             </div>
