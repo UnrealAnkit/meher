@@ -96,18 +96,16 @@ export const CalendarPage = (): JSX.Element => {
 
       {/* Main Content Section */}
       <section className="relative w-full bg-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Calendar Section */}
-            <div className="lg:w-[300px] flex-shrink-0">
-              <Calendar />
-            </div>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Calendar Section */}
+          <div className="w-full lg:w-[300px] flex-shrink-0">
+            <Calendar />
+          </div>
             
-            {/* Content Section - Will be used for displaying events */}
-            <div className="flex-1 bg-[#f9d2a3] rounded-lg p-6">
-              <h2 className="text-2xl font-semibold text-[#ab4b28] mb-4">Upcoming Events</h2>
-              {/* Event listings will go here */}
-            </div>
+          {/* Content Section - Will be used for displaying events */}
+          <div className="flex-1 bg-[#f9d2a3] rounded-lg p-6 lg:mr-8">
+            <h2 className="text-2xl font-semibold text-[#ab4b28] mb-4">Upcoming Events</h2>
+            {/* Event listings will go here */}
           </div>
         </div>
       </section>

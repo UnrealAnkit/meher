@@ -68,7 +68,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
         <button
           key={day}
           onClick={() => handleDateClick(day)}
-          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm
+          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm [font-family:'Poppins',Helvetica]
             ${isToday ? 'bg-[#ab4b28] text-white' : ''}
             ${isSelected ? 'bg-[#ab4b28] text-white' : 'hover:bg-[#ab4b28] hover:text-white'}
             transition-colors duration-200`}
@@ -82,19 +82,19 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
   };
 
   return (
-    <div className="w-[300px] bg-[#f9d2a3] p-6 rounded-lg">
+    <div className="w-full max-w-[300px] bg-[#f9d2a3] py-4 pr-4 pl-4 rounded-lg">
       {/* Toggle buttons */}
       <div className="flex mb-6 bg-white rounded-lg p-1">
         <button
           onClick={() => setView('upcoming')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors
+          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors [font-family:'Poppins',Helvetica]
             ${view === 'upcoming' ? 'bg-[#ab4b28] text-white' : 'text-[#ab4b28]'}`}
         >
           UPCOMING
         </button>
         <button
           onClick={() => setView('past')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors
+          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors [font-family:'Poppins',Helvetica]
             ${view === 'past' ? 'bg-[#ab4b28] text-white' : 'text-[#ab4b28]'}`}
         >
           PAST
@@ -106,7 +106,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
         <button onClick={prevMonth} className="p-1">
           <ChevronLeft className="w-5 h-5 text-[#ab4b28]" />
         </button>
-        <span className="font-medium text-[#ab4b28]">
+        <span className="font-medium text-[#ab4b28] [font-family:'Poppins',Helvetica]">
           {currentMonthStr} {currentYear}
         </span>
         <button onClick={nextMonth} className="p-1">
@@ -119,7 +119,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
         {/* Weekday headers */}
         <div className="grid grid-cols-7 mb-2">
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-            <div key={index} className="w-8 h-8 flex items-center justify-center text-sm font-medium text-[#ab4b28]">
+            <div key={index} className="w-8 h-8 flex items-center justify-center text-sm font-medium text-[#ab4b28] [font-family:'Poppins',Helvetica]">
               {day}
             </div>
           ))}
@@ -133,16 +133,16 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
 
       {/* Search */}
       <div className="mb-4">
-        <div className="text-sm font-medium text-[#ab4b28] mb-2">Search</div>
+        <div className="text-sm font-medium text-[#ab4b28] mb-2 [font-family:'Poppins',Helvetica]">Search</div>
         <div className="flex gap-2">
           <input
             type="text"
             placeholder="Search..."
-            className="flex-1 px-3 py-2 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28]"
+            className="flex-1 px-2 py-1.5 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica] text-sm"
           />
           <Button
             variant="outline"
-            className="px-4 py-2 bg-[#ab4b28] text-white border-[#ab4b28] hover:bg-[#8d3d20]"
+            className="px-3 py-1.5 bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#f9d2a3] [font-family:'Poppins',Helvetica] text-sm"
           >
             GO
           </Button>
@@ -152,8 +152,8 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
       {/* Filters */}
       <div className="space-y-4 mb-6">
         <div>
-          <div className="text-sm font-medium text-[#ab4b28] mb-2">Filter By Time</div>
-          <select className="w-full px-3 py-2 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28]">
+          <div className="text-sm font-medium text-[#ab4b28] mb-2 [font-family:'Poppins',Helvetica]">Filter By Time</div>
+          <select className="w-full px-2 py-1.5 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica] text-sm">
             <option value="">- Select Time -</option>
             <option value="morning">Morning</option>
             <option value="afternoon">Afternoon</option>
@@ -162,8 +162,8 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
         </div>
 
         <div>
-          <div className="text-sm font-medium text-[#ab4b28] mb-2">Filter By Type</div>
-          <select className="w-full px-3 py-2 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28]">
+          <div className="text-sm font-medium text-[#ab4b28] mb-2 [font-family:'Poppins',Helvetica]">Filter By Type</div>
+          <select className="w-full px-2 py-1.5 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica] text-sm">
             <option value="">- Select Type -</option>
             <option value="therapy">Therapy</option>
             <option value="workshop">Workshop</option>
@@ -174,12 +174,12 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
 
       {/* Host Event Section */}
       <div className="text-center">
-        <h3 className="text-[#24312e] text-lg font-medium mb-3">
+        <h3 className="text-[#24312e] text-lg font-medium mb-3 [font-family:'Poppins',Helvetica]">
           Host your event at the MEHR
         </h3>
         <Button
           variant="outline"
-          className="w-full bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#ab4b28] hover:text-white transition-colors"
+          className="w-full bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#ab4b28] hover:text-white transition-colors [font-family:'Poppins',Helvetica]"
         >
           HOST YOUR EVENT
         </Button>
