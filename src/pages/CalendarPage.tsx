@@ -131,16 +131,17 @@ export const CalendarPage = (): JSX.Element => {
           {/* Content Section - Event Cards */}
           <div className="flex-1 bg-white p-6 lg:mr-8">
             <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">October 2025</h2>
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
               {events.map((event, index) => (
-                <EventCard
-                  key={index}
-                  title={event.title}
-                  description={event.description}
-                  tag={event.tag}
-                  dateTime={event.dateTime}
-                  image={event.image}
-                />
+                <div className="h-48" key={index}>
+                  <EventCard
+                    title={event.title}
+                    description={event.description}
+                    tag={event.tag}
+                    dateTime={event.dateTime}
+                    image={event.image}
+                  />
+                </div>
               ))}
             </div>
           </div>

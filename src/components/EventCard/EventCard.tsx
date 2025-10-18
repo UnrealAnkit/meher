@@ -17,9 +17,9 @@ export const EventCard: React.FC<EventCardProps> = ({
   image
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-100 mb-4 flex overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 mb-4 flex overflow-hidden h-full">
       {/* Left Section - Image */}
-      <div className="w-32 flex-shrink-0 rounded-l-lg overflow-hidden">
+      <div className="w-64 flex-shrink-0 rounded-l-lg overflow-hidden">
         <img
           src={image}
           alt={title}
@@ -47,11 +47,11 @@ export const EventCard: React.FC<EventCardProps> = ({
         </div>
         
         {/* Right Arrow */}
-        <div className="flex justify-end mt-3">
-          <button className="w-8 h-8 rounded-full border border-[#ab4b28] flex items-center justify-center hover:bg-[#ab4b28] hover:text-white transition-colors">
-            <ChevronRight className="w-4 h-4 text-[#ab4b28]" />
-          </button>
-        </div>
+          <div className="flex justify-end mt-4">
+            <button className="w-10 h-10 rounded-full border border-[#ab4b28] flex items-center justify-center hover:bg-[#ab4b28] hover:text-white transition-colors group">
+              <ChevronRight className="w-5 h-5 text-[#ab4b28] group-hover:text-white" />
+            </button>
+          </div>
       </div>
     </div>
   );
