@@ -133,7 +133,7 @@ export const CalendarPage = (): JSX.Element => {
             <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">October 2025</h2>
             <div className="flex flex-col gap-4">
               {events.map((event, index) => (
-                <div className="h-48" key={index}>
+                <div className="h-56" key={index}>
                   <EventCard
                     title={event.title}
                     description={event.description}
