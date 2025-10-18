@@ -176,9 +176,9 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
       </div>
 
       {/* Host Event Section */}
-      <div className="text-center">
+      <div className="text-left">
         <h3 className="text-[#24312e] text-lg font-medium mb-3 [font-family:'Poppins',Helvetica]">
-          Host your event at the MEHR
+          Host your Retreat at the MEHR
         </h3>
         <Button
           variant="outline"
