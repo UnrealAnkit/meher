@@ -19,7 +19,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 mb-4 flex overflow-hidden">
       {/* Left Section - Image */}
-      <div className="w-32 h-32 flex-shrink-0 rounded-l-lg overflow-hidden">
+      <div className="w-32 flex-shrink-0 rounded-l-lg overflow-hidden">
         <img
           src={image}
           alt={title}
