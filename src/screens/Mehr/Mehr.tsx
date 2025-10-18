@@ -408,35 +408,35 @@ export const Mehr = (): JSX.Element => {
                   <ul className="space-y-4">
                    <li className="flex items-start">
                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
                        Located on the riverbanks in Koregaon Park provides peace within the city.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
                        Connected to CH2 World Foundation gives you access to 50+ therapies, expert doctors, and emotional wellness programs.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
                        Integrated with Raaha which is a community space with soulful experiences of music, dance, meditation, and art.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
                         Not an escape from life, but an integration with yourself and your community.
                       </p>
                     </li>
 
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-[#ab4b28] text-base leading-[24px]">
+                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
                         20 mins from Pune International Airport, 3.5 hours from Mumbai International Airport
                       </p>
                     </li>
