@@ -43,19 +43,23 @@ export const AboutPage = (): JSX.Element => {
       <div className="bg-white py-16">
         <div className="max-w-[1200px] mx-auto px-4">
           {/* Navigation Tabs */}
-          <div className="flex gap-8 mb-16">
-            <div className="px-6 py-3 bg-[#A0522D] rounded-lg">
-              <span className="text-white [font-family:'Poppins'] font-normal text-lg">Our approach</span>
+          <div>
+            <div className="flex gap-8 mb-4">
+              <div className="px-6 py-3 bg-[#A0522D] rounded-lg">
+                <span className="text-white [font-family:'Poppins'] font-normal text-lg">Our approach</span>
+              </div>
+              <div className="px-6 py-3">
+                <span className="text-[#1E1E1E] [font-family:'Poppins'] font-normal text-lg">Why choose us?</span>
+              </div>
+              <div className="px-6 py-3">
+                <span className="text-[#1E1E1E] [font-family:'Poppins'] font-normal text-lg">Key reasons to choose US.</span>
+              </div>
+              <div className="px-6 py-3">
+                <span className="text-[#1E1E1E] [font-family:'Poppins'] font-normal text-lg">Mission and Vision</span>
+              </div>
             </div>
-            <div className="px-6 py-3">
-              <span className="text-[#1E1E1E] [font-family:'Poppins'] font-normal text-lg">Why choose us?</span>
-            </div>
-            <div className="px-6 py-3">
-              <span className="text-[#1E1E1E] [font-family:'Poppins'] font-normal text-lg">Key reasons to choose US.</span>
-            </div>
-            <div className="px-6 py-3">
-              <span className="text-[#1E1E1E] [font-family:'Poppins'] font-normal text-lg">Mission and Vision</span>
-            </div>
+            {/* Horizontal Line */}
+            <div className="w-full h-[1px] bg-black mb-16"></div>
           </div>
 
           {/* Content */}
