@@ -105,7 +105,7 @@ export const ContactPage: React.FC = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                  className="bg-[#E5B8AF] h-12 rounded-[10px] text-lg font-medium px-6 border-none focus:ring-0 [font-family:'Poppins'] focus:bg-[#E5B8AF]"
                 />
                 <Input
                   placeholder="E-Mail"
@@ -113,7 +113,7 @@ export const ContactPage: React.FC = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                  className="bg-[#E5B8AF] h-12 rounded-[10px] text-lg font-medium px-6 border-none focus:ring-0 [font-family:'Poppins'] focus:bg-[#E5B8AF]"
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -122,14 +122,14 @@ export const ContactPage: React.FC = () => {
                   name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
-                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                  className="bg-[#E5B8AF] h-12 rounded-[10px] text-lg font-medium px-6 border-none focus:ring-0 [font-family:'Poppins'] focus:bg-[#E5B8AF]"
                 />
                 <Input
                   placeholder="Your City"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                  className="bg-[#E5B8AF] h-12 rounded-[10px] text-lg font-medium px-6 border-none focus:ring-0 [font-family:'Poppins'] focus:bg-[#E5B8AF]"
                 />
               </div>
               <Textarea
@@ -137,7 +137,7 @@ export const ContactPage: React.FC = () => {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] min-h-[180px] rounded-[10px] text-base p-6 border-none focus:ring-0 resize-none"
+                className="bg-[#E5B8AF] min-h-[180px] rounded-[10px] text-lg font-medium p-6 border-none focus:ring-0 resize-none [font-family:'Poppins'] focus:bg-[#E5B8AF]"
               />
               <Button
                 type="submit"
