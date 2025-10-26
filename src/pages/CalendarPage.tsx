@@ -108,7 +108,7 @@ export const CalendarPage = (): JSX.Element => {
           preload="auto"
           style={{ backgroundColor: '#ab4b28' }}
         >
-          <source src="/meher hero section.mp4" type="video/mp4" />
+          <source src="https://meher.b-cdn.net/Meher%20Spaces%20Walk%20Through%20Vid.MP4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
