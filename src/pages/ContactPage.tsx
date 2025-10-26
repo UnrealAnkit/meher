@@ -1,65 +1,155 @@
-import React from "react";
-import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
-import { FooterSection } from "../screens/Mehr/sections/FooterSection";
+import React, { useState } from 'react';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
+import { NavbarSection } from '../screens/Mehr/sections/NavbarSection';
+import { FooterSection } from '../screens/Mehr/sections/FooterSection';
 
-export const ContactPage = (): JSX.Element => {
+export const ContactPage: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    city: '',
+    message: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log('Form submitted:', formData);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
-    <div className="bg-[#f9d2a3] min-h-screen">
-      <NavbarSection />
-      
-      <main className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="[font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-5xl mb-8">
-            Contact Us
-          </h1>
-          
-          <div className="bg-white rounded-[18px] shadow-[0px_4px_3.3px_#00000040] p-12">
-            <div className="mb-8">
-              <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-3xl mb-6">
-                Coming Soon
-              </h2>
-              <p className="[font-family:'Poppins',Helvetica] font-medium text-[#24312e] text-xl leading-8">
-                We're creating a comprehensive contact page with detailed information about our location, 
-                contact details, and an enhanced contact form. In the meantime, you can reach out to us 
-                through the contact form on our homepage.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <div className="bg-[#f9d2a3] rounded-[15px] p-8">
-                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-xl mb-4">
-                  Location
-                </h3>
-                <p className="[font-family:'Poppins',Helvetica] font-medium text-[#24312e] text-base">
-                  Located on the riverbanks in Koregaon Park – peace within the city.
-                </p>
-              </div>
-              
-              <div className="bg-[#f9d2a3] rounded-[15px] p-8">
-                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-xl mb-4">
-                  Get In Touch
-                </h3>
-                <p className="[font-family:'Poppins',Helvetica] font-medium text-[#24312e] text-base">
-                  Ready to begin your wellness journey? Contact us for more information.
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-[#ab4b28] rounded-[15px] p-8">
-              <p className="[font-family:'Poppins',Helvetica] font-medium text-white text-lg mb-4">
-                For immediate assistance, please use the contact form on our homepage.
-              </p>
-              <a 
-                href="/" 
-                className="inline-block bg-white text-[#ab4b28] px-8 py-3 rounded-[15px] [font-family:'Poppins',Helvetica] font-semibold text-lg hover:bg-gray-100 transition-colors"
-              >
-                Go to Homepage
-              </a>
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <div className="w-full">
+        <NavbarSection />
+      </div>
+
+      {/* Spacer */}
+      <div className="h-16"></div>
+
+      {/* Hero Section */}
+      <div className="mx-auto w-full max-w-[1440px]">
+        <div className="flex">
+          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-start pl-16">
+            <div className="max-w-[570px] text-left">
+              <h1 className="text-[#A0522D] text-[64px] font-normal leading-tight [font-family:'Poppins']">
+                CONTACT<br />US
+              </h1>
             </div>
           </div>
+          <div className="flex-1">
+            <img 
+              src="/Group Yoga class Marbella.png"
+              alt="Contact Us" 
+              className="w-full h-[500px] object-cover"
+            />
+          </div>
         </div>
-      </main>
-      
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-grow bg-white">
+        <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Left Section - Contact Info */}
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-3xl font-semibold text-black mb-4 leading-tight">
+                Every journey begins with a<br />
+                step — reach out to us, and<br />
+                let's walk together towards<br />
+                healing, hope, and<br />
+                wholeness.
+              </h2>
+              <p className="text-[#5D5E5E] mb-8 text-xl [font-family:'Poppins'] leading-relaxed">
+                Your journey is unique, and we're<br />
+                honored to walk it with you.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="[font-family:'Poppins'] font-bold text-[#000000] text-2xl">Reach us at</h3>
+              <div className="flex flex-col space-y-2">
+                <a 
+                  href="mailto:contact@eh2.world" 
+                  className="[font-family:'Poppins'] text-[#000000] text-xl font-semibold hover:text-[#A0522D] transition-colors underline"
+                >
+                  contact@eh2.world
+                </a>
+                <p className="[font-family:'Poppins'] text-[#000000] font-semibold text-xl underline">
+                  +91 96731 92121
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Section - Contact Form */}
+          <div className="bg-[#A0522D] rounded-[15px] p-8 max-w-[800px] w-full mx-auto">
+            <h3 className="text-white text-4xl font-light mb-8 text-center [font-family:'Poppins']">
+              REQUEST A EXPLORATION CALL
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  placeholder="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                />
+                <Input
+                  placeholder="E-Mail"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  placeholder="Mobile Numbers"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                />
+                <Input
+                  placeholder="Your City"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] h-12 rounded-[10px] text-base px-6 border-none focus:ring-0"
+                />
+              </div>
+              <Textarea
+                placeholder="Message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                className="bg-[#E6B8AF] placeholder-[#666666] text-[#666666] min-h-[180px] rounded-[10px] text-base p-6 border-none focus:ring-0 resize-none"
+              />
+              <Button
+                type="submit"
+                className="w-full bg-white text-[#A0522D] hover:bg-gray-50 h-12 rounded-[10px] text-base font-medium mt-4"
+              >
+                Send
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <FooterSection />
     </div>
   );
