@@ -36,14 +36,14 @@ export const RejuvenationPage = (): JSX.Element => {
       {/* Main Content */}
       <div className="flex-grow bg-white">
         {/* Rejuvenation Package Section */}
-        <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="w-full px-4 py-16">
           {/* Section Title */}
-          <h2 className="text-center [font-family:'Poppins'] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
+          <h2 className="text-left [font-family:'Poppins'] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12 ml-8">
             OUR REJUVENATION PACKAGE
           </h2>
 
           {/* Package Card */}
-          <div className="max-w-[1300px] mx-auto">
+          <div className="max-w-[2000px] ml-8 mr-32">
             <div className="bg-white rounded-[20px] shadow-[0px_4px_20px_rgba(0,0,0,0.1)] overflow-hidden">
               {/* Image Section - Top */}
               <div className="h-[300px]">
