@@ -43,63 +43,61 @@ export const RejuvenationPage = (): JSX.Element => {
           </h2>
 
           {/* Package Card */}
-          <div className="max-w-[1200px] mx-auto">
+          <div className="max-w-[1300px] mx-auto">
             <div className="bg-white rounded-[20px] shadow-[0px_4px_20px_rgba(0,0,0,0.1)] overflow-hidden">
-              <div className="flex flex-col lg:flex-row">
-                {/* Image Section */}
-                <div className="lg:w-1/2 h-[400px] lg:h-[500px]">
-                  <img 
-                    src="https://meher.b-cdn.net/Frame%2026.png"
-                    alt="Rejuvenation Package"
-                    className="w-full h-full object-cover"
-                  />
+              {/* Image Section - Top */}
+              <div className="h-[300px]">
+                <img 
+                  src="https://meher.b-cdn.net/Frame%2026.png"
+                  alt="Rejuvenation Package"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Text Section - Bottom */}
+              <div className="p-8 flex flex-col justify-between min-h-[280px]">
+                <div>
+                  {/* Package Title */}
+                  <h3 className="[font-family:'Poppins'] font-bold text-[#ab4b28] text-[28px] tracking-[0] leading-tight mb-2">
+                    REJUVENATION PACKAGE
+                  </h3>
+                  
+                  {/* Duration */}
+                  <p className="[font-family:'Poppins'] font-light text-[#666666] text-[16px] tracking-[0] leading-6 mb-4">
+                    3 Days Programme
+                  </p>
+                  
+                  {/* Description */}
+                  <p className="[font-family:'Poppins'] font-light text-[#1E1E1E] text-[20px] leading-[32px] mb-6">
+                    A Transformative 3-Day Urban Wellness Retreat Designed To Reset Your Mind, Body, And Soul Through Mindful Movement, Healing Therapies, Creative Expression, And Nourishing Organic Living — Helping You Pause, Realign, And Return To Life With Renewed Clarity And Energy.
+                  </p>
                 </div>
 
-                {/* Text Section */}
-                <div className="lg:w-1/2 bg-white p-8 lg:p-12 flex flex-col justify-between">
-                  <div>
-                    {/* Package Title */}
-                    <h3 className="[font-family:'Poppins'] font-bold text-[#ab4b28] text-[32px] tracking-[0] leading-tight mb-2">
-                      REJUVENATION PACKAGE
-                    </h3>
-                    
-                    {/* Duration */}
-                    <p className="[font-family:'Poppins'] font-light text-[#666666] text-[18px] tracking-[0] leading-6 mb-6">
-                      3 Days Programme
-                    </p>
-                    
-                    {/* Description */}
-                    <p className="[font-family:'Poppins'] font-normal text-[#1E1E1E] text-[18px] leading-[28px] mb-8">
-                      A Transformative 3-Day Urban Wellness Retreat Designed To Reset Your Mind, Body, And Soul Through Mindful Movement, Healing Therapies, Creative Expression, And Nourishing Organic Living — Helping You Pause, Realign, And Return To Life With Renewed Clarity And Energy.
-                    </p>
+                {/* Bottom Section with Price and Button */}
+                <div className="flex items-center justify-between">
+                  {/* Price */}
+                  <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[18px] tracking-[0] leading-6">
+                    From Rs. XXXXXX
                   </div>
-
-                  {/* Bottom Section with Price and Button */}
-                  <div className="flex items-center justify-between">
-                    {/* Price */}
-                    <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[20px] tracking-[0] leading-6">
-                      From Rs. XXXXXX
-                    </div>
-                    
-                    {/* Navigation Button */}
-                    <button className="w-12 h-12 rounded-full border-2 border-[#ab4b28] bg-transparent hover:bg-[#ab4b28] transition-colors duration-300 flex items-center justify-center group">
-                      <svg 
-                        width="16" 
-                        height="16" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        className="text-[#ab4b28] group-hover:text-white transition-colors duration-300"
-                      >
-                        <path 
-                          d="M9 18L15 12L9 6" 
-                          stroke="currentColor" 
-                          strokeWidth="2" 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
+                  
+                  {/* Navigation Button */}
+                  <button className="w-12 h-12 rounded-full border-2 border-[#ab4b28] bg-transparent hover:bg-[#ab4b28] transition-colors duration-300 flex items-center justify-center group">
+                    <svg 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      className="text-[#ab4b28] group-hover:text-white transition-colors duration-300"
+                    >
+                      <path 
+                        d="M9 18L15 12L9 6" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
