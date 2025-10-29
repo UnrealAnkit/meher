@@ -102,6 +102,67 @@ export const LearningPage = (): JSX.Element => {
               </div>
             </div>
           </div>
+
+          {/* Second Programme Card - Aerial Yoga */}
+          <div className="max-w-[2000px] ml-8 mr-32 mt-12">
+            <div className="bg-white rounded-[20px] shadow-[0px_4px_20px_rgba(0,0,0,0.1)] overflow-hidden">
+              {/* Image Section - Top */}
+              <div className="h-[300px]">
+                <img 
+                  src="https://meher.b-cdn.net/Frame%2026%20(2).png"
+                  alt="Aerial Yoga Teacher Training"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Text Section - Bottom */}
+              <div className="p-8 flex flex-col justify-between min-h-[280px]">
+                <div>
+                  {/* Programme Title */}
+                  <h3 className="[font-family:'Poppins'] font-bold text-[#ab4b28] text-[28px] tracking-[0] leading-tight mb-2">
+                    AERIAL YOGA TEACHER TRAINING PROGRAM
+                  </h3>
+                  
+                  {/* Batch Information */}
+                  <p className="[font-family:'Poppins'] font-light text-[#666666] text-[16px] tracking-[0] leading-6 mb-4">
+                    Upcoming Batch | Saturday, November 22 to Sunday, November 30, 2025
+                  </p>
+                  
+                  {/* Description */}
+                  <p className="[font-family:'Poppins'] font-light text-[#1E1E1E] text-[20px] leading-[32px] mb-6">
+                    A Transformative Aerial Yoga Teacher Training Led By Yoko, Blending Traditional Yoga With Modern Movement For Balance And Restoration — Ideal For Teachers And Beginners Alike, Offered At MEHR With Personalised Wellness And Therapy Plans For Every Participant.
+                  </p>
+                </div>
+
+                {/* Bottom Section with Price and Button */}
+                <div className="flex items-center justify-between">
+                  {/* Price */}
+                  <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[18px] tracking-[0] leading-6">
+                    From Rs. XXXXXX
+                  </div>
+                  
+                  {/* Navigation Button */}
+                  <button className="w-12 h-12 rounded-full border-2 border-[#ab4b28] bg-transparent hover:bg-[#ab4b28] transition-colors duration-300 flex items-center justify-center group">
+                    <svg 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      className="text-[#ab4b28] group-hover:text-white transition-colors duration-300"
+                    >
+                      <path 
+                        d="M9 18L15 12L9 6" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
