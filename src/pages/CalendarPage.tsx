@@ -7,28 +7,71 @@ import { EventCard } from "../components/EventCard";
 export const CalendarPage = (): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Sample event data
+  // Sample event data - November 1st, 2025
   const events = [
     {
-      title: "LITURGY & IGNATIAN SPIRITUALITY",
-      description: "Mass & Ignatian Reflections in October",
+      title: "AERIAL YOGA",
+      description: "Facilitator: Bhagya",
       tag: "IN-PERSON",
-      dateTime: "Daytime | October 7, 2025 - October 28, 2025, 8:00am - 8:45am",
-      image: "/rectangle-1.png"
+      dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Aerial yoga blends traditional yoga poses with the support of a suspended hammock, enhancing flexibility, balance, and core strength. It offers a playful yet deeply restorative experience, relieving tension and promoting a sense of lightness and freedom."
     },
     {
-      title: "LITURGY & IGNATIAN SPIRITUALITY",
-      description: "Mass & Ignatian Reflections in October",
+      title: "YIN YOGA",
+      description: "Facilitator: Ankeet",
       tag: "IN-PERSON",
-      dateTime: "Daytime | October 7, 2025 - October 28, 2025, 8:00am - 8:45am",
-      image: "/rectangle-2.png"
+      dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 7:30 AM, 9:00 AM, 5:00 PM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Yin yoga is a slow-paced style that targets deep connective tissues through long-held poses. It promotes flexibility, joint health, and inner calm while balancing the body's energy flow for profound relaxation and mental clarity."
     },
     {
-      title: "LITURGY & IGNATIAN SPIRITUALITY",
-      description: "Mass & Ignatian Reflections in October",
+      title: "ANTENATAL",
+      description: "Facilitator: Sunita",
       tag: "IN-PERSON",
-      dateTime: "Daytime | October 7, 2025 - October 28, 2025, 8:00am - 8:45am",
-      image: "/rectangle-3.png"
+      dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Antenatal yoga is designed specifically for expectant mothers, focusing on gentle poses that strengthen the body, improve flexibility, and prepare for childbirth. It promotes relaxation, reduces pregnancy discomfort, and enhances connection with your baby."
+    },
+    {
+      title: "SOUND HEALING",
+      description: "Facilitator: Ankeet",
+      tag: "IN-PERSON",
+      dateTime: "Rs 1200.00 | 60 Minutes | Pick a slot: 6:30 AM, 9:30 AM, 6:00 PM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Sound healing uses therapeutic vibrations from singing bowls, gongs, and other instruments to restore balance and harmony. It deeply relaxes the nervous system, releases stress, and promotes emotional and physical well-being through resonance."
+    },
+    {
+      title: "SMILING MEDITATION",
+      description: "Facilitator: Rishi",
+      tag: "IN-PERSON",
+      dateTime: "Rs 1200.00 | 60 Minutes | Pick a slot: 7:30 PM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Smiling meditation cultivates inner joy and peace through gentle awareness of your natural smile. This practice releases tension, elevates mood, and fosters compassion, creating a ripple effect of positivity in body, mind, and heart."
+    },
+    {
+      title: "HATHA YOGA",
+      description: "Facilitator: Bhagya",
+      tag: "IN-PERSON",
+      dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 8:00 AM, 11:00 AM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Hatha yoga combines physical postures, breathing techniques, and meditation to create balance and strength. It's a foundational practice that improves flexibility, builds muscle tone, and calms the mind while connecting body and breath."
+    },
+    {
+      title: "PRANAYAMA & BREATHWORK",
+      description: "Facilitator: Sunita",
+      tag: "IN-PERSON",
+      dateTime: "Rs 600.00 | 45 Minutes | Pick a slot: 6:00 AM, 4:00 PM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Pranayama and breathwork harness the power of conscious breathing to enhance vitality and mental clarity. These techniques balance the nervous system, reduce stress, increase energy levels, and deepen your connection to the present moment."
+    },
+    {
+      title: "RESTORATIVE YOGA",
+      description: "Facilitator: Ankeet",
+      tag: "IN-PERSON",
+      dateTime: "Rs 550.00 | 60 Minutes | Pick a slot: 3:00 PM, 7:00 PM",
+      image: "/rectangle-1.png",
+      expandedDescription: "Restorative yoga uses supportive props to hold gentle poses for extended periods, allowing deep relaxation and healing. It calms the nervous system, releases chronic tension, and promotes recovery from stress and fatigue."
     }
   ];
 
@@ -130,18 +173,18 @@ export const CalendarPage = (): JSX.Element => {
             
           {/* Content Section - Event Cards */}
           <div className="flex-1 bg-white p-6 lg:mr-8">
-            <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">October 2025</h2>
+            <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">1st November 2025</h2>
             <div className="flex flex-col gap-4">
               {events.map((event, index) => (
-                <div className="h-56" key={index}>
-                  <EventCard
-                    title={event.title}
-                    description={event.description}
-                    tag={event.tag}
-                    dateTime={event.dateTime}
-                    image={event.image}
-                  />
-                </div>
+                <EventCard
+                  key={index}
+                  title={event.title}
+                  description={event.description}
+                  tag={event.tag}
+                  dateTime={event.dateTime}
+                  image={event.image}
+                  expandedDescription={event.expandedDescription}
+                />
               ))}
             </div>
           </div>

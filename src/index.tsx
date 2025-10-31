@@ -7,9 +7,6 @@ import { ProgramsPage } from "./pages/ProgramsPage";
 import { BlogsPage } from "./pages/BlogsPage";
 import { ContactPage } from "./pages/ContactPage";
 import { CalendarPage } from "./pages/CalendarPage";
-import { GalleryPage } from "./pages/GalleryPage";
-import { RejuvenationPage } from "./pages/RejuvenationPage";
-import { LearningPage } from "./pages/LearningPage";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>
@@ -21,9 +18,6 @@ createRoot(document.getElementById("app") as HTMLElement).render(
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/rejuvenate" element={<RejuvenationPage />} />
-        <Route path="/learning" element={<LearningPage />} />
       </Routes>
     </Router>
   </StrictMode>,
