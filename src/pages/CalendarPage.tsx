@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar } from "../components/Calendar/Calendar";
@@ -6,16 +6,19 @@ import { EventCard } from "../components/EventCard";
 
 export const CalendarPage = (): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(2025, 10, 1)); // November 1st, 2025
 
   // Sample event data - November 1st, 2025
-  const events = [
+  const novemberFirstDate = new Date(2025, 10, 1); // November 1st, 2025
+  const allEvents = [
     {
       title: "AERIAL YOGA",
       description: "Facilitator: Bhagya",
       tag: "IN-PERSON",
       dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM",
       image: "/rectangle-1.png",
-      expandedDescription: "Aerial yoga blends traditional yoga poses with the support of a suspended hammock, enhancing flexibility, balance, and core strength. It offers a playful yet deeply restorative experience, relieving tension and promoting a sense of lightness and freedom."
+      expandedDescription: "Aerial yoga blends traditional yoga poses with the support of a suspended hammock, enhancing flexibility, balance, and core strength. It offers a playful yet deeply restorative experience, relieving tension and promoting a sense of lightness and freedom.",
+      eventDate: novemberFirstDate
     },
     {
       title: "YIN YOGA",
@@ -23,7 +26,8 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 7:30 AM, 9:00 AM, 5:00 PM",
       image: "/rectangle-1.png",
-      expandedDescription: "Yin yoga is a slow-paced style that targets deep connective tissues through long-held poses. It promotes flexibility, joint health, and inner calm while balancing the body's energy flow for profound relaxation and mental clarity."
+      expandedDescription: "Yin yoga is a slow-paced style that targets deep connective tissues through long-held poses. It promotes flexibility, joint health, and inner calm while balancing the body's energy flow for profound relaxation and mental clarity.",
+      eventDate: novemberFirstDate
     },
     {
       title: "ANTENATAL",
@@ -31,7 +35,8 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM",
       image: "/rectangle-1.png",
-      expandedDescription: "Antenatal yoga is designed specifically for expectant mothers, focusing on gentle poses that strengthen the body, improve flexibility, and prepare for childbirth. It promotes relaxation, reduces pregnancy discomfort, and enhances connection with your baby."
+      expandedDescription: "Antenatal yoga is designed specifically for expectant mothers, focusing on gentle poses that strengthen the body, improve flexibility, and prepare for childbirth. It promotes relaxation, reduces pregnancy discomfort, and enhances connection with your baby.",
+      eventDate: novemberFirstDate
     },
     {
       title: "SOUND HEALING",
@@ -39,7 +44,8 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 1200.00 | 60 Minutes | Pick a slot: 6:30 AM, 9:30 AM, 6:00 PM",
       image: "/rectangle-1.png",
-      expandedDescription: "Sound healing uses therapeutic vibrations from singing bowls, gongs, and other instruments to restore balance and harmony. It deeply relaxes the nervous system, releases stress, and promotes emotional and physical well-being through resonance."
+      expandedDescription: "Sound healing uses therapeutic vibrations from singing bowls, gongs, and other instruments to restore balance and harmony. It deeply relaxes the nervous system, releases stress, and promotes emotional and physical well-being through resonance.",
+      eventDate: novemberFirstDate
     },
     {
       title: "SMILING MEDITATION",
@@ -47,7 +53,8 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 1200.00 | 60 Minutes | Pick a slot: 7:30 PM",
       image: "/rectangle-1.png",
-      expandedDescription: "Smiling meditation cultivates inner joy and peace through gentle awareness of your natural smile. This practice releases tension, elevates mood, and fosters compassion, creating a ripple effect of positivity in body, mind, and heart."
+      expandedDescription: "Smiling meditation cultivates inner joy and peace through gentle awareness of your natural smile. This practice releases tension, elevates mood, and fosters compassion, creating a ripple effect of positivity in body, mind, and heart.",
+      eventDate: novemberFirstDate
     },
     {
       title: "HATHA YOGA",
@@ -55,7 +62,8 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 500.00 | 60 Minutes | Pick a slot: 8:00 AM, 11:00 AM",
       image: "/rectangle-1.png",
-      expandedDescription: "Hatha yoga combines physical postures, breathing techniques, and meditation to create balance and strength. It's a foundational practice that improves flexibility, builds muscle tone, and calms the mind while connecting body and breath."
+      expandedDescription: "Hatha yoga combines physical postures, breathing techniques, and meditation to create balance and strength. It's a foundational practice that improves flexibility, builds muscle tone, and calms the mind while connecting body and breath.",
+      eventDate: novemberFirstDate
     },
     {
       title: "PRANAYAMA & BREATHWORK",
@@ -63,7 +71,8 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 600.00 | 45 Minutes | Pick a slot: 6:00 AM, 4:00 PM",
       image: "/rectangle-1.png",
-      expandedDescription: "Pranayama and breathwork harness the power of conscious breathing to enhance vitality and mental clarity. These techniques balance the nervous system, reduce stress, increase energy levels, and deepen your connection to the present moment."
+      expandedDescription: "Pranayama and breathwork harness the power of conscious breathing to enhance vitality and mental clarity. These techniques balance the nervous system, reduce stress, increase energy levels, and deepen your connection to the present moment.",
+      eventDate: novemberFirstDate
     },
     {
       title: "RESTORATIVE YOGA",
@@ -71,9 +80,36 @@ export const CalendarPage = (): JSX.Element => {
       tag: "IN-PERSON",
       dateTime: "Rs 550.00 | 60 Minutes | Pick a slot: 3:00 PM, 7:00 PM",
       image: "/rectangle-1.png",
-      expandedDescription: "Restorative yoga uses supportive props to hold gentle poses for extended periods, allowing deep relaxation and healing. It calms the nervous system, releases chronic tension, and promotes recovery from stress and fatigue."
+      expandedDescription: "Restorative yoga uses supportive props to hold gentle poses for extended periods, allowing deep relaxation and healing. It calms the nervous system, releases chronic tension, and promotes recovery from stress and fatigue.",
+      eventDate: novemberFirstDate
     }
   ];
+
+  // Handle date selection from calendar (memoized to prevent infinite loops)
+  const handleDateSelect = useCallback((date: Date) => {
+    setSelectedDate(date);
+  }, []);
+
+  // Filter events based on selected date
+  // Only show events for November 1st, 2025
+  const isNovemberFirst = selectedDate.getDate() === 1 && 
+                          selectedDate.getMonth() === 10 && 
+                          selectedDate.getFullYear() === 2025;
+  
+  const events = isNovemberFirst 
+    ? allEvents 
+    : [];
+
+  // Format date for display
+  const formatDate = (date: Date): string => {
+    const day = date.getDate();
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    const suffix = day === 1 ? 'st' : day === 2 ? 'nd' : day === 3 ? 'rd' : 'th';
+    return `${day}${suffix} ${month} ${year}`;
+  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -168,24 +204,30 @@ export const CalendarPage = (): JSX.Element => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Calendar Section */}
           <div className="w-full lg:w-[300px] flex-shrink-0">
-            <Calendar />
+            <Calendar onDateSelect={handleDateSelect} initialDate={new Date(2025, 10, 1)} />
           </div>
             
           {/* Content Section - Event Cards */}
           <div className="flex-1 bg-white p-6 lg:mr-8">
-            <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">1st November 2025</h2>
+            <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">
+              {isNovemberFirst ? "1st November 2025" : formatDate(selectedDate)}
+            </h2>
             <div className="flex flex-col gap-4">
-              {events.map((event, index) => (
-                <EventCard
-                  key={index}
-                  title={event.title}
-                  description={event.description}
-                  tag={event.tag}
-                  dateTime={event.dateTime}
-                  image={event.image}
-                  expandedDescription={event.expandedDescription}
-                />
-              ))}
+              {events.length > 0 ? (
+                events.map((event, index) => (
+                  <EventCard
+                    key={index}
+                    title={event.title}
+                    description={event.description}
+                    tag={event.tag}
+                    dateTime={event.dateTime}
+                    image={event.image}
+                    expandedDescription={event.expandedDescription}
+                  />
+                ))
+              ) : (
+                <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base">No events scheduled.</p>
+              )}
             </div>
           </div>
         </div>

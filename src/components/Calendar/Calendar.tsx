@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 
 interface CalendarProps {
   onDateSelect?: (date: Date) => void;
+  initialDate?: Date;
 }
 
-export const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate }) => {
+  const initDate = initialDate || new Date();
+  const [currentDate, setCurrentDate] = useState(new Date(initDate.getFullYear(), initDate.getMonth(), 1));
   const [view, setView] = useState<'upcoming' | 'past'>('upcoming');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(initDate);
+
+  // Auto-select initial date on mount
+  useEffect(() => {
+    if (initialDate && onDateSelect) {
+      onDateSelect(initialDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Get the first day of the month
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
