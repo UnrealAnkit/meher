@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
 import { Separator } from "../../../../components/ui/separator";
 
@@ -108,6 +109,14 @@ export const FooterSection = (): JSX.Element => {
             <div className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap">
               Contact
             </div>
+            <Separator orientation="vertical" className="h-4 w-px bg-white/30" />
+            <Link
+              to="/admin/login"
+              className="[font-family:'Raleway',Helvetica] font-normal text-white/60 hover:text-white text-xs tracking-[0] leading-5 whitespace-nowrap transition-colors"
+              title="Admin Access"
+            >
+              Admin
+            </Link>
           </div>
 
           <div className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap">
