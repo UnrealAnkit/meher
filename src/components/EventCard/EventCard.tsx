@@ -51,13 +51,35 @@ export const EventCard: React.FC<EventCardProps> = ({
       }`}
     >
       <div className="flex">
-        {/* Left Section - Image */}
-        <div className={`w-48 flex-shrink-0 rounded-l-lg overflow-hidden transition-all duration-500 ${isExpanded ? 'h-[180px]' : 'h-[260px]'}`}>
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
+        {/* Left Section - Image and Pick a slot */}
+        <div className={`w-48 flex-shrink-0 flex flex-col ${isExpanded ? '' : 'h-[260px]'}`}>
+          {/* Image */}
+          <div className={`rounded-l-lg overflow-hidden transition-all duration-500 ${isExpanded ? 'h-[180px]' : 'h-[260px]'}`}>
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          
+          {/* Pick a slot - shown when expanded, below image */}
+          {isExpanded && (
+            <div className="p-4 pt-3 animate-fadeIn">
+              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base font-semibold mb-2">
+                Pick a slot:
+              </p>
+              <div className="flex flex-col gap-1">
+                {timeSlots.split(',').map((slot, index) => (
+                  <span 
+                    key={index}
+                    className="[font-family:'Poppins',Helvetica] text-[#ab4b28] text-base font-normal"
+                  >
+                    {slot.trim()}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         
         {/* Right Section - Event Details */}
@@ -129,37 +151,15 @@ export const EventCard: React.FC<EventCardProps> = ({
               BOOK THIS EXPERIENCE
             </button>
           )}
-        </div>
-      </div>
 
-      {/* Expanded Section - Pick a slot */}
-      {isExpanded && (
-        <div className="flex animate-fadeIn">
-          {/* Empty space to align with image */}
-          <div className="w-48 flex-shrink-0 p-4 pl-6">
-            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base font-semibold mb-2">
-              Pick a slot:
-            </p>
-            <div className="flex flex-col gap-1">
-              {timeSlots.split(',').map((slot, index) => (
-                <span 
-                  key={index}
-                  className="[font-family:'Poppins',Helvetica] text-[#ab4b28] text-base font-normal"
-                >
-                  {slot.trim()}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Book Now Button area */}
-          <div className="flex-1 p-4 pr-4">
-            <button className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors">
+          {/* Book Now Button - only show when expanded */}
+          {isExpanded && (
+            <button className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors mt-2 animate-fadeIn">
               BOOK NOW
             </button>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
