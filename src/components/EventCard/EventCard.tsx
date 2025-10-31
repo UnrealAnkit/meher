@@ -50,9 +50,9 @@ export const EventCard: React.FC<EventCardProps> = ({
         isExpanded ? 'h-auto' : 'h-[260px]'
       }`}
     >
-      <div className="flex h-[260px]">
+      <div className="flex">
         {/* Left Section - Image */}
-        <div className="w-48 flex-shrink-0 rounded-l-lg overflow-hidden">
+        <div className={`w-48 flex-shrink-0 rounded-l-lg overflow-hidden transition-all duration-500 ${isExpanded ? 'h-[180px]' : 'h-[260px]'}`}>
           <img
             src={image}
             alt={title}
@@ -61,7 +61,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         </div>
         
         {/* Right Section - Event Details */}
-        <div className="flex-1 flex flex-col justify-between p-4 relative">
+        <div className="flex-1 flex flex-col p-4 relative">
           {/* Arrow Button - Top Right */}
           <div className="absolute top-3 right-3">
             <button 
@@ -76,9 +76,9 @@ export const EventCard: React.FC<EventCardProps> = ({
             </button>
           </div>
 
-          <div>
+          <div className="flex-1">
             {/* Title */}
-            <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-lg mb-2 leading-tight">
+            <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-lg mb-2 leading-tight pr-12">
               {title}
             </h3>
 
@@ -93,12 +93,12 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
 
             {/* Facilitator */}
-            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-sm mb-2">
+            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-sm mb-3">
               <span className="font-semibold">Facilitator:</span> {description.replace('Facilitator:', '').trim()}
             </p>
 
             {/* Price and Duration in rounded boxes */}
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-3">
               <span className="[font-family:'Poppins',Helvetica] border-2 border-[#ab4b28] text-[#24312e] px-3 py-1 rounded-full text-sm font-normal">
                 {price}
               </span>
@@ -106,6 +106,13 @@ export const EventCard: React.FC<EventCardProps> = ({
                 {duration}
               </span>
             </div>
+
+            {/* Description - shown when expanded */}
+            {isExpanded && expandedDescription && (
+              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn">
+                {expandedDescription}
+              </p>
+            )}
 
             {/* Pick a slot - only show when NOT expanded */}
             {!isExpanded && (
@@ -125,39 +132,32 @@ export const EventCard: React.FC<EventCardProps> = ({
         </div>
       </div>
 
-      {/* Expanded Section */}
+      {/* Expanded Section - Pick a slot */}
       {isExpanded && (
-        <div className="p-6 pt-0 animate-fadeIn">
-          <div className="flex gap-6">
-            {/* Left Side - Pick a slot */}
-            <div className="w-48 flex-shrink-0">
-              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base font-semibold mb-3">
-                Pick a slot:
-              </p>
-              <div className="flex flex-col gap-2">
-                {timeSlots.split(',').map((slot, index) => (
-                  <span 
-                    key={index}
-                    className="[font-family:'Poppins',Helvetica] text-[#ab4b28] text-base font-normal"
-                  >
-                    {slot.trim()}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Side - Description */}
-            <div className="flex-1">
-              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4">
-                {expandedDescription}
-              </p>
+        <div className="flex animate-fadeIn">
+          {/* Empty space to align with image */}
+          <div className="w-48 flex-shrink-0 p-4 pl-6">
+            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base font-semibold mb-2">
+              Pick a slot:
+            </p>
+            <div className="flex flex-col gap-1">
+              {timeSlots.split(',').map((slot, index) => (
+                <span 
+                  key={index}
+                  className="[font-family:'Poppins',Helvetica] text-[#ab4b28] text-base font-normal"
+                >
+                  {slot.trim()}
+                </span>
+              ))}
             </div>
           </div>
 
-          {/* Book Now Button */}
-          <button className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors mt-4">
-            BOOK NOW
-          </button>
+          {/* Book Now Button area */}
+          <div className="flex-1 p-4 pr-4">
+            <button className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors">
+              BOOK NOW
+            </button>
+          </div>
         </div>
       )}
     </div>
