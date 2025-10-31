@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { BookingModal } from '../BookingModal/BookingModal';
 
 interface EventCardProps {
   title: string;
@@ -8,6 +9,8 @@ interface EventCardProps {
   dateTime: string;
   image: string;
   expandedDescription?: string;
+  eventDate?: Date;
+  eventId?: string;
 }
 
 export const EventCard: React.FC<EventCardProps> = ({
@@ -16,9 +19,13 @@ export const EventCard: React.FC<EventCardProps> = ({
   tag,
   dateTime,
   image,
-  expandedDescription
+  expandedDescription,
+  eventDate,
+  eventId,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState<string>('');
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   // Parse dateTime string to extract price, duration, and time slots
   // Format: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM, 11:00 AM"
@@ -26,7 +33,8 @@ export const EventCard: React.FC<EventCardProps> = ({
   const price = parts[0] || '';
   const duration = parts[1] || '';
   const slotsText = parts[2] || '';
-  const timeSlots = slotsText.replace('Pick a slot:', '').trim();
+  const timeSlotsStr = slotsText.replace('Pick a slot:', '').trim();
+  const timeSlots = timeSlotsStr.split(',').map(slot => slot.trim()).filter(slot => slot);
 
   // Determine category tag based on title
   const getCategoryTag = (title: string) => {
@@ -42,6 +50,29 @@ export const EventCard: React.FC<EventCardProps> = ({
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleSlotSelect = (slot: string) => {
+    setSelectedSlot(slot);
+  };
+
+  const handleBookNow = () => {
+    if (!selectedSlot && timeSlots.length > 0) {
+      // If no slot selected, select first one by default
+      setSelectedSlot(timeSlots[0]);
+    }
+    setShowBookingModal(true);
+  };
+
+  const formatDateForBooking = (): string => {
+    if (eventDate) {
+      // Format as YYYY-MM-DD
+      const year = eventDate.getFullYear();
+      const month = String(eventDate.getMonth() + 1).padStart(2, '0');
+      const day = String(eventDate.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return new Date().toISOString().split('T')[0];
   };
 
   return (
@@ -68,14 +99,19 @@ export const EventCard: React.FC<EventCardProps> = ({
               <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base font-semibold mb-2">
                 Pick a slot:
               </p>
-              <div className="flex flex-col gap-1">
-                {timeSlots.split(',').map((slot, index) => (
-                  <span 
+              <div className="flex flex-col gap-2">
+                {timeSlots.map((slot, index) => (
+                  <button
                     key={index}
-                    className="[font-family:'Poppins',Helvetica] text-[#ab4b28] text-base font-normal"
+                    onClick={() => handleSlotSelect(slot)}
+                    className={`[font-family:'Poppins',Helvetica] text-base font-normal px-3 py-2 rounded-lg text-left transition-colors ${
+                      selectedSlot === slot
+                        ? 'bg-[#ab4b28] text-white'
+                        : 'bg-gray-100 text-[#ab4b28] hover:bg-gray-200'
+                    }`}
                   >
-                    {slot.trim()}
-                  </span>
+                    {slot}
+                  </button>
                 ))}
               </div>
             </div>
@@ -140,26 +176,60 @@ export const EventCard: React.FC<EventCardProps> = ({
             {!isExpanded && (
               <div className="[font-family:'Poppins',Helvetica] text-sm mb-2">
                 <span className="text-[#24312e] font-normal">Pick a slot: </span>
-                <span className="text-[#ab4b28] font-normal">{timeSlots}</span>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {timeSlots.map((slot, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSlotSelect(slot)}
+                      className={`text-xs px-2 py-1 rounded transition-colors ${
+                        selectedSlot === slot
+                          ? 'bg-[#ab4b28] text-white'
+                          : 'bg-gray-100 text-[#ab4b28] hover:bg-gray-200'
+                      }`}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
 
           {/* Book This Experience Button - only show when NOT expanded */}
           {!isExpanded && (
-            <button className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors mt-2">
+            <button 
+              onClick={handleBookNow}
+              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors mt-2"
+            >
               BOOK THIS EXPERIENCE
             </button>
           )}
 
           {/* Book Now Button - only show when expanded */}
           {isExpanded && (
-            <button className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors mt-2 animate-fadeIn">
+            <button 
+              onClick={handleBookNow}
+              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-full [font-family:'Poppins',Helvetica] text-base font-semibold uppercase transition-colors mt-2 animate-fadeIn"
+            >
               BOOK NOW
             </button>
           )}
         </div>
       </div>
+
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={showBookingModal}
+        onClose={() => {
+          setShowBookingModal(false);
+          setSelectedSlot('');
+        }}
+        eventTitle={title}
+        eventDate={formatDateForBooking()}
+        selectedSlot={selectedSlot || (timeSlots.length > 0 ? timeSlots[0] : '')}
+        price={price}
+        eventId={eventId}
+      />
     </div>
   );
 };

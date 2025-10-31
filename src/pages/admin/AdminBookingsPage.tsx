@@ -4,13 +4,16 @@ import { Edit2, Trash2, AlertCircle, Check, Eye } from 'lucide-react';
 
 interface Booking {
   id: string;
-  user_id: string;
-  event_id: string;
-  class_id: string;
-  booking_date: string;
+  event_id: string | null;
+  event_title: string;
+  event_date: string;
+  selected_slot: string;
+  price: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
   status: string;
-  payment_status: string;
-  notes: string;
+  notes: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -21,12 +24,15 @@ export const AdminBookingsPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
   const [formData, setFormData] = useState({
-    user_id: '',
     event_id: '',
-    class_id: '',
-    booking_date: '',
+    event_title: '',
+    event_date: '',
+    selected_slot: '',
+    price: '',
+    customer_name: '',
+    customer_email: '',
+    customer_phone: '',
     status: 'pending',
-    payment_status: 'pending',
     notes: '',
   });
   const [submitting, setSubmitting] = useState(false);
@@ -60,13 +66,16 @@ export const AdminBookingsPage: React.FC = () => {
 
     try {
       const bookingData = {
-        user_id: formData.user_id,
         event_id: formData.event_id || null,
-        class_id: formData.class_id || null,
-        booking_date: formData.booking_date,
+        event_title: formData.event_title,
+        event_date: formData.event_date,
+        selected_slot: formData.selected_slot,
+        price: formData.price,
+        customer_name: formData.customer_name,
+        customer_email: formData.customer_email,
+        customer_phone: formData.customer_phone,
         status: formData.status,
-        payment_status: formData.payment_status,
-        notes: formData.notes,
+        notes: formData.notes || null,
       };
 
       if (editingBooking) {
@@ -117,12 +126,15 @@ export const AdminBookingsPage: React.FC = () => {
   const handleEdit = (booking: Booking) => {
     setEditingBooking(booking);
     setFormData({
-      user_id: booking.user_id,
       event_id: booking.event_id || '',
-      class_id: booking.class_id || '',
-      booking_date: booking.booking_date,
+      event_title: booking.event_title,
+      event_date: booking.event_date,
+      selected_slot: booking.selected_slot,
+      price: booking.price,
+      customer_name: booking.customer_name,
+      customer_email: booking.customer_email,
+      customer_phone: booking.customer_phone,
       status: booking.status,
-      payment_status: booking.payment_status,
       notes: booking.notes || '',
     });
     setShowForm(true);
@@ -130,12 +142,15 @@ export const AdminBookingsPage: React.FC = () => {
 
   const resetForm = () => {
     setFormData({
-      user_id: '',
       event_id: '',
-      class_id: '',
-      booking_date: '',
+      event_title: '',
+      event_date: '',
+      selected_slot: '',
+      price: '',
+      customer_name: '',
+      customer_email: '',
+      customer_phone: '',
       status: 'pending',
-      payment_status: 'pending',
       notes: '',
     });
     setEditingBooking(null);
@@ -199,28 +214,98 @@ export const AdminBookingsPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  User ID *
+                  Event Title *
                 </label>
                 <input
                   type="text"
                   required
-                  value={formData.user_id}
-                  onChange={(e) => setFormData({ ...formData, user_id: e.target.value })}
+                  value={formData.event_title}
+                  onChange={(e) => setFormData({ ...formData, event_title: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                  placeholder="User UUID"
+                  placeholder="e.g., YIN YOGA"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Booking Date *
+                  Event Date *
                 </label>
                 <input
                   type="date"
                   required
-                  value={formData.booking_date}
-                  onChange={(e) => setFormData({ ...formData, booking_date: e.target.value })}
+                  value={formData.event_date}
+                  onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Selected Time Slot *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.selected_slot}
+                  onChange={(e) => setFormData({ ...formData, selected_slot: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  placeholder="e.g., 10:00 AM"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Price *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.price}
+                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  placeholder="e.g., Rs 500.00"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Customer Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.customer_name}
+                  onChange={(e) => setFormData({ ...formData, customer_name: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  placeholder="Customer full name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Customer Email *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.customer_email}
+                  onChange={(e) => setFormData({ ...formData, customer_email: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  placeholder="customer@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Customer Phone *
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.customer_phone}
+                  onChange={(e) => setFormData({ ...formData, customer_phone: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  placeholder="+91 1234567890"
                 />
               </div>
 
@@ -239,19 +324,6 @@ export const AdminBookingsPage: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Class ID (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={formData.class_id}
-                  onChange={(e) => setFormData({ ...formData, class_id: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                  placeholder="Class UUID"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                   Status *
                 </label>
                 <select
@@ -263,22 +335,7 @@ export const AdminBookingsPage: React.FC = () => {
                   <option value="pending">Pending</option>
                   <option value="confirmed">Confirmed</option>
                   <option value="cancelled">Cancelled</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Payment Status *
-                </label>
-                <select
-                  required
-                  value={formData.payment_status}
-                  onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="paid">Paid</option>
-                  <option value="refunded">Refunded</option>
+                  <option value="completed">Completed</option>
                 </select>
               </div>
 
@@ -348,16 +405,19 @@ export const AdminBookingsPage: React.FC = () => {
               <thead className="bg-[#f9f5f0] border-b-2 border-[#f9d2a3]">
                 <tr>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
-                    User ID
+                    Event
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
-                    Booking Date
+                    Date & Time
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    Customer
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    Price
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
                     Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
-                    Payment
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
                     Actions
@@ -373,23 +433,23 @@ export const AdminBookingsPage: React.FC = () => {
                     } hover:bg-[#f9f5f0] transition-colors`}
                   >
                     <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica] font-medium">
-                      {booking.user_id.substring(0, 8)}...
+                      {booking.event_title}
                     </td>
                     <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica]">
-                      {new Date(booking.booking_date).toLocaleDateString()}
+                      <div>{new Date(booking.event_date).toLocaleDateString()}</div>
+                      <div className="text-[#ab4b28] text-xs">{booking.selected_slot}</div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      <div className="font-medium">{booking.customer_name}</div>
+                      <div className="text-xs text-gray-600">{booking.customer_email}</div>
+                      <div className="text-xs text-gray-600">{booking.customer_phone}</div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica] font-medium">
+                      {booking.price}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`inline-block px-3 py-1 rounded text-xs font-semibold [font-family:'Poppins',Helvetica] uppercase ${getStatusColor(booking.status)}`}>
                         {booking.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-block px-3 py-1 rounded text-xs font-semibold [font-family:'Poppins',Helvetica] uppercase ${
-                        booking.payment_status === 'paid' ? 'bg-green-500 text-white' :
-                        booking.payment_status === 'refunded' ? 'bg-blue-500 text-white' :
-                        'bg-yellow-500 text-white'
-                      }`}>
-                        {booking.payment_status}
                       </span>
                     </td>
                     <td className="px-6 py-4 flex gap-2">

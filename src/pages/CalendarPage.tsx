@@ -114,6 +114,7 @@ export const CalendarPage = (): JSX.Element => {
         const dateTimeString = `${event.price} | ${event.duration} | Pick a slot: ${timeSlotsFormatted}`;
         
         return {
+          id: event.id,
           title: event.title,
           description: event.description,
           tag: event.tag,
@@ -291,6 +292,8 @@ export const CalendarPage = (): JSX.Element => {
                     dateTime={event.dateTime}
                     image={event.image}
                     expandedDescription={event.expandedDescription}
+                    eventDate={event.eventDate}
+                    eventId={(event as any).id || undefined}
                   />
                 ))
               ) : (
