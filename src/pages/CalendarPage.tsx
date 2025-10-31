@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar } from "../components/Calendar/Calendar";
@@ -247,7 +247,7 @@ export const CalendarPage = (): JSX.Element => {
       <section className="relative w-full bg-white">
         <video
           ref={videoRef}
-          className="w-full h-[600px] object-cover"
+          className="w-full h-[400px] sm:h-[500px] md:h-[600px] object-cover"
           autoPlay
           loop
           playsInline
@@ -259,27 +259,27 @@ export const CalendarPage = (): JSX.Element => {
         </video>
 
         {/* Text Overlay */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] sm:max-w-[95vw] text-center px-4">
-          <h1 className="[font-family:'Poppins',Helvetica] font-light text-white text-[45px] lg:text-[45px] md:text-[40px] sm:text-[22px] tracking-[2px] md:tracking-[1px] sm:tracking-[0.5px] leading-[55px] md:leading-[50px] sm:leading-[30px] drop-shadow-2xl text-shadow-lg lg:whitespace-nowrap md:whitespace-normal">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] text-center px-4">
+          <h1 className="[font-family:'Poppins',Helvetica] font-light text-white text-lg sm:text-xl md:text-3xl lg:text-[45px] tracking-[1px] sm:tracking-[2px] leading-[28px] sm:leading-[35px] md:leading-[50px] lg:leading-[55px] drop-shadow-2xl text-shadow-lg">
             Book an Experience with us at your convenient day
           </h1>
         </div>
       </section>
 
       {/* Main Content Section */}
-      <section className="relative w-full bg-white py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <section className="relative w-full bg-white py-6 sm:py-8 md:py-12 px-4 sm:px-6">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 max-w-7xl mx-auto">
           {/* Calendar Section */}
-          <div className="w-full lg:w-[300px] flex-shrink-0">
+          <div className="w-full lg:w-[300px] flex-shrink-0 mx-auto lg:mx-0">
             <Calendar onDateSelect={handleDateSelect} initialDate={new Date(2025, 10, 1)} />
           </div>
             
           {/* Content Section - Event Cards */}
-          <div className="flex-1 bg-white p-6 lg:mr-8">
-            <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">
+          <div className="flex-1 bg-white min-w-0">
+            <h2 className="[font-family:'Poppins',Helvetica] text-xl sm:text-2xl font-light text-[#24312e] mb-4 sm:mb-6">
               {isNovemberFirst ? "1st November 2025" : isNovemberSecond ? "2nd November 2025" : formatDate(selectedDate)}
             </h2>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 w-full">
               {loadingEvents ? (
                 <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base">Loading events...</p>
               ) : events.length > 0 ? (
