@@ -3,10 +3,13 @@ import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar } from "../components/Calendar/Calendar";
 import { EventCard } from "../components/EventCard";
+import { supabase, CalendarEvent } from "../lib/supabase";
 
 export const CalendarPage = (): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(2025, 10, 1)); // November 1st, 2025
+  const [supabaseEvents, setSupabaseEvents] = useState<any[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(false);
 
   // Sample event data - November 1st, 2025
   const novemberFirstDate = new Date(2025, 10, 1); // November 1st, 2025
@@ -85,19 +88,82 @@ export const CalendarPage = (): JSX.Element => {
     }
   ];
 
+  // Fetch events from Supabase for November 2nd
+  const fetchNovember2Events = useCallback(async () => {
+    try {
+      setLoadingEvents(true);
+      // Format: 2025-11-02 (YYYY-MM-DD)
+      const november2Date = '2025-11-02';
+      
+      const { data, error } = await supabase
+        .from('calendar_events')
+        .select('*')
+        .eq('event_date', november2Date)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching events:', error);
+        return;
+      }
+
+      // Convert Supabase events to EventCard format
+      const convertedEvents = (data || []).map((event: CalendarEvent) => {
+        // Format time slots
+        const timeSlotsFormatted = event.time_slots.join(', ');
+        // Format dateTime string: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM, 11:00 AM"
+        const dateTimeString = `${event.price} | ${event.duration} | Pick a slot: ${timeSlotsFormatted}`;
+        
+        return {
+          title: event.title,
+          description: event.description,
+          tag: event.tag,
+          dateTime: dateTimeString,
+          image: event.image_url || '/rectangle-1.png',
+          expandedDescription: event.expanded_description || '',
+          eventDate: new Date(event.event_date)
+        };
+      });
+
+      setSupabaseEvents(convertedEvents);
+    } catch (err) {
+      console.error('Error fetching Supabase events:', err);
+    } finally {
+      setLoadingEvents(false);
+    }
+  }, []);
+
+  // Fetch events when component mounts or when selected date changes to November 2nd
+  useEffect(() => {
+    const isNovember2 = selectedDate.getDate() === 2 && 
+                        selectedDate.getMonth() === 10 && 
+                        selectedDate.getFullYear() === 2025;
+    
+    if (isNovember2) {
+      fetchNovember2Events();
+    } else {
+      setSupabaseEvents([]);
+    }
+  }, [selectedDate, fetchNovember2Events]);
+
   // Handle date selection from calendar (memoized to prevent infinite loops)
   const handleDateSelect = useCallback((date: Date) => {
     setSelectedDate(date);
   }, []);
 
   // Filter events based on selected date
-  // Only show events for November 1st, 2025
   const isNovemberFirst = selectedDate.getDate() === 1 && 
                           selectedDate.getMonth() === 10 && 
                           selectedDate.getFullYear() === 2025;
   
+  const isNovemberSecond = selectedDate.getDate() === 2 && 
+                           selectedDate.getMonth() === 10 && 
+                           selectedDate.getFullYear() === 2025;
+  
+  // Show November 1st events (hardcoded) or November 2nd events (from Supabase)
   const events = isNovemberFirst 
     ? allEvents 
+    : isNovemberSecond
+    ? supabaseEvents
     : [];
 
   // Format date for display
@@ -210,10 +276,12 @@ export const CalendarPage = (): JSX.Element => {
           {/* Content Section - Event Cards */}
           <div className="flex-1 bg-white p-6 lg:mr-8">
             <h2 className="[font-family:'Poppins',Helvetica] text-2xl font-light text-[#24312e] mb-6">
-              {isNovemberFirst ? "1st November 2025" : formatDate(selectedDate)}
+              {isNovemberFirst ? "1st November 2025" : isNovemberSecond ? "2nd November 2025" : formatDate(selectedDate)}
             </h2>
             <div className="flex flex-col gap-4">
-              {events.length > 0 ? (
+              {loadingEvents ? (
+                <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base">Loading events...</p>
+              ) : events.length > 0 ? (
                 events.map((event, index) => (
                   <EventCard
                     key={index}
