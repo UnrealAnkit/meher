@@ -78,14 +78,14 @@ export const EventCard: React.FC<EventCardProps> = ({
   return (
     <div 
       className={`bg-white rounded-lg shadow-sm border border-gray-100 mb-4 flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${
-        isExpanded ? 'h-auto' : 'h-[260px]'
+        isExpanded ? 'h-auto' : 'h-[280px]'
       }`}
     >
       <div className="flex">
         {/* Left Section - Image and Pick a slot */}
-        <div className={`w-48 flex-shrink-0 flex flex-col ${isExpanded ? '' : 'h-[260px]'}`}>
+        <div className={`w-48 flex-shrink-0 flex flex-col ${isExpanded ? '' : 'h-[280px]'}`}>
           {/* Image */}
-          <div className={`rounded-l-lg overflow-hidden transition-all duration-500 ${isExpanded ? 'h-[180px]' : 'h-[260px]'}`}>
+          <div className={`rounded-l-lg overflow-hidden transition-all duration-500 ${isExpanded ? 'h-[180px]' : 'h-[280px]'}`}>
             <img
               src={image}
               alt={title}

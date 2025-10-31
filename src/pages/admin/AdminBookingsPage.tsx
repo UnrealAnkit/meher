@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Edit2, Trash2, AlertCircle, Check, Eye } from 'lucide-react';
+import { Edit2, Trash2, AlertCircle, Check, Eye, X } from 'lucide-react';
 
 interface Booking {
   id: string;
@@ -23,6 +23,7 @@ export const AdminBookingsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
+  const [viewingBooking, setViewingBooking] = useState<Booking | null>(null);
   const [formData, setFormData] = useState({
     event_id: '',
     event_title: '',
@@ -454,14 +455,23 @@ export const AdminBookingsPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 flex gap-2">
                       <button
+                        onClick={() => setViewingBooking(booking)}
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        title="View Details"
+                      >
+                        <Eye className="w-5 h-5" />
+                      </button>
+                      <button
                         onClick={() => handleEdit(booking)}
                         className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        title="Edit Booking"
                       >
                         <Edit2 className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleDelete(booking.id)}
                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Delete Booking"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
@@ -473,6 +483,181 @@ export const AdminBookingsPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Booking Details Modal */}
+      {viewingBooking && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="bg-[#ab4b28] px-6 py-4 flex items-center justify-between sticky top-0">
+              <h2 className="text-2xl font-bold text-white [font-family:'Poppins',Helvetica]">
+                Booking Details
+              </h2>
+              <button
+                onClick={() => setViewingBooking(null)}
+                className="text-white hover:text-gray-200 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-6">
+              {/* Event Information */}
+              <div className="bg-[#f9f5f0] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
+                  Event Information
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Event Title</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {viewingBooking.event_title}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Event Date</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {new Date(viewingBooking.event_date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Time Slot</p>
+                    <p className="text-base font-medium text-[#ab4b28] [font-family:'Poppins',Helvetica]">
+                      {viewingBooking.selected_slot}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Price</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {viewingBooking.price}
+                    </p>
+                  </div>
+                  {viewingBooking.event_id && (
+                    <div className="col-span-2">
+                      <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Event ID</p>
+                      <p className="text-base font-mono text-xs text-gray-500 [font-family:'Poppins',Helvetica] break-all">
+                        {viewingBooking.event_id}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Customer Information */}
+              <div className="bg-[#f9f5f0] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
+                  Customer Information
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Name</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {viewingBooking.customer_name}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Email</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      <a href={`mailto:${viewingBooking.customer_email}`} className="text-[#ab4b28] hover:underline">
+                        {viewingBooking.customer_email}
+                      </a>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Phone</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      <a href={`tel:${viewingBooking.customer_phone}`} className="text-[#ab4b28] hover:underline">
+                        {viewingBooking.customer_phone}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Booking Status */}
+              <div className="bg-[#f9f5f0] p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
+                  Booking Status
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Status</p>
+                    <span className={`inline-block px-3 py-1 rounded text-sm font-semibold [font-family:'Poppins',Helvetica] uppercase ${getStatusColor(viewingBooking.status)}`}>
+                      {viewingBooking.status}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Booking ID</p>
+                    <p className="text-base font-mono text-xs text-gray-500 [font-family:'Poppins',Helvetica] break-all">
+                      {viewingBooking.id}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Created At</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {new Date(viewingBooking.created_at).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Last Updated</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {new Date(viewingBooking.updated_at).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Notes */}
+              {viewingBooking.notes && (
+                <div className="bg-[#f9f5f0] p-4 rounded-lg">
+                  <h3 className="text-lg font-semibold text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                    Notes
+                  </h3>
+                  <p className="text-base text-[#24312e] [font-family:'Poppins',Helvetica] whitespace-pre-wrap">
+                    {viewingBooking.notes}
+                  </p>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-4 pt-4 border-t border-gray-300">
+                <button
+                  onClick={() => {
+                    setViewingBooking(null);
+                    handleEdit(viewingBooking);
+                  }}
+                  className="flex-1 bg-[#ab4b28] hover:bg-[#8b3a1f] text-white py-3 rounded-lg font-semibold transition-colors [font-family:'Poppins',Helvetica]"
+                >
+                  Edit Booking
+                </button>
+                <button
+                  onClick={() => setViewingBooking(null)}
+                  className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors [font-family:'Poppins',Helvetica]"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Plus, Edit2, Trash2, AlertCircle, Check } from 'lucide-react';
+import { Plus, Edit2, Trash2, AlertCircle, Check, Eye, X } from 'lucide-react';
 
-interface User {
+interface Booking {
   id: string;
-  email: string;
-  full_name: string;
-  phone: string;
-  role: string;
+  event_id: string | null;
+  event_title: string;
+  event_date: string;
+  selected_slot: string;
+  price: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  status: string;
+  notes: string | null;
   created_at: string;
   updated_at: string;
 }
 
+interface UserWithBookings {
+  customer_email: string;
+  customer_name: string;
+  customer_phone: string;
+  bookings: Booking[];
+  total_bookings: number;
+  first_booking_date: string;
+  last_booking_date: string;
+}
+
 export const AdminUsersPage: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserWithBookings[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
-  const [formData, setFormData] = useState({
-    email: '',
-    full_name: '',
-    phone: '',
-    role: 'user',
-  });
-  const [submitting, setSubmitting] = useState(false);
+  const [viewingUser, setViewingUser] = useState<UserWithBookings | null>(null);
   const [message, setMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
@@ -33,13 +41,51 @@ export const AdminUsersPage: React.FC = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('users')
+      // Fetch all bookings
+      const { data: bookings, error } = await supabase
+        .from('bookings')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setUsers(data || []);
+
+      // Group bookings by customer email
+      const userMap = new Map<string, UserWithBookings>();
+
+      (bookings || []).forEach((booking: Booking) => {
+        const email = booking.customer_email;
+        
+        if (!userMap.has(email)) {
+          userMap.set(email, {
+            customer_email: email,
+            customer_name: booking.customer_name,
+            customer_phone: booking.customer_phone,
+            bookings: [],
+            total_bookings: 0,
+            first_booking_date: booking.created_at,
+            last_booking_date: booking.created_at,
+          });
+        }
+
+        const user = userMap.get(email)!;
+        user.bookings.push(booking);
+        user.total_bookings += 1;
+
+        // Update first and last booking dates
+        if (new Date(booking.created_at) < new Date(user.first_booking_date)) {
+          user.first_booking_date = booking.created_at;
+        }
+        if (new Date(booking.created_at) > new Date(user.last_booking_date)) {
+          user.last_booking_date = booking.created_at;
+        }
+      });
+
+      // Convert map to array and sort by last booking date
+      const usersArray = Array.from(userMap.values()).sort((a, b) => 
+        new Date(b.last_booking_date).getTime() - new Date(a.last_booking_date).getTime()
+      );
+
+      setUsers(usersArray);
     } catch (err) {
       console.error('Error fetching users:', err);
       showNotification('error', 'Failed to fetch users');
@@ -48,83 +94,19 @@ export const AdminUsersPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-
-    try {
-      const userData = {
-        email: formData.email,
-        full_name: formData.full_name,
-        phone: formData.phone,
-        role: formData.role,
-      };
-
-      if (editingUser) {
-        const { error } = await supabase
-          .from('users')
-          .update(userData)
-          .eq('id', editingUser.id);
-
-        if (error) throw error;
-        showNotification('success', 'User updated successfully');
-      } else {
-        const { error } = await supabase
-          .from('users')
-          .insert([userData]);
-
-        if (error) throw error;
-        showNotification('success', 'User created successfully');
-      }
-
-      resetForm();
-      fetchUsers();
-    } catch (err) {
-      console.error('Error saving user:', err);
-      showNotification('error', 'Failed to save user');
-    } finally {
-      setSubmitting(false);
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'confirmed':
+        return 'bg-green-500 text-white';
+      case 'cancelled':
+        return 'bg-red-500 text-white';
+      case 'completed':
+        return 'bg-blue-500 text-white';
+      case 'pending':
+        return 'bg-yellow-500 text-white';
+      default:
+        return 'bg-gray-500 text-white';
     }
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this user?')) return;
-
-    try {
-      const { error } = await supabase
-        .from('users')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-      showNotification('success', 'User deleted successfully');
-      fetchUsers();
-    } catch (err) {
-      console.error('Error deleting user:', err);
-      showNotification('error', 'Failed to delete user');
-    }
-  };
-
-  const handleEdit = (user: User) => {
-    setEditingUser(user);
-    setFormData({
-      email: user.email,
-      full_name: user.full_name,
-      phone: user.phone,
-      role: user.role,
-    });
-    setShowForm(true);
-  };
-
-  const resetForm = () => {
-    setFormData({
-      email: '',
-      full_name: '',
-      phone: '',
-      role: 'user',
-    });
-    setEditingUser(null);
-    setShowForm(false);
   };
 
   const showNotification = (type: string, text: string) => {
@@ -161,100 +143,10 @@ export const AdminUsersPage: React.FC = () => {
         </div>
       )}
 
-      <div className="mb-8">
-        <button
-          onClick={() => {
-            resetForm();
-            setShowForm(!showForm);
-          }}
-          className="flex items-center gap-2 bg-[#ab4b28] hover:bg-[#8b3a1f] text-white px-6 py-3 rounded-lg transition-colors [font-family:'Poppins',Helvetica] font-semibold"
-        >
-          <Plus className="w-5 h-5" />
-          {showForm ? 'Cancel' : 'Add New User'}
-        </button>
-      </div>
-
-      {showForm && (
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8 border-2 border-[#f9d2a3]">
-          <h2 className="text-2xl font-bold text-[#24312e] mb-6 [font-family:'Poppins',Helvetica]">
-            {editingUser ? 'Edit User' : 'Create New User'}
-          </h2>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                  placeholder="user@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.full_name}
-                  onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                  placeholder="+1234567890"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Role *
-                </label>
-                <select
-                  required
-                  value={formData.role}
-                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                  <option value="instructor">Instructor</option>
-                </select>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] disabled:bg-[#cccccc] text-white py-3 rounded-lg font-semibold transition-colors [font-family:'Poppins',Helvetica] uppercase"
-            >
-              {submitting ? 'Saving...' : editingUser ? 'Update User' : 'Create User'}
-            </button>
-          </form>
-        </div>
-      )}
-
       <div className="bg-white rounded-lg shadow-md overflow-hidden border-2 border-[#f9d2a3]">
         <div className="px-6 py-4 bg-gradient-to-r from-[#f9d2a3] to-[#fce8d3]">
           <h2 className="text-xl font-bold text-[#24312e] [font-family:'Poppins',Helvetica]">
-            Users ({users.length})
+            Users with Bookings ({users.length})
           </h2>
         </div>
 
@@ -265,7 +157,7 @@ export const AdminUsersPage: React.FC = () => {
         ) : users.length === 0 ? (
           <div className="p-8 text-center">
             <p className="text-[#24312e] [font-family:'Poppins',Helvetica]">
-              No users yet. Create one to get started!
+              No users with bookings yet. Bookings will appear here once customers make reservations.
             </p>
           </div>
         ) : (
@@ -274,16 +166,19 @@ export const AdminUsersPage: React.FC = () => {
               <thead className="bg-[#f9f5f0] border-b-2 border-[#f9d2a3]">
                 <tr>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
-                    Email
+                    Customer Name
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
-                    Full Name
+                    Email
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
                     Phone
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
-                    Role
+                    Total Bookings
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    Last Booking
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
                     Actions
@@ -293,41 +188,43 @@ export const AdminUsersPage: React.FC = () => {
               <tbody>
                 {users.map((user, index) => (
                   <tr
-                    key={user.id}
+                    key={user.customer_email}
                     className={`border-b border-[#f9d2a3] ${
                       index % 2 === 0 ? 'bg-white' : 'bg-[#faf7f3]'
                     } hover:bg-[#f9f5f0] transition-colors`}
                   >
                     <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica] font-medium">
-                      {user.email}
+                      {user.customer_name}
                     </td>
                     <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica]">
-                      {user.full_name}
+                      <a href={`mailto:${user.customer_email}`} className="text-[#ab4b28] hover:underline">
+                        {user.customer_email}
+                      </a>
                     </td>
                     <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica]">
-                      {user.phone || '-'}
+                      <a href={`tel:${user.customer_phone}`} className="text-[#24312e] hover:text-[#ab4b28]">
+                        {user.customer_phone}
+                      </a>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-block px-3 py-1 rounded text-xs font-semibold [font-family:'Poppins',Helvetica] uppercase ${
-                        user.role === 'admin' ? 'bg-red-500 text-white' :
-                        user.role === 'instructor' ? 'bg-blue-500 text-white' :
-                        'bg-gray-500 text-white'
-                      }`}>
-                        {user.role}
+                    <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica] font-medium">
+                      <span className="bg-[#ab4b28] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                        {user.total_bookings}
                       </span>
                     </td>
-                    <td className="px-6 py-4 flex gap-2">
+                    <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {new Date(user.last_booking_date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </td>
+                    <td className="px-6 py-4">
                       <button
-                        onClick={() => handleEdit(user)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        onClick={() => setViewingUser(user)}
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        title="View Booking Details"
                       >
-                        <Edit2 className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(user.id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                      >
-                        <Trash2 className="w-5 h-5" />
+                        <Eye className="w-5 h-5" />
                       </button>
                     </td>
                   </tr>
@@ -337,6 +234,129 @@ export const AdminUsersPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* User Booking Details Modal */}
+      {viewingUser && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="bg-[#ab4b28] px-6 py-4 flex items-center justify-between sticky top-0">
+              <h2 className="text-2xl font-bold text-white [font-family:'Poppins',Helvetica]">
+                {viewingUser.customer_name}'s Bookings
+              </h2>
+              <button
+                onClick={() => setViewingUser(null)}
+                className="text-white hover:text-gray-200 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              {/* Customer Info */}
+              <div className="bg-[#f9f5f0] p-4 rounded-lg mb-6">
+                <h3 className="text-lg font-semibold text-[#24312e] mb-3 [font-family:'Poppins',Helvetica]">
+                  Customer Information
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Name</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {viewingUser.customer_name}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Email</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      <a href={`mailto:${viewingUser.customer_email}`} className="text-[#ab4b28] hover:underline">
+                        {viewingUser.customer_email}
+                      </a>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Phone</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      <a href={`tel:${viewingUser.customer_phone}`} className="text-[#ab4b28] hover:underline">
+                        {viewingUser.customer_phone}
+                      </a>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Total Bookings</p>
+                    <p className="text-base font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {viewingUser.total_bookings}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bookings List */}
+              <div>
+                <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
+                  All Bookings ({viewingUser.bookings.length})
+                </h3>
+                <div className="space-y-4">
+                  {viewingUser.bookings.map((booking) => (
+                    <div key={booking.id} className="bg-[#f9f5f0] p-4 rounded-lg border-l-4 border-[#ab4b28]">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div>
+                          <p className="text-xs text-gray-600 [font-family:'Poppins',Helvetica] mb-1">Event</p>
+                          <p className="text-sm font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                            {booking.event_title}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-600 [font-family:'Poppins',Helvetica] mb-1">Date & Time</p>
+                          <p className="text-sm font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                            {new Date(booking.event_date).toLocaleDateString()}
+                          </p>
+                          <p className="text-xs text-[#ab4b28] [font-family:'Poppins',Helvetica]">
+                            {booking.selected_slot}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-600 [font-family:'Poppins',Helvetica] mb-1">Price</p>
+                          <p className="text-sm font-medium text-[#24312e] [font-family:'Poppins',Helvetica]">
+                            {booking.price}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-600 [font-family:'Poppins',Helvetica] mb-1">Status</p>
+                          <span className={`inline-block px-2 py-1 rounded text-xs font-semibold [font-family:'Poppins',Helvetica] uppercase ${getStatusColor(booking.status)}`}>
+                            {booking.status}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2 pt-2 border-t border-gray-300">
+                        <p className="text-xs text-gray-500 [font-family:'Poppins',Helvetica]">
+                          Booked on: {new Date(booking.created_at).toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Close Button */}
+              <div className="flex justify-end mt-6 pt-4 border-t border-gray-300">
+                <button
+                  onClick={() => setViewingUser(null)}
+                  className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors [font-family:'Poppins',Helvetica]"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
