@@ -7,6 +7,9 @@ import { ProgramsPage } from "./pages/ProgramsPage";
 import { BlogsPage } from "./pages/BlogsPage";
 import { ContactPage } from "./pages/ContactPage";
 import { CalendarPage } from "./pages/CalendarPage";
+import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
+import { RefundPolicyPage } from "./pages/RefundPolicyPage";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { AdminLoginPage } from "./pages/AdminLoginPage";
 import { AdminLayout } from "./pages/admin/AdminLayout";
 import { AdminDashboardOverview } from "./pages/admin/AdminDashboardOverview";
@@ -70,6 +73,11 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        
+        {/* Policy Pages */}
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         
         {/* Admin Routes */}
         <Route

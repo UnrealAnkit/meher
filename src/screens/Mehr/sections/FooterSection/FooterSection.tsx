@@ -102,13 +102,33 @@ export const FooterSection = (): JSX.Element => {
           </div>
 
           <div className="flex items-center gap-[9.5px]">
-            <div className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap">
+            <Link
+              to="/privacy-policy"
+              className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap hover:opacity-80 transition-opacity"
+            >
               Privacy Policy
-            </div>
+            </Link>
             <Separator orientation="vertical" className="h-4 w-px bg-white" />
-            <div className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap">
+            <Link
+              to="/terms-and-conditions"
+              className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap hover:opacity-80 transition-opacity"
+            >
+              Terms & Conditions
+            </Link>
+            <Separator orientation="vertical" className="h-4 w-px bg-white" />
+            <Link
+              to="/refund-policy"
+              className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap hover:opacity-80 transition-opacity"
+            >
+              Refund Policy
+            </Link>
+            <Separator orientation="vertical" className="h-4 w-px bg-white" />
+            <Link
+              to="/contact"
+              className="[font-family:'Raleway',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 whitespace-nowrap hover:opacity-80 transition-opacity"
+            >
               Contact
-            </div>
+            </Link>
             <Separator orientation="vertical" className="h-4 w-px bg-white/30" />
             <Link
               to="/admin/login"
