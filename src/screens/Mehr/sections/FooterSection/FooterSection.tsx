@@ -29,8 +29,8 @@ export const FooterSection = (): JSX.Element => {
             <div className="flex justify-start">
               <img
                 className="w-full max-w-[387px] h-auto object-cover"
-                alt="Image"
-                src="/image-5-1.png"
+                alt="MEHER Logo"
+                src="/Artboard 8.svg"
               />
             </div>
 
@@ -78,6 +78,12 @@ export const FooterSection = (): JSX.Element => {
                 <div className="[font-family:'Raleway',Helvetica] font-bold text-[#ab4b28] text-sm tracking-[0] leading-4 whitespace-nowrap">
                   Contact us at
                 </div>
+                <a 
+                  href="mailto:contact@ch2.world" 
+                  className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-4 hover:text-[#ab4b28] transition-colors underline"
+                >
+                  contact@ch2.world
+                </a>
               </div>
 
               <div className="flex flex-col gap-[14px]">

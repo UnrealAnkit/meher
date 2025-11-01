@@ -147,15 +147,15 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate })
       {/* Search */}
       <div className="mb-3 sm:mb-4">
         <div className="text-xs sm:text-sm font-medium text-[#ab4b28] mb-2 [font-family:'Poppins',Helvetica]">Search</div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full">
           <input
             type="text"
             placeholder="Search..."
-            className="flex-1 px-2 py-1.5 sm:py-2 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica] text-xs sm:text-sm"
+            className="flex-1 min-w-0 px-2 py-1.5 sm:py-2 rounded-md border border-[#ab4b28] focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica] text-xs sm:text-sm"
           />
           <Button
             variant="outline"
-            className="px-2 sm:px-3 py-1.5 sm:py-2 bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#f9d2a3] [font-family:'Poppins',Helvetica] text-xs sm:text-sm touch-manipulation"
+            className="flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#f9d2a3] [font-family:'Poppins',Helvetica] text-xs sm:text-sm touch-manipulation"
           >
             GO
           </Button>

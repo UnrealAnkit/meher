@@ -81,10 +81,10 @@ export const ContactPage: React.FC = () => {
               <h3 className="[font-family:'Poppins'] font-bold text-[#000000] text-2xl">Reach us at</h3>
               <div className="flex flex-col space-y-2">
                 <a 
-                  href="mailto:contact@eh2.world" 
+                  href="mailto:contact@ch2.world" 
                   className="[font-family:'Poppins'] text-[#000000] text-xl font-semibold hover:text-[#A0522D] transition-colors underline"
                 >
-                  contact@eh2.world
+                  contact@ch2.world
                 </a>
                 <p className="[font-family:'Poppins'] text-[#000000] font-semibold text-xl underline">
                   +91 96731 92121
