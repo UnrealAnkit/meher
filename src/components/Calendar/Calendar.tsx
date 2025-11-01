@@ -92,7 +92,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate })
   };
 
   return (
-    <div className="w-full max-w-[300px] lg:max-w-[300px] mx-auto bg-[#f9d2a3] py-3 sm:py-4 px-3 sm:px-4 rounded-lg">
+    <div className="w-full max-w-[300px] lg:max-w-[300px] mx-auto lg:ml-0 lg:rounded-l-none bg-[#f9d2a3] py-3 sm:py-4 px-3 sm:px-4 rounded-lg">
       {/* Toggle buttons */}
       <div className="flex gap-2 mb-3 sm:mb-4 justify-center">
         <button

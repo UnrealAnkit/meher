@@ -88,17 +88,20 @@ export const CalendarPage = (): JSX.Element => {
     }
   ];
 
-  // Fetch events from Supabase for November 2nd
-  const fetchNovember2Events = useCallback(async () => {
+  // Fetch events from Supabase for any selected date
+  const fetchEventsForDate = useCallback(async (date: Date) => {
     try {
       setLoadingEvents(true);
-      // Format: 2025-11-02 (YYYY-MM-DD)
-      const november2Date = '2025-11-02';
+      // Format date as YYYY-MM-DD
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
       
       const { data, error } = await supabase
         .from('calendar_events')
         .select('*')
-        .eq('event_date', november2Date)
+        .eq('event_date', formattedDate)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -133,18 +136,11 @@ export const CalendarPage = (): JSX.Element => {
     }
   }, []);
 
-  // Fetch events when component mounts or when selected date changes to November 2nd
+  // Fetch events when component mounts or when selected date changes
   useEffect(() => {
-    const isNovember2 = selectedDate.getDate() === 2 && 
-                        selectedDate.getMonth() === 10 && 
-                        selectedDate.getFullYear() === 2025;
-    
-    if (isNovember2) {
-      fetchNovember2Events();
-    } else {
-      setSupabaseEvents([]);
-    }
-  }, [selectedDate, fetchNovember2Events]);
+    // Always fetch events from Supabase for the selected date
+    fetchEventsForDate(selectedDate);
+  }, [selectedDate, fetchEventsForDate]);
 
   // Handle date selection from calendar (memoized to prevent infinite loops)
   const handleDateSelect = useCallback((date: Date) => {
@@ -156,16 +152,8 @@ export const CalendarPage = (): JSX.Element => {
                           selectedDate.getMonth() === 10 && 
                           selectedDate.getFullYear() === 2025;
   
-  const isNovemberSecond = selectedDate.getDate() === 2 && 
-                           selectedDate.getMonth() === 10 && 
-                           selectedDate.getFullYear() === 2025;
-  
-  // Show November 1st events (hardcoded) or November 2nd events (from Supabase)
-  const events = isNovemberFirst 
-    ? allEvents 
-    : isNovemberSecond
-    ? supabaseEvents
-    : [];
+  // Show November 1st events (hardcoded) or fetch events from Supabase for any other date
+  const events = isNovemberFirst ? allEvents : supabaseEvents;
 
   // Format date for display
   const formatDate = (date: Date): string => {
@@ -267,17 +255,17 @@ export const CalendarPage = (): JSX.Element => {
       </section>
 
       {/* Main Content Section */}
-      <section className="relative w-full bg-white py-6 sm:py-8 md:py-12 px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 max-w-7xl mx-auto">
+      <section className="relative w-full bg-white py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-0">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 lg:max-w-none">
           {/* Calendar Section */}
-          <div className="w-full lg:w-[300px] flex-shrink-0 mx-auto lg:mx-0">
+          <div className="w-full lg:w-[300px] flex-shrink-0 mx-auto lg:mx-0 lg:pl-0">
             <Calendar onDateSelect={handleDateSelect} initialDate={new Date(2025, 10, 1)} />
           </div>
             
           {/* Content Section - Event Cards */}
-          <div className="flex-1 bg-white min-w-0">
+          <div className="flex-1 bg-white min-w-0 lg:pr-8">
             <h2 className="[font-family:'Poppins',Helvetica] text-xl sm:text-2xl font-light text-[#24312e] mb-4 sm:mb-6">
-              {isNovemberFirst ? "1st November 2025" : isNovemberSecond ? "2nd November 2025" : formatDate(selectedDate)}
+              {formatDate(selectedDate)}
             </h2>
             <div className="flex flex-col gap-4 w-full">
               {loadingEvents ? (

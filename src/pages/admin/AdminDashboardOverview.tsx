@@ -21,19 +21,23 @@ export const AdminDashboardOverview: React.FC = () => {
       setLoading(true);
 
       // Fetch counts from all tables
-      const [events, classes, users, bookings, blogs] = await Promise.all([
+      const [events, classes, bookingsResult, blogs] = await Promise.all([
         supabase.from('calendar_events').select('id', { count: 'exact', head: true }),
         supabase.from('classes').select('id', { count: 'exact', head: true }),
-        supabase.from('users').select('id', { count: 'exact', head: true }),
-        supabase.from('bookings').select('id', { count: 'exact', head: true }),
+        supabase.from('bookings').select('customer_email'),
         supabase.from('blogs').select('id', { count: 'exact', head: true }),
       ]);
+
+      // Count unique users (customers who made bookings)
+      const uniqueUsers = new Set(
+        (bookingsResult.data || []).map((booking: any) => booking.customer_email)
+      ).size;
 
       setStats({
         events: events.count || 0,
         classes: classes.count || 0,
-        users: users.count || 0,
-        bookings: bookings.count || 0,
+        users: uniqueUsers,
+        bookings: bookingsResult.data?.length || 0,
         blogs: blogs.count || 0,
       });
     } catch (err) {

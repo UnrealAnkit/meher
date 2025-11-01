@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ArrowLeft } from 'lucide-react';
+import { X, ArrowLeft, Calendar, Clock, IndianRupee } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 interface BookingModalProps {
@@ -78,10 +78,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto p-4">
+      <div className="bg-white rounded-lg w-full max-w-md my-8 shadow-2xl relative">
         {/* Header */}
-        <div className="bg-[#ab4b28] px-6 py-4 flex items-center justify-between">
+        <div className="bg-[#ab4b28] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10">
           <button
             onClick={onClose}
             className="flex items-center gap-2 text-[#f9d2a3] hover:text-white transition-colors"
@@ -104,7 +104,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         <div className="h-px bg-gray-300"></div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[calc(90vh-80px)] overflow-y-auto">
           {/* Message */}
           {message.text && (
             <div
@@ -119,19 +119,64 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           )}
 
           {/* Event Info */}
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <p className="[font-family:'Poppins',Helvetica] text-sm text-gray-600 mb-1">
-              <strong>Event:</strong> {eventTitle}
-            </p>
-            <p className="[font-family:'Poppins',Helvetica] text-sm text-gray-600 mb-1">
-              <strong>Date:</strong> {new Date(eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </p>
-            <p className="[font-family:'Poppins',Helvetica] text-sm text-gray-600 mb-1">
-              <strong>Time Slot:</strong> {selectedSlot}
-            </p>
-            <p className="[font-family:'Poppins',Helvetica] text-sm text-gray-600">
-              <strong>Price:</strong> {price}
-            </p>
+          <div className="bg-gradient-to-br from-[#f9f5f0] to-[#f9d2a3] p-5 rounded-xl border-2 border-[#ab4b28]/20 shadow-sm">
+            {/* Event Title */}
+            <div className="mb-4 pb-4 border-b border-[#ab4b28]/30">
+              <h3 className="[font-family:'Poppins',Helvetica] text-xl font-bold text-[#24312e] mb-1">
+                {eventTitle}
+              </h3>
+              <p className="[font-family:'Poppins',Helvetica] text-xs text-gray-600 uppercase tracking-wide">
+                Event Details
+              </p>
+            </div>
+
+            {/* Details Grid */}
+            <div className="space-y-3">
+              {/* Date */}
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 p-1.5 bg-[#ab4b28]/10 rounded-lg">
+                  <Calendar className="w-4 h-4 text-[#ab4b28]" />
+                </div>
+                <div className="flex-1">
+                  <p className="[font-family:'Poppins',Helvetica] text-xs font-semibold text-gray-600 uppercase tracking-wide mb-0.5">
+                    Date
+                  </p>
+                  <p className="[font-family:'Poppins',Helvetica] text-base font-medium text-[#24312e]">
+                    {new Date(eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                </div>
+              </div>
+
+              {/* Time Slot */}
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 p-1.5 bg-[#ab4b28]/10 rounded-lg">
+                  <Clock className="w-4 h-4 text-[#ab4b28]" />
+                </div>
+                <div className="flex-1">
+                  <p className="[font-family:'Poppins',Helvetica] text-xs font-semibold text-gray-600 uppercase tracking-wide mb-0.5">
+                    Time Slot
+                  </p>
+                  <p className="[font-family:'Poppins',Helvetica] text-base font-medium text-[#24312e]">
+                    {selectedSlot}
+                  </p>
+                </div>
+              </div>
+
+              {/* Price - Highlighted */}
+              <div className="flex items-start gap-3 pt-2 border-t border-[#ab4b28]/20">
+                <div className="mt-0.5 p-1.5 bg-[#ab4b28]/20 rounded-lg">
+                  <IndianRupee className="w-4 h-4 text-[#ab4b28]" />
+                </div>
+                <div className="flex-1">
+                  <p className="[font-family:'Poppins',Helvetica] text-xs font-semibold text-gray-600 uppercase tracking-wide mb-0.5">
+                    Price
+                  </p>
+                  <p className="[font-family:'Poppins',Helvetica] text-lg font-bold text-[#ab4b28]">
+                    {price}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Name Field */}
