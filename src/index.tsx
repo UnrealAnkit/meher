@@ -8,6 +8,8 @@ import { BlogsPage } from "./pages/BlogsPage";
 import { ContactPage } from "./pages/ContactPage";
 import { CalendarPage } from "./pages/CalendarPage";
 import { GalleryPage } from "./pages/GalleryPage";
+import { LearningPage } from "./pages/LearningPage";
+import { RejuvenationPage } from "./pages/RejuvenationPage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
 import { RefundPolicyPage } from "./pages/RefundPolicyPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
@@ -73,6 +75,8 @@ function App() {
         <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/learning" element={<LearningPage />} />
+        <Route path="/rejuvenation" element={<RejuvenationPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         
