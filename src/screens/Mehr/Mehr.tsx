@@ -42,53 +42,6 @@ export const Mehr = (): JSX.Element => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Try to play with sound first
-    const playVideo = async () => {
-      try {
-        // First try to play with sound
-        video.muted = false;
-        await video.play();
-        console.log('Video playing with sound');
-      } catch (err) {
-        console.log('Unmuted autoplay failed, trying muted:', err);
-        // If that fails, try muted
-        video.muted = true;
-        try {
-          await video.play();
-          console.log('Video playing muted');
-        } catch (mutedErr) {
-          console.error('Muted autoplay also failed:', mutedErr);
-        }
-      }
-    };
-
-    // Play when loaded
-    if (video.readyState >= 2) {
-      playVideo();
-    } else {
-      video.addEventListener('loadeddata', playVideo);
-    }
-
-    // Handle scroll-based muting
-    const handleScroll = () => {
-      const heroSection = video.closest('section');
-      if (!heroSection) return;
-
-      const rect = heroSection.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      
-      if (isVisible) {
-        // Hero section is visible - unmute
-        video.muted = false;
-      } else {
-        // Hero section is not visible - mute
-        video.muted = true;
-      }
-    };
-
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll);
-    
     // Handle video time to exclude last 10 seconds
     const handleTimeUpdate = () => {
       if (video.duration && video.currentTime >= video.duration - 10) {
@@ -97,14 +50,9 @@ export const Mehr = (): JSX.Element => {
     };
 
     video.addEventListener('timeupdate', handleTimeUpdate);
-    
-    // Initial check
-    handleScroll();
 
     return () => {
-      video.removeEventListener('loadeddata', playVideo);
       video.removeEventListener('timeupdate', handleTimeUpdate);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -169,6 +117,7 @@ export const Mehr = (): JSX.Element => {
           className="w-full h-[600px] object-cover"
           autoPlay
           loop
+          muted
           playsInline
           preload="auto"
           style={{ backgroundColor: '#ab4b28' }}

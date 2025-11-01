@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar } from "../components/Calendar/Calendar";
@@ -6,7 +6,6 @@ import { EventCard } from "../components/EventCard";
 import { supabase, CalendarEvent } from "../lib/supabase";
 
 export const CalendarPage = (): JSX.Element => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(2025, 10, 1)); // November 1st, 2025
   const [supabaseEvents, setSupabaseEvents] = useState<any[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(false);
@@ -166,66 +165,6 @@ export const CalendarPage = (): JSX.Element => {
     return `${day}${suffix} ${month} ${year}`;
   };
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Try to play with sound first
-    const playVideo = async () => {
-      try {
-        // First try to play with sound
-        video.muted = false;
-        await video.play();
-        console.log('Video playing with sound');
-      } catch (err) {
-        console.log('Unmuted autoplay failed, trying muted:', err);
-        // If that fails, try muted
-        video.muted = true;
-        try {
-          await video.play();
-          console.log('Video playing muted');
-        } catch (mutedErr) {
-          console.error('Muted autoplay also failed:', mutedErr);
-        }
-      }
-    };
-
-    // Play when loaded
-    if (video.readyState >= 2) {
-      playVideo();
-    } else {
-      video.addEventListener('loadeddata', playVideo);
-    }
-
-    // Handle scroll-based muting
-    const handleScroll = () => {
-      const heroSection = video.closest('section');
-      if (!heroSection) return;
-
-      const rect = heroSection.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      
-      if (isVisible) {
-        // Hero section is visible - unmute
-        video.muted = false;
-      } else {
-        // Hero section is not visible - mute
-        video.muted = true;
-      }
-    };
-
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll);
-    
-    // Initial check
-    handleScroll();
-
-    return () => {
-      video.removeEventListener('loadeddata', playVideo);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="bg-white overflow-hidden w-full relative">
       {/* Header Section */}
@@ -234,10 +173,10 @@ export const CalendarPage = (): JSX.Element => {
       {/* Hero Section with Video */}
       <section className="relative w-full bg-white">
         <video
-          ref={videoRef}
           className="w-full h-[400px] sm:h-[500px] md:h-[600px] object-cover"
           autoPlay
           loop
+          muted
           playsInline
           preload="auto"
           style={{ backgroundColor: '#ab4b28' }}
