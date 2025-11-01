@@ -7,6 +7,7 @@ import { ProgramsPage } from "./pages/ProgramsPage";
 import { BlogsPage } from "./pages/BlogsPage";
 import { ContactPage } from "./pages/ContactPage";
 import { CalendarPage } from "./pages/CalendarPage";
+import { GalleryPage } from "./pages/GalleryPage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
 import { RefundPolicyPage } from "./pages/RefundPolicyPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
@@ -71,6 +72,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         

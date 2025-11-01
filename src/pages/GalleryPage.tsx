@@ -1,10 +1,9 @@
-import React from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 
 export const GalleryPage = (): JSX.Element => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white">
       <NavbarSection />
 
       {/* Spacer */}
