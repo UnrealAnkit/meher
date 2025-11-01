@@ -266,3 +266,5 @@ That's it! Your admin panel should work on production.
 
 Just add the production domain to Supabase CORS and deploy!
 
+
+

@@ -225,3 +225,5 @@ CREATE POLICY "Allow authenticated users to delete blog images"
 
 -- SELECT * FROM storage.buckets WHERE name IN ('class-images', 'blog-images');
 
+
+

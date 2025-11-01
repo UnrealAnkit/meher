@@ -81,3 +81,5 @@ See `DATABASE_COLUMN_NAMES.md` for complete column name reference.
 ---
 
 **All fixed! Your admin panel should work now! 🎉**
+
+

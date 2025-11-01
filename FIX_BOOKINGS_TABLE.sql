@@ -77,3 +77,5 @@ CREATE TRIGGER update_bookings_updated_at
 -- Add comment to table
 COMMENT ON TABLE bookings IS 'Stores customer bookings for calendar events';
 
+
+

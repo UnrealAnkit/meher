@@ -14,3 +14,5 @@ DROP POLICY IF EXISTS "Allow authenticated users to delete events" ON calendar_e
 -- DROP TABLE IF EXISTS calendar_events;
 
 -- Now run all the queries from SUPABASE_SETUP.sql starting from "CREATE TABLE..."
+
+
