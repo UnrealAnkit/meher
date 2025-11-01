@@ -23,7 +23,7 @@ export const TermsAndConditionsPage = (): JSX.Element => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow bg-[#FFE5E5]">
+      <div className="flex-grow bg-[#FFF3E4]">
         <div className="max-w-[1200px] mx-auto px-4 py-16">
           <div className="space-y-8 [font-family:'Poppins'] text-[#1E1E1E]">
             
