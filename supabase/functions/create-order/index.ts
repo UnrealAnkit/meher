@@ -3,13 +3,15 @@
 import Razorpay from "npm:razorpay";
 
 Deno.serve(async (req: Request): Promise<Response> => {
-  // ✅ Handle preflight (CORS)
+  // ✅ Handle preflight (CORS) - Must return 200 status
   if (req.method === "OPTIONS") {
     return new Response("ok", {
+      status: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, x-client-info, apikey",
+        "Access-Control-Max-Age": "86400"
       }
     });
   }

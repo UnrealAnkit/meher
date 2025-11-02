@@ -1,48 +1,93 @@
-/// <reference path="./deno.d.ts" />
+// supabase/functions/verify-payment/index.ts
+import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 
-Deno.serve(async (req: Request): Promise<Response> => {
-  // ✅ Handle preflight (CORS)
+serve(async (req) => {
+  // Get origin from request and allow both production and development
+  const origin = req.headers.get("origin") || "";
+  const allowedOrigins = [
+    "https://mehr.world",
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:3000"
+  ];
+  
+  // Determine which origin to use (allow localhost for development)
+  const allowedOrigin = allowedOrigins.includes(origin) ? origin : "https://mehr.world";
+
+  // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
-    return new Response("ok", {
+    return new Response(null, {
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": allowedOrigin,
         "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization"
-      }
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
     });
   }
 
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
+    const body = await req.json();
+    console.log("Received body:", JSON.stringify(body, null, 2));
 
-    // Validate required fields
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-      return new Response(JSON.stringify({ 
-        error: "Missing required fields",
-        message: "razorpay_order_id, razorpay_payment_id, and razorpay_signature are required"
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = body;
+
+    // 🔒 Ensure all fields exist and are not empty
+    const missingFields: string[] = [];
+    if (!razorpay_order_id || (typeof razorpay_order_id === "string" && razorpay_order_id.trim() === "")) {
+      missingFields.push("razorpay_order_id");
+    }
+    if (!razorpay_payment_id || (typeof razorpay_payment_id === "string" && razorpay_payment_id.trim() === "")) {
+      missingFields.push("razorpay_payment_id");
+    }
+    if (!razorpay_signature || (typeof razorpay_signature === "string" && razorpay_signature.trim() === "")) {
+      missingFields.push("razorpay_signature");
+    }
+
+    if (missingFields.length > 0) {
+      console.error("Missing or empty fields:", missingFields);
+      console.error("Received values:", {
+        razorpay_order_id: razorpay_order_id || "MISSING",
+        razorpay_payment_id: razorpay_payment_id || "MISSING",
+        razorpay_signature: razorpay_signature || "MISSING"
+      });
+      
+      return new Response(JSON.stringify({
+        success: false,
+        error: "Missing required Razorpay parameters",
+        details: `Missing fields: ${missingFields.join(", ")}`,
+        received: {
+          razorpay_order_id: !!razorpay_order_id,
+          razorpay_payment_id: !!razorpay_payment_id,
+          razorpay_signature: !!razorpay_signature
+        }
       }), {
+        headers: {
+          "Access-Control-Allow-Origin": allowedOrigin,
+          "Content-Type": "application/json",
+        },
         status: 400,
-        headers: { "Access-Control-Allow-Origin": "*" }
       });
     }
 
-    const keySecret = Deno.env.get("RAZORPAY_KEY_SECRET");
-
-    if (!keySecret) {
-      return new Response(JSON.stringify({ error: "Razorpay credentials not configured" }), {
+    // ✅ Step 1: Verify signature using Deno Web Crypto API
+    const key_secret = Deno.env.get("RAZORPAY_KEY_SECRET");
+    
+    if (!key_secret) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: "Razorpay credentials not configured",
+      }), {
+        headers: {
+          "Access-Control-Allow-Origin": allowedOrigin,
+          "Content-Type": "application/json",
+        },
         status: 500,
-        headers: { "Access-Control-Allow-Origin": "*" }
       });
     }
 
-    // ✅ Mandatory security step: Verify payment signature
-    // This confirms the payment response authenticity and prevents fraud
-    // Razorpay signature = HMAC SHA256(order_id + "|" + payment_id, key_secret)
-    
+    // Use Web Crypto API for HMAC SHA256 (Deno-compatible)
     const message = `${razorpay_order_id}|${razorpay_payment_id}`;
-    
-    // Use Web Crypto API for HMAC SHA256 (built into Deno)
-    const keyData = new TextEncoder().encode(keySecret);
+    const keyData = new TextEncoder().encode(key_secret);
     const cryptoKey = await crypto.subtle.importKey(
       "raw",
       keyData,
@@ -58,62 +103,63 @@ Deno.serve(async (req: Request): Promise<Response> => {
     );
     
     // Convert to hex string
-    const expectedSignatureHex = Array.from(new Uint8Array(signatureBuffer))
+    const expectedSignature = Array.from(new Uint8Array(signatureBuffer))
       .map(b => b.toString(16).padStart(2, "0"))
       .join("");
-    
-    // Compare signatures (constant-time comparison would be better, but this is acceptable for this use case)
-    const isValid = expectedSignatureHex === razorpay_signature.toLowerCase();
+
+    const isValid = expectedSignature === razorpay_signature.toLowerCase();
 
     if (!isValid) {
-      console.error("Payment signature verification failed:", {
+      console.error("Invalid signature:", {
         order_id: razorpay_order_id,
         payment_id: razorpay_payment_id,
-        received_signature: razorpay_signature.substring(0, 20) + "...",
-        expected_signature: expectedSignatureHex.substring(0, 20) + "..."
+        received: razorpay_signature.substring(0, 20) + "...",
+        expected: expectedSignature.substring(0, 20) + "..."
       });
       
-      return new Response(JSON.stringify({ 
-        verified: false,
-        error: "Invalid payment signature",
-        message: "Payment signature verification failed. Payment may be fraudulent."
+      return new Response(JSON.stringify({
+        success: false,
+        error: "Invalid signature",
       }), {
-        status: 400,
         headers: {
+          "Access-Control-Allow-Origin": allowedOrigin,
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        }
+        },
+        status: 400,
       });
     }
 
-    // Signature verified successfully
-    console.log("Payment signature verified successfully:", {
+    // ✅ Step 2: Store in Supabase table (optional)
+    // You can later insert logic here to save payment info using Supabase client
+
+    console.log("Payment verified successfully:", {
       order_id: razorpay_order_id,
       payment_id: razorpay_payment_id
     });
 
-    return new Response(JSON.stringify({ 
-      verified: true,
-      message: "Payment signature verified successfully"
+    return new Response(JSON.stringify({
+      success: true,
+      message: "Payment verified successfully",
+      data: { razorpay_order_id, razorpay_payment_id },
     }), {
       headers: {
+        "Access-Control-Allow-Origin": "https://mehr.world",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      }
+      },
+      status: 200,
     });
-  } catch (err: unknown) {
-    console.error("Error verifying payment signature:", err);
-    const errorMessage = err instanceof Error ? err.message : "Failed to verify payment";
-    return new Response(JSON.stringify({ 
-      verified: false,
-      error: errorMessage 
+
+  } catch (error) {
+    console.error("Verification Error:", error);
+    return new Response(JSON.stringify({
+      success: false,
+      error: error.message || "Failed to verify payment",
     }), {
-      status: 500,
       headers: {
+        "Access-Control-Allow-Origin": "https://mehr.world",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      }
+      },
+      status: 500,
     });
   }
 });
-

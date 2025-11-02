@@ -233,33 +233,43 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               return;
             }
 
-            console.log('Payment successful:', {
+            console.log('Payment successful - Full response:', response);
+            console.log('Payment successful - Extracted values:', {
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
-              signature: response.razorpay_signature.substring(0, 20) + '...' // Log partial signature for security
+              signature: response.razorpay_signature ? response.razorpay_signature.substring(0, 20) + '...' : 'MISSING'
             });
 
             // ✅ STEP 1.5: Verify Payment Signature (MANDATORY SECURITY STEP)
             // This confirms the payment response authenticity and prevents fraud
+            const verificationPayload = {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            };
+
+            console.log('Sending verification request:', {
+              ...verificationPayload,
+              razorpay_signature: verificationPayload.razorpay_signature ? verificationPayload.razorpay_signature.substring(0, 20) + '...' : 'MISSING'
+            });
+
             const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
               method: "POST",
               headers: { 
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
               },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
-              })
+              body: JSON.stringify(verificationPayload)
             });
 
             if (!verifyResponse.ok) {
               const verifyError = await verifyResponse.json().catch(() => ({ error: 'Verification failed' }));
-              console.error('Payment signature verification failed:', verifyError);
+              console.error('Error from verify-payment:', verifyError);
+              console.error('Response status:', verifyResponse.status);
+              console.error('Response statusText:', verifyResponse.statusText);
               setMessage({ 
                 type: 'error', 
-                text: 'Payment verification failed. Please contact support with Payment ID: ' + response.razorpay_payment_id
+                text: `Payment verification failed: ${verifyError.error || verifyError.message || 'Unknown error'}. Please contact support with Payment ID: ${response.razorpay_payment_id}`
               });
               setSubmitting(false);
               return;
@@ -267,11 +277,12 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
             const verifyResult = await verifyResponse.json();
             
-            if (!verifyResult.verified) {
+            // Check for success field (new format) or verified field (old format) for compatibility
+            if (!verifyResult.success && !verifyResult.verified) {
               console.error('Payment signature is invalid:', verifyResult);
               setMessage({ 
                 type: 'error', 
-                text: 'Payment verification failed. Invalid signature. Please contact support.'
+                text: `Payment verification failed: ${verifyResult.error || 'Invalid signature'}. Please contact support.`
               });
               setSubmitting(false);
               return;
@@ -280,22 +291,43 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             console.log('Payment signature verified successfully');
 
             // ✅ STEP 1.6: Payment verified - Now save booking to Supabase
-            const { error: bookingError } = await supabase.from('bookings').insert([
-              {
-                event_id: null,
-                event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
-                event_date: new Date().toISOString().split('T')[0],
-                selected_slot: selectedSlot,
-                price: priceString,
-                customer_name: formData.name,
-                customer_email: formData.email,
-                customer_phone: formData.phoneNumber,
-                status: 'confirmed', // Payment successful, so confirmed
-                notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Payment ID: ${response.razorpay_payment_id}, Order ID: ${response.razorpay_order_id}`,
-              },
-            ]);
+            const bookingData = {
+              event_id: null,
+              event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
+              event_date: new Date().toISOString().split('T')[0],
+              selected_slot: selectedSlot,
+              price: priceString,
+              customer_name: formData.name,
+              customer_email: formData.email,
+              customer_phone: formData.phoneNumber,
+              status: 'confirmed', // Payment successful, so confirmed
+              notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Payment ID: ${response.razorpay_payment_id}, Order ID: ${response.razorpay_order_id}, Signature Verified: Yes`,
+            };
 
-            if (bookingError) throw bookingError;
+            console.log('Saving booking to Supabase:', bookingData);
+
+            const { data: bookingResult, error: bookingError } = await supabase
+              .from('bookings')
+              .insert([bookingData])
+              .select();
+
+            if (bookingError) {
+              console.error('Booking save error details:', {
+                error: bookingError,
+                code: bookingError.code,
+                message: bookingError.message,
+                details: bookingError.details,
+                hint: bookingError.hint,
+                bookingData: bookingData
+              });
+              throw new Error(`Database error: ${bookingError.message}${bookingError.details ? ` - ${bookingError.details}` : ''}${bookingError.hint ? ` (Hint: ${bookingError.hint})` : ''}`);
+            }
+
+            if (!bookingResult || bookingResult.length === 0) {
+              throw new Error('Booking was inserted but no data was returned. Please check admin panel.');
+            }
+
+            console.log('Booking saved successfully:', bookingResult[0]);
 
             setMessage({ 
               type: 'success', 
@@ -311,9 +343,31 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             }, 3000);
           } catch (err) {
             console.error('Error saving booking after payment:', err);
+            
+            // Get detailed error message
+            let errorMessage = 'Payment successful but failed to save booking.';
+            if (err instanceof Error) {
+              errorMessage = err.message;
+            }
+            
+            // Store payment details for manual recovery
+            const paymentInfo = {
+              payment_id: response?.razorpay_payment_id || 'N/A',
+              order_id: response?.razorpay_order_id || 'N/A',
+              customer_name: formData.name,
+              customer_email: formData.email,
+              customer_phone: formData.phoneNumber,
+              amount: selectedTotal,
+              occupancy: occupancyType,
+              error: errorMessage,
+              timestamp: new Date().toISOString()
+            };
+            
+            console.error('Payment info for manual recovery:', paymentInfo);
+            
             setMessage({ 
               type: 'error', 
-              text: 'Payment successful but failed to save booking. Please contact support with Payment ID: ' + (response?.razorpay_payment_id || 'N/A')
+              text: `${errorMessage} Payment ID: ${response?.razorpay_payment_id || 'N/A'}. Your payment was successful - please contact support with this Payment ID to complete your booking.`
             });
             setSubmitting(false);
           }
