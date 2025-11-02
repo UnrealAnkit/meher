@@ -10,6 +10,7 @@ import { CalendarPage } from "./pages/CalendarPage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { LearningPage } from "./pages/LearningPage";
 import { RejuvenationPage } from "./pages/RejuvenationPage";
+import { RejuvenationPackagePage } from "./pages/RejuvenationPackagePage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
 import { RefundPolicyPage } from "./pages/RefundPolicyPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
@@ -78,6 +79,7 @@ function App() {
         <Route path="/learning" element={<LearningPage />} />
         <Route path="/rejuvenation" element={<RejuvenationPage />} />
         <Route path="/rejuvenate" element={<RejuvenationPage />} />
+        <Route path="/rejuvenation/package" element={<RejuvenationPackagePage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         
