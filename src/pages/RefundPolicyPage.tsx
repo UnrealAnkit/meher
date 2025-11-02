@@ -14,27 +14,16 @@ export const RefundPolicyPage = (): JSX.Element => {
       <div className="h-16"></div>
 
       {/* Hero Section */}
-      <div className="mx-auto w-full max-w-[1440px]">
-        <div className="flex">
-          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-start pl-16">
-            <div className="max-w-[570px] text-left">
-              <h1 className="text-[#A0522D] text-[64px] font-normal leading-tight [font-family:'Poppins']">
-                CANCELLATION &<br />REFUND POLICY
-              </h1>
-            </div>
-          </div>
-          <div className="flex-1">
-            <img 
-              src="/Group Yoga class Marbella.png"
-              alt="Cancellation & Refund Policy" 
-              className="w-full h-[500px] object-cover"
-            />
-          </div>
+      <div className="mx-auto w-full max-w-[1440px] px-4 py-4 sm:py-6 lg:py-8">
+        <div className="flex items-center justify-start">
+          <h1 className="text-[#A0522D] text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
+            CANCELLATION &<br />REFUND POLICY
+          </h1>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow bg-white">
+      <div className="flex-grow bg-[#FFF3E4]">
         <div className="max-w-[1200px] mx-auto px-4 py-16">
           <div className="space-y-8 [font-family:'Poppins'] text-[#1E1E1E]">
             

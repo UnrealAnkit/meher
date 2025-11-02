@@ -117,43 +117,43 @@ export const FooterSection = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="relative w-full h-14 bg-[#f9d2a3]">
-        <div className="container mx-auto px-[83px] h-full flex items-center justify-between">
-          <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-5 whitespace-nowrap">
+      <div className="relative w-full min-h-[56px] bg-[#f9d2a3]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-[83px] py-3 lg:py-0 h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-3 lg:gap-0">
+          <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 text-center lg:text-left">
             © 2025 Ch2. All rights reserved.
           </div>
 
-          <div className="flex items-center gap-[9.5px]">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-[9.5px]">
             <Link
               to="/privacy-policy"
-              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-5 whitespace-nowrap hover:text-[#ab4b28] transition-colors"
+              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 hover:text-[#ab4b28] transition-colors"
             >
               Privacy Policy
             </Link>
-            <Separator orientation="vertical" className="h-4 w-px bg-[#355149]" />
+            <Separator orientation="vertical" className="h-4 w-px bg-[#355149] hidden sm:block" />
             <Link
               to="/terms-and-conditions"
-              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-5 whitespace-nowrap hover:text-[#ab4b28] transition-colors"
+              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 hover:text-[#ab4b28] transition-colors"
             >
               Terms & Conditions
             </Link>
-            <Separator orientation="vertical" className="h-4 w-px bg-[#355149]" />
+            <Separator orientation="vertical" className="h-4 w-px bg-[#355149] hidden sm:block" />
             <Link
               to="/refund-policy"
-              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-5 whitespace-nowrap hover:text-[#ab4b28] transition-colors"
+              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 hover:text-[#ab4b28] transition-colors"
             >
               Refund Policy
             </Link>
-            <Separator orientation="vertical" className="h-4 w-px bg-[#355149]" />
+            <Separator orientation="vertical" className="h-4 w-px bg-[#355149] hidden sm:block" />
             <Link
               to="/contact"
-              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-5 whitespace-nowrap hover:text-[#ab4b28] transition-colors"
+              className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 hover:text-[#ab4b28] transition-colors"
             >
               Contact
             </Link>
           </div>
 
-          <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-sm tracking-[0] leading-5 whitespace-nowrap">
+          <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 text-center lg:text-left">
             Powered by
           </div>
         </div>

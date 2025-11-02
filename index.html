@@ -5,7 +5,10 @@
     <title>MEHR - Stay. Heal. Rejuvenate. Celebrate.</title>
     <meta name="description" content="MEHR Pune - A wellness retreat offering healing, rejuvenation, and celebration. Experience 50+ therapies, medical consultations, and emotional wellness programs in a serene environment." />
     <meta name="keywords" content="wellness retreat, healing, rejuvenation, spa, therapy, medical consultation, naturopathy, emotional wellness, Pune, MEHR" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta property="og:title" content="MEHR - Stay. Heal. Rejuvenate. Celebrate." />
     <meta property="og:description" content="Experience healing and wellness at MEHR Pune. 50+ therapies, medical consultations, and emotional wellness programs." />
     <meta property="og:type" content="website" />
@@ -15,6 +18,42 @@
     </style>
     <link href="tailwind.css" rel="stylesheet" />
     <link href="tailwind.css" rel="stylesheet" />
+    <script>
+      // Prevent zoom on double tap and pinch gestures
+      (function() {
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+          const now = Date.now();
+          // Only prevent if double-tap and not on an interactive element
+          const target = event.target;
+          const isInteractive = target.tagName === 'BUTTON' || 
+                               target.tagName === 'A' || 
+                               target.tagName === 'INPUT' || 
+                               target.tagName === 'TEXTAREA' ||
+                               target.closest('button') ||
+                               target.closest('a') ||
+                               target.closest('[onclick]');
+          
+          if (now - lastTouchEnd <= 300 && !isInteractive) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        }, { passive: false });
+
+        // Prevent pinch zoom
+        document.addEventListener('gesturestart', function(e) {
+          e.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('gesturechange', function(e) {
+          e.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('gestureend', function(e) {
+          e.preventDefault();
+        }, { passive: false });
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

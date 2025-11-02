@@ -1,11 +1,4 @@
--- ============================================
--- MEHER Admin Panel - Complete Database Setup
--- ============================================
--- Run these queries in Supabase SQL Editor
 
--- ============================================
--- 1. CLASSES TABLE
--- ============================================
 CREATE TABLE IF NOT EXISTS classes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -44,9 +37,7 @@ CREATE POLICY "Allow authenticated users to delete classes"
 CREATE INDEX IF NOT EXISTS idx_classes_created_at ON classes (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_classes_instructor ON classes (instructor);
 
--- ============================================
--- 2. USERS TABLE (Extended Profile)
--- ============================================
+
 CREATE TABLE IF NOT EXISTS users (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email VARCHAR(255) NOT NULL UNIQUE,

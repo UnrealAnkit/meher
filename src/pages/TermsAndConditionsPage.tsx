@@ -14,9 +14,9 @@ export const TermsAndConditionsPage = (): JSX.Element => {
       <div className="h-16"></div>
 
       {/* Hero Section */}
-      <div className="mx-auto w-full max-w-[1440px] px-4 py-8">
+      <div className="mx-auto w-full max-w-[1440px] px-4 py-4 sm:py-6 lg:py-8">
         <div className="flex items-center justify-start">
-          <h1 className="text-[#A0522D] text-[64px] font-normal leading-tight [font-family:'Poppins']">
+          <h1 className="text-[#A0522D] text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
             Terms and Conditions
           </h1>
         </div>
