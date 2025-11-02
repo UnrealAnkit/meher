@@ -1,21 +1,28 @@
--- Fix RLS Policy for Bookings Table
--- This allows public (unauthenticated) users to insert bookings for payments
--- Run this in Supabase SQL Editor
+-- ============================================
+-- FIX BOOKINGS RLS POLICY - URGENT!
+-- ============================================
+-- This script fixes the RLS policy to allow public (unauthenticated) users
+-- to insert bookings for payment processing.
+--
+-- Run this in: Supabase Dashboard → SQL Editor → New Query
+-- ============================================
 
--- Drop existing conflicting policies
+-- Step 1: Drop all existing conflicting policies on bookings table
 DROP POLICY IF EXISTS "Allow authenticated users to create bookings" ON bookings;
 DROP POLICY IF EXISTS "Allow public booking inserts" ON bookings;
+DROP POLICY IF EXISTS "Allow admins to create bookings" ON bookings;
+DROP POLICY IF EXISTS "Allow public booking inserts" ON bookings; -- Drop again in case of duplicates
 
--- Create/Recreate the public insert policy
--- This allows anyone (including unauthenticated users) to create bookings
+-- Step 2: Create the public insert policy
+-- This allows ANYONE (including unauthenticated users) to create bookings
+-- This is needed for payment processing where users aren't logged in
 CREATE POLICY "Allow public booking inserts" 
 ON bookings
 FOR INSERT
 TO public
 WITH CHECK (true);
 
--- Verify the policy exists
--- You can check this in Supabase Dashboard → Authentication → Policies
+-- Step 3: Verify the policy was created
 SELECT 
   schemaname,
   tablename,
@@ -23,8 +30,10 @@ SELECT
   permissive,
   roles,
   cmd,
-  qual,
   with_check
 FROM pg_policies 
-WHERE tablename = 'bookings' AND policyname = 'Allow public booking inserts';
+WHERE tablename = 'bookings' 
+AND cmd = 'INSERT'
+ORDER BY policyname;
 
+-- Expected result: Should see "Allow public booking inserts" with roles = '{public}'
