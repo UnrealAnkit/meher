@@ -306,73 +306,33 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
             console.log('Saving booking to Supabase:', bookingData);
 
-            // Try direct insert first (will work if RLS policies are correct)
-            let bookingResult = null;
-            let bookingError = null;
+            // Use Edge Function to create booking (bypasses RLS using service_role)
+            // This is the most reliable permanent solution
+            const CREATE_BOOKING_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-booking";
+            
+            const bookingResponse = await fetch(CREATE_BOOKING_FUNCTION_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify(bookingData)
+            });
 
-            const { data: directInsertResult, error: directInsertError } = await supabase
-              .from('bookings')
-              .insert([bookingData])
-              .select();
+            const bookingResponseData = await bookingResponse.json();
 
-            if (directInsertError) {
-              // If RLS error, try using the RPC function as fallback
-              if (directInsertError.code === '42501' || directInsertError.message?.includes('row-level security')) {
-                console.warn('Direct insert failed due to RLS, trying RPC function fallback...');
-                
-                const { data: rpcResult, error: rpcError } = await supabase.rpc('insert_booking', {
-                  p_event_id: bookingData.event_id,
-                  p_event_title: bookingData.event_title,
-                  p_event_date: bookingData.event_date,
-                  p_selected_slot: bookingData.selected_slot,
-                  p_price: bookingData.price,
-                  p_customer_name: bookingData.customer_name,
-                  p_customer_email: bookingData.customer_email,
-                  p_customer_phone: bookingData.customer_phone,
-                  p_status: bookingData.status,
-                  p_notes: bookingData.notes
-                });
-
-                if (rpcError) {
-                  console.error('RPC function also failed:', rpcError);
-                  bookingError = rpcError;
-                } else if (rpcResult) {
-                  // RPC function returns UUID, so fetch the full booking record
-                  const { data: fetchedBooking, error: fetchError } = await supabase
-                    .from('bookings')
-                    .select('*')
-                    .eq('id', rpcResult)
-                    .single();
-
-                  if (fetchError) {
-                    console.error('Error fetching booking after RPC insert:', fetchError);
-                    bookingError = fetchError;
-                  } else {
-                    bookingResult = [fetchedBooking];
-                    console.log('Booking saved successfully via RPC function:', fetchedBooking);
-                  }
-                }
-              } else {
-                // Other error (not RLS), just use the original error
-                bookingError = directInsertError;
-              }
-
-              if (bookingError) {
-                console.error('Booking save error details:', {
-                  error: bookingError,
-                  code: bookingError.code,
-                  message: bookingError.message,
-                  details: bookingError.details,
-                  hint: bookingError.hint,
-                  bookingData: bookingData
-                });
-                throw new Error(`Database error: ${bookingError.message}${bookingError.details ? ` - ${bookingError.details}` : ''}${bookingError.hint ? ` (Hint: ${bookingError.hint})` : ''}`);
-              }
-            } else {
-              // Direct insert succeeded
-              bookingResult = directInsertResult;
-              console.log('Booking saved successfully via direct insert:', bookingResult[0]);
+            if (!bookingResponse.ok || !bookingResponseData.success) {
+              const errorMessage = bookingResponseData.error || bookingResponseData.details || 'Failed to create booking';
+              console.error('Booking save error:', {
+                status: bookingResponse.status,
+                error: bookingResponseData,
+                bookingData: bookingData
+              });
+              throw new Error(`Database error: ${errorMessage}`);
             }
+
+            const bookingResult = [bookingResponseData.data];
+            console.log('Booking saved successfully via Edge Function:', bookingResult[0]);
 
             if (!bookingResult || bookingResult.length === 0) {
               throw new Error('Booking was inserted but no data was returned. Please check admin panel.');

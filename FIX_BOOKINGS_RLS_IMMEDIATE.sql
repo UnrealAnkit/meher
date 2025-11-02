@@ -58,6 +58,10 @@ GRANT EXECUTE ON FUNCTION public.insert_booking TO anon;
 GRANT EXECUTE ON FUNCTION public.insert_booking TO public;
 GRANT EXECUTE ON FUNCTION public.insert_booking TO authenticated;
 
+-- Step 3.5: Grant usage on schema (required for function execution)
+GRANT USAGE ON SCHEMA public TO anon;
+GRANT USAGE ON SCHEMA public TO public;
+
 -- Step 4: Still create RLS policies for direct table access (in case needed)
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 
@@ -105,6 +109,12 @@ WHERE routine_schema = 'public'
 AND routine_name = 'insert_booking';
 
 -- Expected: Should show insert_booking with security_type = 'DEFINER'
+
+-- Step 6: Important - Refresh Supabase schema cache
+-- Note: After creating the function, you may need to wait a few seconds
+-- or refresh the Supabase API schema cache
+-- The function should be available immediately, but if you get cache errors,
+-- wait 10-30 seconds and try again
 
 -- ============================================
 -- HOW TO USE THE FUNCTION (Alternative approach)
