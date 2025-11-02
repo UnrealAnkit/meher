@@ -1,9 +1,10 @@
 interface RazorpayOptions {
   key: string;
-  amount: number;
+  amount: number; // Integer in smallest currency subunit (mandatory) - Razorpay API accepts both number and string, but number is recommended
   currency: string;
   name: string;
   description: string;
+  image?: string; // Logo image URL to display in checkout modal
   order_id: string;
   handler: (response: RazorpayResponse) => void | Promise<void>;
   prefill?: {
@@ -11,12 +12,18 @@ interface RazorpayOptions {
     email?: string;
     contact?: string;
   };
+  notes?: {
+    [key: string]: string;
+  };
   theme?: {
     color?: string;
   };
   modal?: {
     ondismiss?: () => void;
   };
+  callback_url?: string;
+  timeout?: number; // Checkout timeout in seconds
+  [key: string]: any; // Allow additional Razorpay options
 }
 
 interface RazorpayResponse {

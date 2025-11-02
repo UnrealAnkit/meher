@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, ArrowLeft } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL } from '../../lib/supabase';
+import { RAZORPAY_KEY_ID } from '../../config/razorpay';
 
 // Supabase anon key for Edge Function authentication
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
@@ -135,8 +136,10 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         isInteger: Number.isInteger(requestBody.amount)
       });
 
-      // Step 1: Create order from Supabase function
-      const response = await fetch("https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-order", {
+      // Step 1: Create order from Supabase function (SERVER-SIDE)
+      // ✅ CORS Safe: Orders API is called server-side via Edge Function, not from client
+      // This prevents "Blocked by CORS policy" errors
+      const response = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -159,8 +162,17 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
       const order = await response.json();
 
+      // Validate order response
       if (!order.id) {
         setMessage({ type: 'error', text: 'Failed to create Razorpay order. Please try again.' });
+        setSubmitting(false);
+        return;
+      }
+
+      // Validate that order was created successfully with proper structure
+      if (!order.amount || !order.currency) {
+        console.error('Invalid order response:', order);
+        setMessage({ type: 'error', text: 'Invalid order response from server. Please contact support.' });
         setSubmitting(false);
         return;
       }
@@ -169,17 +181,105 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       const priceString = `₹${selectedTotal.toLocaleString('en-IN')} (${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy)`;
       const selectedSlot = `${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy - 3 Days / 2 Nights`;
 
-      // Step 3: Initialize Razorpay
+      // Step 3: Initialize Razorpay with enhanced options (following Razorpay best practices)
+      // Format phone number with country code for better conversion rates
+      const formatPhoneNumber = (phone: string): string => {
+        // Remove all non-digit characters
+        const digits = phone.replace(/\D/g, '');
+        // If number doesn't start with country code, assume +91 (India)
+        if (digits.length === 10) {
+          return `+91${digits}`;
+        } else if (digits.length > 10 && !digits.startsWith('91')) {
+          return `+91${digits.slice(-10)}`;
+        } else if (digits.startsWith('91')) {
+          return `+${digits}`;
+        }
+        return phone.startsWith('+') ? phone : `+91${digits}`;
+      };
+
+      // ✅ Key ID is imported from config to ensure consistency
+      // ⚠️ CRITICAL: This MUST match RAZORPAY_KEY_ID in Supabase Edge Function
+      // Error "The id provided does not exist" occurs when keys don't match
+
       const options = {
-        key: "rzp_test_RapqMdrvD1ZIvp", // Razorpay Key ID
-        amount: order.amount,
-        currency: "INR",
-        name: "MEHR Rejuvenation Retreat",
-        description: `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`,
-        order_id: order.id,
+        key: RAZORPAY_KEY_ID, // Razorpay Key ID (mandatory) - MUST match server-side key
+        amount: order.amount, // Integer in smallest currency subunit (mandatory) - already in paise
+        currency: order.currency || "INR", // Currency code (mandatory)
+        name: "MEHR Rejuvenation Retreat", // Business name (mandatory)
+        description: `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`, // Transaction description (optional)
+        image: window.location.origin + "/image-5-1.png", // Business logo (optional)
+        order_id: order.id, // Order ID from server (mandatory)
         handler: async function (response: any) {
           try {
-            // Payment successful - Save booking to Supabase
+            // Check if payment failed (Razorpay may pass error in response)
+            if (response.error) {
+              console.error('Payment failed in handler:', response.error);
+              setMessage({ 
+                type: 'error', 
+                text: `Payment failed: ${response.error.description || response.error.reason || 'Unknown error'}. Please try again.` 
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            // Validate payment response structure for successful payments
+            if (!response.razorpay_payment_id || !response.razorpay_order_id || !response.razorpay_signature) {
+              console.error('Invalid payment response:', response);
+              setMessage({ 
+                type: 'error', 
+                text: 'Payment response is incomplete. Please contact support.' 
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            console.log('Payment successful:', {
+              payment_id: response.razorpay_payment_id,
+              order_id: response.razorpay_order_id,
+              signature: response.razorpay_signature.substring(0, 20) + '...' // Log partial signature for security
+            });
+
+            // ✅ STEP 1.5: Verify Payment Signature (MANDATORY SECURITY STEP)
+            // This confirms the payment response authenticity and prevents fraud
+            const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
+              method: "POST",
+              headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+
+            if (!verifyResponse.ok) {
+              const verifyError = await verifyResponse.json().catch(() => ({ error: 'Verification failed' }));
+              console.error('Payment signature verification failed:', verifyError);
+              setMessage({ 
+                type: 'error', 
+                text: 'Payment verification failed. Please contact support with Payment ID: ' + response.razorpay_payment_id
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            const verifyResult = await verifyResponse.json();
+            
+            if (!verifyResult.verified) {
+              console.error('Payment signature is invalid:', verifyResult);
+              setMessage({ 
+                type: 'error', 
+                text: 'Payment verification failed. Invalid signature. Please contact support.'
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            console.log('Payment signature verified successfully');
+
+            // ✅ STEP 1.6: Payment verified - Now save booking to Supabase
             const { error: bookingError } = await supabase.from('bookings').insert([
               {
                 event_id: null,
@@ -191,7 +291,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
                 customer_email: formData.email,
                 customer_phone: formData.phoneNumber,
                 status: 'confirmed', // Payment successful, so confirmed
-                notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Payment ID: ${response.razorpay_payment_id}`,
+                notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Payment ID: ${response.razorpay_payment_id}, Order ID: ${response.razorpay_order_id}`,
               },
             ]);
 
@@ -213,35 +313,76 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             console.error('Error saving booking after payment:', err);
             setMessage({ 
               type: 'error', 
-              text: 'Payment successful but failed to save booking. Please contact support with Payment ID: ' + response.razorpay_payment_id 
+              text: 'Payment successful but failed to save booking. Please contact support with Payment ID: ' + (response?.razorpay_payment_id || 'N/A')
             });
             setSubmitting(false);
           }
         },
         prefill: {
-          name: formData.name,
-          email: formData.email,
-          contact: formData.phoneNumber,
+          // Prefill customer details to boost conversions and minimize drop-offs
+          name: formData.name || undefined,
+          email: formData.email || undefined,
+          contact: formData.phoneNumber ? formatPhoneNumber(formData.phoneNumber) : undefined, // Format: +(country code)(phone number)
+        },
+        notes: {
+          // Additional payment information (max 15 key-value pairs, 256 chars each)
+          booking_type: 'rejuvenation_retreat',
+          occupancy: occupancyType,
+          package: '3_day_2_night',
+          customer_name: formData.name,
+          customer_email: formData.email,
+          order_value: selectedTotal.toString(),
         },
         theme: {
           color: "#A0522D", // Match MEHR brand color
         },
         modal: {
           ondismiss: function() {
-            // User closed the payment modal
+            // User closed the payment modal without completing payment
             setSubmitting(false);
-            setMessage({ type: '', text: '' });
+            setMessage({ 
+              type: 'error', 
+              text: 'Payment was cancelled. Please try again when ready.' 
+            });
+            console.log('Payment modal dismissed by user');
           }
-        }
+        },
+        timeout: 900, // 15 minutes timeout (optional) - prevents checkout from staying open indefinitely
+        // Note: Some browsers may pause timers in power saver mode, so timeout may not be exact
+        // Note: Using handler function instead of callback_url
+        // Handler function: Customer stays on your page, better UX for modals
+        // Callback URL: Customer redirects to success/failure page (alternative approach)
+        // For this modal-based flow, handler function is preferred
       };
 
       const rzp = new window.Razorpay(options);
+      
+      // Enhanced error handling for Razorpay checkout
+      // Note: payment.failed event is handled automatically by Razorpay and will trigger handler with error
+      // We also handle errors in the catch block and modal.ondismiss
+
+      // Log checkout opening with key verification
+      console.log('Opening Razorpay checkout:', {
+        order_id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        key_id: RAZORPAY_KEY_ID.substring(0, 8) + '...' // Log partial key for debugging
+      });
+
+      // ⚠️ Error Prevention:
+      // 1. "The id provided does not exist" - Prevented by using same key_id in server (Edge Function) and client (checkout)
+      // 2. "Blocked by CORS policy" - Prevented by making Orders API calls server-side only (via Edge Function)
+
       rzp.open();
       
       // Don't set submitting to false here - let the handler do it
     } catch (err) {
-      console.error('Error during payment:', err);
-      setMessage({ type: 'error', text: 'Failed to process payment. Please try again.' });
+      console.error('Error during payment setup:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setMessage({ 
+        type: 'error', 
+        text: `Failed to process payment: ${errorMessage}. Please try again.` 
+      });
       setSubmitting(false);
     }
   };
