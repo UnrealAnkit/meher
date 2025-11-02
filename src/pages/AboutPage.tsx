@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 
@@ -17,7 +17,7 @@ export const AboutPage = (): JSX.Element => {
       <div className="w-full lg:max-w-[1440px] lg:mx-auto">
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 bg-[#FFDAB9] flex items-center justify-center lg:justify-start px-4 sm:px-6 lg:pl-16 pt-0 pb-8 lg:py-0">
-            <div className="w-full lg:max-w-[570px] text-left">
+            <div className="w-full lg:max-w-[570px] text-left pt-6 sm:pt-8 lg:pt-0">
               <h1 className="text-[#A0522D] text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
                 ABOUT<br />US
               </h1>
