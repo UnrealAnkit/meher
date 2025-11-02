@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { X, ArrowLeft } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
+// Supabase anon key for Edge Function authentication
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
+
 interface RejuvenationBookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -78,6 +81,131 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     } catch (err) {
       console.error('Error submitting booking:', err);
       setMessage({ type: 'error', text: 'Failed to submit booking. Please try again.' });
+      setSubmitting(false);
+    }
+  };
+
+  const handlePayNow = async () => {
+    // Validate form fields
+    if (!formData.name || !formData.email || !formData.phoneNumber) {
+      setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
+      return;
+    }
+
+    setSubmitting(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      // Convert amount to paise (multiply by 100)
+      const amountInPaise = selectedTotal * 100;
+
+      // Step 1: Create order from Supabase function
+      const response = await fetch("https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-order", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ amount: amountInPaise }),
+      });
+
+      // Check if response is OK
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        if (response.status === 401) {
+          setMessage({ type: 'error', text: 'Authentication failed. Please contact support.' });
+        } else {
+          setMessage({ type: 'error', text: errorData.error || 'Failed to create Razorpay order. Please try again.' });
+        }
+        setSubmitting(false);
+        return;
+      }
+
+      const order = await response.json();
+
+      if (!order.id) {
+        setMessage({ type: 'error', text: 'Failed to create Razorpay order. Please try again.' });
+        setSubmitting(false);
+        return;
+      }
+
+      // Step 2: Format booking details for saving after payment
+      const priceString = `₹${selectedTotal.toLocaleString('en-IN')} (${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy)`;
+      const selectedSlot = `${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy - 3 Days / 2 Nights`;
+
+      // Step 3: Initialize Razorpay
+      const options = {
+        key: "rzp_test_RapqMdrvD1ZIvp", // Razorpay Key ID
+        amount: order.amount,
+        currency: "INR",
+        name: "MEHR Rejuvenation Retreat",
+        description: `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`,
+        order_id: order.id,
+        handler: async function (response: any) {
+          try {
+            // Payment successful - Save booking to Supabase
+            const { error: bookingError } = await supabase.from('bookings').insert([
+              {
+                event_id: null,
+                event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
+                event_date: new Date().toISOString().split('T')[0],
+                selected_slot: selectedSlot,
+                price: priceString,
+                customer_name: formData.name,
+                customer_email: formData.email,
+                customer_phone: formData.phoneNumber,
+                status: 'confirmed', // Payment successful, so confirmed
+                notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Payment ID: ${response.razorpay_payment_id}`,
+              },
+            ]);
+
+            if (bookingError) throw bookingError;
+
+            setMessage({ 
+              type: 'success', 
+              text: `Payment successful! Payment ID: ${response.razorpay_payment_id}. Booking confirmed!` 
+            });
+            
+            // Reset form and close modal after 3 seconds
+            setTimeout(() => {
+              setFormData({ name: '', email: '', phoneNumber: '' });
+              setOccupancyType('double');
+              setSubmitting(false);
+              onClose();
+            }, 3000);
+          } catch (err) {
+            console.error('Error saving booking after payment:', err);
+            setMessage({ 
+              type: 'error', 
+              text: 'Payment successful but failed to save booking. Please contact support with Payment ID: ' + response.razorpay_payment_id 
+            });
+            setSubmitting(false);
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phoneNumber,
+        },
+        theme: {
+          color: "#A0522D", // Match MEHR brand color
+        },
+        modal: {
+          ondismiss: function() {
+            // User closed the payment modal
+            setSubmitting(false);
+            setMessage({ type: '', text: '' });
+          }
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+      
+      // Don't set submitting to false here - let the handler do it
+    } catch (err) {
+      console.error('Error during payment:', err);
+      setMessage({ type: 'error', text: 'Failed to process payment. Please try again.' });
       setSubmitting(false);
     }
   };
@@ -258,14 +386,24 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             />
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full bg-[#A0522D] hover:bg-[#8b3a1f] disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
-          >
-            {submitting ? 'SUBMITTING...' : 'SUBMIT BOOKING'}
-          </button>
+          {/* Submit and Pay Now Buttons */}
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="flex-1 bg-[#A0522D] hover:bg-[#8b3a1f] disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
+            >
+              {submitting ? 'SUBMITTING...' : 'SUBMIT BOOKING'}
+            </button>
+            <button
+              type="button"
+              onClick={handlePayNow}
+              disabled={submitting}
+              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
+            >
+              PAY NOW
+            </button>
+          </div>
         </form>
       </div>
     </div>
