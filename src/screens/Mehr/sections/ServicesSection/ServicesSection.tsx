@@ -46,17 +46,17 @@ export const ServicesSection = (): JSX.Element => {
                 />
 
                 <div className="flex-1 flex flex-col items-center px-4 pt-[18px]">
-                  <h3 className="[font-family:'Poppins',Helvetica] font-bold text-white text-[32px] tracking-[0] leading-8 text-center whitespace-nowrap">
+                  <h3 className="[font-family:'Poppins'] font-semibold text-black text-[32px] tracking-[0] leading-5 text-center whitespace-nowrap">
                     {card.title}
                   </h3>
 
-                  <p className="mt-[13px] w-full max-w-[522px] [font-family:'Poppins',Helvetica] font-medium text-[#606060] text-xl text-center tracking-[0] leading-[29px]">
+                  <p className="mt-[13px] w-full max-w-[522px] [font-family:'Poppins'] font-medium text-[#606060] text-xl text-center tracking-[0] leading-[29px]">
                     {card.description}
                   </p>
                 </div>
 
                 <div className="flex justify-center pb-[40px]">
-                  <Button className="w-[314px] h-11 bg-[#ab4b28] hover:bg-[#8f3e21] rounded-[60px] [font-family:'Poppins',Helvetica] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
+                  <Button className="w-[314px] h-11 bg-[#ab4b28] hover:bg-[#8f3e21] rounded-[60px] [font-family:'Poppins'] font-bold text-white text-xl tracking-[0.50px] leading-[22px]">
                     EXPLORE
                   </Button>
                 </div>

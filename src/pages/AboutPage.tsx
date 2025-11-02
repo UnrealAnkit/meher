@@ -50,25 +50,25 @@ export const AboutPage = (): JSX.Element => {
             <div className="flex gap-8 mb-4">
               <button 
                 onClick={() => setActiveTab('approach')}
-                className={`px-6 py-3 rounded-lg transition-colors ${activeTab === 'approach' ? 'bg-[#A0522D] text-white' : 'text-[#1E1E1E]'}`}
+                className={`px-6 py-3 rounded-lg transition-all duration-300 ease-in-out transform ${activeTab === 'approach' ? 'bg-[#A0522D] text-white scale-105' : 'text-[#1E1E1E] hover:bg-gray-100 hover:scale-105'}`}
               >
                 <span className="[font-family:'Poppins'] font-normal text-lg">Our approach</span>
               </button>
               <button 
                 onClick={() => setActiveTab('why')}
-                className={`px-6 py-3 rounded-lg transition-colors ${activeTab === 'why' ? 'bg-[#A0522D] text-white' : 'text-[#1E1E1E]'}`}
+                className={`px-6 py-3 rounded-lg transition-all duration-300 ease-in-out transform ${activeTab === 'why' ? 'bg-[#A0522D] text-white scale-105' : 'text-[#1E1E1E] hover:bg-gray-100 hover:scale-105'}`}
               >
                 <span className="[font-family:'Poppins'] font-normal text-lg">Why choose us?</span>
               </button>
               <button 
                 onClick={() => setActiveTab('reasons')}
-                className={`px-6 py-3 rounded-lg transition-colors ${activeTab === 'reasons' ? 'bg-[#A0522D] text-white' : 'text-[#1E1E1E]'}`}
+                className={`px-6 py-3 rounded-lg transition-all duration-300 ease-in-out transform ${activeTab === 'reasons' ? 'bg-[#A0522D] text-white scale-105' : 'text-[#1E1E1E] hover:bg-gray-100 hover:scale-105'}`}
               >
                 <span className="[font-family:'Poppins'] font-normal text-lg">Key reasons to choose US.</span>
               </button>
               <button 
                 onClick={() => setActiveTab('mission')}
-                className={`px-6 py-3 rounded-lg transition-colors ${activeTab === 'mission' ? 'bg-[#A0522D] text-white' : 'text-[#1E1E1E]'}`}
+                className={`px-6 py-3 rounded-lg transition-all duration-300 ease-in-out transform ${activeTab === 'mission' ? 'bg-[#A0522D] text-white scale-105' : 'text-[#1E1E1E] hover:bg-gray-100 hover:scale-105'}`}
               >
                 <span className="[font-family:'Poppins'] font-normal text-lg">Mission and Vision</span>
               </button>
@@ -81,18 +81,18 @@ export const AboutPage = (): JSX.Element => {
           <div className="flex gap-16">
             {/* Left Column - Title */}
             <div className="w-1/3">
-              <h2 className="text-[#A0522D] [font-family:'Poppins'] text-[48px] font-semibold leading-tight">
-                {activeTab === 'approach' && <>OUR<br />APPROACH</>}
-                {activeTab === 'why' && <>WHY CHOOSE<br />US?</>}
-                {activeTab === 'reasons' && <>KEY REASONS<br />TO CHOOSE<br />US?</>}
-                {activeTab === 'mission' && <>MISSION AND<br />VISION</>}
+              <h2 key={activeTab} className="text-[#A0522D] [font-family:'Poppins'] text-[48px] font-semibold leading-tight transition-all duration-500 ease-in-out animate-fadeIn">
+                {activeTab === 'approach' && <span className="animate-slideIn">OUR<br />APPROACH</span>}
+                {activeTab === 'why' && <span className="animate-slideIn">WHY CHOOSE<br />US?</span>}
+                {activeTab === 'reasons' && <span className="animate-slideIn">KEY REASONS<br />TO CHOOSE<br />US?</span>}
+                {activeTab === 'mission' && <span className="animate-slideIn">MISSION AND<br />VISION</span>}
               </h2>
             </div>
 
             {/* Right Column - Content */}
             <div className="w-2/3">
               {activeTab === 'approach' && (
-                <div className="space-y-8">
+                <div key="approach" className="space-y-8 animate-fadeInSlide">
                   <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[22px] font-light leading-[38px]">
                     "Knowing" today is easy - with access to information, everyone can KNOW everything. But, DOING is where magic lies. And DOING can get tiresome, lonely, monotonous or strenuous. At MEHR, our endeavour is to create experiences where learning and doing becomes fun, pleasurable and hence consistent.
                   </p>
@@ -103,7 +103,7 @@ export const AboutPage = (): JSX.Element => {
               )}
 
               {activeTab === 'why' && (
-                <div className="space-y-8">
+                <div key="why" className="space-y-8 animate-fadeInSlide">
                   <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[22px] font-light leading-[38px]">
                     Wellness retreats and biohacking have become a raging trend today. It is fabulous to see so many people becoming more aware about the need for wellness. In the end, slowing down and reconnecting with self are the ultimate answers to healing and wellness - which sometimes becomes challenging as we have not been taught how to be with ourselves. At MEHR, our attempt is to create sustainable, holistic wellness spaces with the best of healers, doctors and masters from across the globe to curate experiences using integrative medicine and holistic healing.
                   </p>
@@ -111,7 +111,7 @@ export const AboutPage = (): JSX.Element => {
               )}
 
               {activeTab === 'reasons' && (
-                <div className="space-y-6">
+                <div key="reasons" className="space-y-6 animate-fadeInSlide">
                   <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[22px] font-light leading-[38px]">
                     1. The spaces - green, sustainably built, thoughtfully designed, functional spaces
                   </p>
@@ -131,7 +131,7 @@ export const AboutPage = (): JSX.Element => {
               )}
 
               {activeTab === 'mission' && (
-                <div className="space-y-8">
+                <div key="mission" className="space-y-8 animate-fadeInSlide">
                   <div>
                     <h3 className="[font-family:'Poppins'] text-[#1E1E1E] text-[24px] font-semibold mb-4">Vision -</h3>
                     <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[22px] font-light leading-[38px]">

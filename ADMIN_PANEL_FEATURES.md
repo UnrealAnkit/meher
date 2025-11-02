@@ -353,3 +353,4 @@ The admin panel is fully functional and integrated with your Supabase project. C
 **Questions or issues?** Check the troubleshooting sections in the setup guides.
 
 
+

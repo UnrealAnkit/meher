@@ -79,3 +79,4 @@ COMMENT ON TABLE bookings IS 'Stores customer bookings for calendar events';
 
 
 
+

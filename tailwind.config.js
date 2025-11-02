@@ -70,11 +70,21 @@ module.exports = {
           from: { opacity: "0", transform: "translateY(-10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        "slideIn": {
+          from: { opacity: "0", transform: "translateX(-20px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "fadeInSlide": {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fadeIn": "fadeIn 0.5s ease-out",
+        "slideIn": "slideIn 0.5s ease-out",
+        "fadeInSlide": "fadeInSlide 0.5s ease-out",
       },
     },
     container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },

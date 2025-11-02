@@ -28,3 +28,4 @@ CREATE INDEX IF NOT EXISTS idx_calendar_events_date ON calendar_events (event_da
 -- WHERE table_name = 'calendar_events' AND column_name = 'event_date';
 
 
+

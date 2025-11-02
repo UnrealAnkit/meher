@@ -99,3 +99,4 @@ CREATE POLICY "Allow admins to delete bookings" ON bookings
 
 
 
+

@@ -137,3 +137,4 @@ CREATE TABLE calendar_events (
 **Remember: Snake case for database, match it in TypeScript! 🐍**
 
 
+
