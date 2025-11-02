@@ -211,10 +211,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             />
           </div>
 
-          {/* Phone Number Field */}
+          {/* Mobile Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm mb-2 uppercase">
-              PHONE NUMBER
+              MOBILE
             </label>
             <input
               type="tel"
@@ -223,7 +223,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               onChange={handleChange}
               required
               className="w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:bg-gray-200 focus:outline-none [font-family:'Poppins',Helvetica] text-[#24312e] transition-colors"
-              placeholder="Enter your phone number"
+              placeholder="Enter your mobile number"
             />
           </div>
 

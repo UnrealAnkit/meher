@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
+import { RejuvenationBookingModal } from "../components/RejuvenationBookingModal/RejuvenationBookingModal";
 
 export const RejuvenationPackagePage = (): JSX.Element => {
   const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(1).png";
   const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(2).png";
   const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(3).png";
+
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
@@ -200,12 +203,162 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                   </div>
                 </div>
               </div>
+
+              {/* Highlights Section */}
+              <div className="mt-16 lg:mt-20">
+                <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
+                  Highlights
+                </h2>
+                <ul className="space-y-3 lg:space-y-4 list-disc list-inside [font-family:'Poppins']">
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Guided morning nature walks and mindful movement sessions
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Gut-reset organic meals designed to restore your digestive balance
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Art, journaling, and vision board workshops to awaken creativity
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Sound healing, pranayama, and yoga nidra for deep relaxation
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    One-on-one coaching on rhythm, flow, and sustainable well-being
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Balanced gourmet detox dinners and mindful hydration rituals
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Personalized wellness consultation on arrival
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    A curated take-home plan to continue your rejuvenation journey
+                  </li>
+                </ul>
+              </div>
+
+              {/* Your-Day-to-Day Journey Section */}
+              <div className="mt-16 lg:mt-20">
+                <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-8 lg:mb-10">
+                  Your-Day-to-Day Journey
+                </h2>
+                
+                <div className="space-y-8 lg:space-y-10">
+                  {/* Day 1 */}
+                  <div>
+                    <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
+                      Day 1 – Arrival & Gentle Reset
+                    </h3>
+                    <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                      Begin your journey with a personalized wellness consultation, cold-pressed detox juice, and grounding yoga. A soothing sound bath follows, ending the day with a clean, organic dinner and guided meditation.
+                    </p>
+                  </div>
+
+                  {/* Day 2 */}
+                  <div>
+                    <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
+                      Day 2 – Deep Cleanse, Creativity & Flow
+                    </h3>
+                    <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                      Start the day with a refreshing walk and gut-reset breakfast. Afternoon brings art therapy, music and dance sessions, restorative yoga, and sound healing. Nourish your body with a refined detox meal.
+                    </p>
+                  </div>
+
+                  {/* Day 3 */}
+                  <div>
+                    <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
+                      Day 3 – Integration & Renewal
+                    </h3>
+                    <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                      A dynamic yoga flow, meditation, and coaching session on healthy rhythms close your retreat. You'll leave feeling rejuvenated, with tools to sustain your renewed energy and inspiration.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Facilities Section */}
+              <div className="mt-16 lg:mt-20">
+                <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
+                  Facilities
+                </h2>
+                <ul className="space-y-3 lg:space-y-4 list-disc list-inside [font-family:'Poppins']">
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Spa & Sound-healing studio
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Garden & Meditation areas
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Organic café & Gourmet dining space
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Lounge & Resting zones
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Air-conditioned rooms
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Eco-friendly interiors
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Special dietary meal requests
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Wi-Fi & mindful workspace
+                  </li>
+                </ul>
+                
+                {/* Eco-inspired spaces description */}
+                <p className="mt-6 lg:mt-8 [font-family:'Poppins'] font-extralight text-[#666666] text-[24px] leading-[32px]">
+                  Experience serene, eco-inspired spaces featuring terracotta walls, over 9,600 indoor plants, and expansive natural ventilation maintaining an air-quality index below 50. Each room is curated to enhance rest and reflection.
+                </p>
+              </div>
+
+              {/* What's Included Section */}
+              <div className="mt-16 lg:mt-20">
+                <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
+                  What's Included
+                </h2>
+                <ul className="space-y-3 lg:space-y-4 list-disc list-inside [font-family:'Poppins']">
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    3 days / 2 nights accommodation
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    All wellness meals, juices, and herbal hydration
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Yoga, meditation, and sound-healing sessions
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Art therapy & journaling workshops
+                  </li>
+                  <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    Personalized consultation and follow-up plan
+                  </li>
+                </ul>
+              </div>
+
+              {/* Book This Experience Button */}
+              <div className="mt-12 lg:mt-16 text-center">
+                <button
+                  onClick={() => setShowBookingModal(true)}
+                  className="bg-[#A0522D] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-4 px-8 sm:px-12 rounded-full [font-family:'Poppins'] text-base sm:text-lg font-semibold uppercase transition-colors"
+                >
+                  BOOK THIS EXPERIENCE
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <FooterSection />
+
+      {/* Rejuvenation Booking Modal */}
+      <RejuvenationBookingModal
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+      />
     </div>
   );
 };
