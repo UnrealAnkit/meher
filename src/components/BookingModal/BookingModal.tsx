@@ -44,19 +44,42 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
     try {
       // Save booking to Supabase
-      const { error } = await supabase.from('bookings').insert([
-        {
-          event_id: eventId || null,
-          event_title: eventTitle,
-          event_date: eventDate,
-          selected_slot: selectedSlot,
-          price: price,
-          customer_name: formData.name,
-          customer_email: formData.email,
-          customer_phone: formData.phoneNumber,
-          status: 'pending',
-        },
-      ]);
+      const bookingData = {
+        event_id: eventId || null,
+        event_title: eventTitle,
+        event_date: eventDate,
+        selected_slot: selectedSlot,
+        price: price,
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phoneNumber,
+        status: 'pending',
+      };
+
+      // Try direct insert first (will work if RLS policies are correct)
+      const { error: directInsertError } = await supabase.from('bookings').insert([bookingData]);
+
+      let error = directInsertError;
+
+      // If RLS error, try using the RPC function as fallback
+      if (directInsertError && (directInsertError.code === '42501' || directInsertError.message?.includes('row-level security'))) {
+        console.warn('Direct insert failed due to RLS, trying RPC function fallback...');
+        
+        const { error: rpcError } = await supabase.rpc('insert_booking', {
+          p_event_id: bookingData.event_id,
+          p_event_title: bookingData.event_title,
+          p_event_date: bookingData.event_date,
+          p_selected_slot: bookingData.selected_slot,
+          p_price: bookingData.price,
+          p_customer_name: bookingData.customer_name,
+          p_customer_email: bookingData.customer_email,
+          p_customer_phone: bookingData.customer_phone,
+          p_status: bookingData.status,
+          p_notes: null
+        });
+
+        error = rpcError;
+      }
 
       if (error) throw error;
 
