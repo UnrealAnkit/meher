@@ -96,8 +96,44 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     setMessage({ type: '', text: '' });
 
     try {
+      // Validate amount before sending
+      if (!selectedTotal || selectedTotal <= 0 || isNaN(selectedTotal)) {
+        setMessage({ type: 'error', text: 'Invalid amount. Please select a valid package.' });
+        setSubmitting(false);
+        return;
+      }
+
       // Convert amount to paise (multiply by 100)
-      const amountInPaise = selectedTotal * 100;
+      const amountInPaise = Math.round(selectedTotal * 100);
+
+      // Validate converted amount
+      if (amountInPaise <= 0 || !isFinite(amountInPaise) || !Number.isInteger(amountInPaise)) {
+        setMessage({ type: 'error', text: 'Invalid amount. Please try again.' });
+        setSubmitting(false);
+        return;
+      }
+
+      // Prepare request body - ensure it's always valid
+      const requestBody = {
+        amount: amountInPaise, // Amount in paise (integer)
+        currency: "INR"
+      };
+
+      // Double-check the body is valid before stringifying
+      if (!requestBody.amount || typeof requestBody.amount !== 'number' || requestBody.amount <= 0) {
+        console.error('Invalid request body prepared:', requestBody);
+        setMessage({ type: 'error', text: 'Invalid payment amount. Please contact support.' });
+        setSubmitting(false);
+        return;
+      }
+
+      // Log request body for debugging (remove in production if sensitive)
+      console.log('Creating Razorpay order with:', {
+        amount: requestBody.amount,
+        currency: requestBody.currency,
+        amountType: typeof requestBody.amount,
+        isInteger: Number.isInteger(requestBody.amount)
+      });
 
       // Step 1: Create order from Supabase function
       const response = await fetch("https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-order", {
@@ -106,7 +142,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
           "Content-Type": "application/json",
           "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify({ amount: amountInPaise }),
+        body: JSON.stringify(requestBody), // Ensure body is always JSON.stringified
       });
 
       // Check if response is OK

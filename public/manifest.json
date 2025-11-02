@@ -1,0 +1,16 @@
+{
+  "name": "MEHR - Stay. Heal. Rejuvenate. Celebrate.",
+  "short_name": "MEHR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#A0522D",
+  "icons": [
+    {
+      "src": "/image-5-1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
+
