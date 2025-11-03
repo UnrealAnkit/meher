@@ -38,6 +38,13 @@ Deno.serve(async (req) => {
     // Parse request body
     const bookingData = await req.json();
 
+    // Log received payment data for debugging
+    console.log('Received booking data:', {
+      payment_id: bookingData.payment_id,
+      order_id: bookingData.order_id,
+      customer_email: bookingData.customer_email
+    });
+
     // Validate required fields
     const requiredFields = ['event_title', 'event_date', 'selected_slot', 'price', 'customer_name', 'customer_email', 'customer_phone'];
     const missingFields = requiredFields.filter(field => !bookingData[field]);
@@ -55,32 +62,52 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Prepare insert data - handle empty strings as null
+    const insertData: any = {
+      event_id: bookingData.event_id || null,
+      event_title: bookingData.event_title,
+      event_date: bookingData.event_date,
+      selected_slot: bookingData.selected_slot,
+      price: bookingData.price,
+      customer_name: bookingData.customer_name,
+      customer_email: bookingData.customer_email,
+      customer_phone: bookingData.customer_phone,
+      status: bookingData.status || 'pending',
+      notes: bookingData.notes || null,
+    };
+
+    // Handle payment_id - only include if it's a non-empty string
+    if (bookingData.payment_id && typeof bookingData.payment_id === 'string' && bookingData.payment_id.trim() !== '') {
+      insertData.payment_id = bookingData.payment_id.trim();
+    } else {
+      insertData.payment_id = null;
+    }
+
+    // Handle order_id - only include if it's a non-empty string
+    if (bookingData.order_id && typeof bookingData.order_id === 'string' && bookingData.order_id.trim() !== '') {
+      insertData.order_id = bookingData.order_id.trim();
+    } else {
+      insertData.order_id = null;
+    }
+
+    console.log('Inserting booking with payment_id:', insertData.payment_id, 'order_id:', insertData.order_id);
+
     // Insert booking (using service role bypasses RLS)
     const { data, error } = await supabase
       .from('bookings')
-      .insert([{
-        event_id: bookingData.event_id || null,
-        event_title: bookingData.event_title,
-        event_date: bookingData.event_date,
-        selected_slot: bookingData.selected_slot,
-        price: bookingData.price,
-        customer_name: bookingData.customer_name,
-        customer_email: bookingData.customer_email,
-        customer_phone: bookingData.customer_phone,
-        status: bookingData.status || 'pending',
-        notes: bookingData.notes || null,
-        payment_id: bookingData.payment_id || null,
-        order_id: bookingData.order_id || null,
-      }])
+      .insert([insertData])
       .select()
       .single();
 
     if (error) {
       console.error('Database error:', error);
+      console.error('Failed insert data:', insertData);
       return new Response(
         JSON.stringify({ 
           error: 'Failed to create booking',
-          details: error.message 
+          details: error.message,
+          code: error.code,
+          hint: error.hint
         }),
         { 
           status: 500,
@@ -88,6 +115,12 @@ Deno.serve(async (req) => {
         }
       );
     }
+
+    console.log('Booking created successfully:', {
+      id: data?.id,
+      payment_id: data?.payment_id,
+      order_id: data?.order_id
+    });
 
     return new Response(
       JSON.stringify({ 
