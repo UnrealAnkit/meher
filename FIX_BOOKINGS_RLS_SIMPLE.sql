@@ -91,3 +91,4 @@ AND tablename = 'bookings';
 -- To check if policies exist:
 -- SELECT * FROM pg_policies WHERE tablename = 'bookings';
 
+

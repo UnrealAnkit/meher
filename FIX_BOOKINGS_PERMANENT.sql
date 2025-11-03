@@ -64,3 +64,4 @@ ORDER BY cmd, policyname;
 
 -- Expected: bookings_allow_insert | INSERT | NULL (all roles) | true
 
+

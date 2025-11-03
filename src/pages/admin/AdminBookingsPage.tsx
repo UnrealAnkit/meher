@@ -14,6 +14,8 @@ interface Booking {
   customer_phone: string;
   status: string;
   notes: string | null;
+  payment_id: string | null;
+  order_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -418,6 +420,9 @@ export const AdminBookingsPage: React.FC = () => {
                     Price
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    Payment ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
                     Status
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
@@ -447,6 +452,13 @@ export const AdminBookingsPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica] font-medium">
                       {booking.price}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {booking.payment_id ? (
+                        <span className="font-mono text-xs text-[#ab4b28]">{booking.payment_id}</span>
+                      ) : (
+                        <span className="text-gray-400 text-xs">—</span>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`inline-block px-3 py-1 rounded text-xs font-semibold [font-family:'Poppins',Helvetica] uppercase ${getStatusColor(booking.status)}`}>
@@ -621,6 +633,22 @@ export const AdminBookingsPage: React.FC = () => {
                       })}
                     </p>
                   </div>
+                  {viewingBooking.payment_id && (
+                    <div>
+                      <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Payment ID</p>
+                      <p className="text-base font-mono text-xs text-[#ab4b28] [font-family:'Poppins',Helvetica] break-all">
+                        {viewingBooking.payment_id}
+                      </p>
+                    </div>
+                  )}
+                  {viewingBooking.order_id && (
+                    <div>
+                      <p className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Order ID</p>
+                      <p className="text-base font-mono text-xs text-[#ab4b28] [font-family:'Poppins',Helvetica] break-all">
+                        {viewingBooking.order_id}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
 

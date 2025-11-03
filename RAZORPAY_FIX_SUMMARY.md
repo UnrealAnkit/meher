@@ -138,3 +138,4 @@ The new `manifest.json` includes:
 - Edge Function Code: `supabase/functions/create-order/index.ts`
 - Frontend Integration: `src/components/RejuvenationBookingModal/RejuvenationBookingModal.tsx`
 
+

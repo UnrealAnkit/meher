@@ -111,3 +111,4 @@ Expected response:
 **Still getting RLS errors**
 → The frontend should now use the Edge Function, which bypasses RLS. Make sure you deployed the function and set the service role key.
 
+

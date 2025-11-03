@@ -69,6 +69,8 @@ Deno.serve(async (req) => {
         customer_phone: bookingData.customer_phone,
         status: bookingData.status || 'pending',
         notes: bookingData.notes || null,
+        payment_id: bookingData.payment_id || null,
+        order_id: bookingData.order_id || null,
       }])
       .select()
       .single();
@@ -112,4 +114,5 @@ Deno.serve(async (req) => {
     );
   }
 });
+
 

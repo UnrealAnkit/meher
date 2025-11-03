@@ -123,3 +123,4 @@ supabase functions deploy verify-payment --project-ref zejmgbkizasnkxivobte
 supabase functions logs verify-payment --project-ref zejmgbkizasnkxivobte --tail
 ```
 
+

@@ -301,7 +301,9 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               customer_email: formData.email,
               customer_phone: formData.phoneNumber,
               status: 'confirmed', // Payment successful, so confirmed
-              notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Payment ID: ${response.razorpay_payment_id}, Order ID: ${response.razorpay_order_id}, Signature Verified: Yes`,
+              notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Signature Verified: Yes`,
+              payment_id: response.razorpay_payment_id,
+              order_id: response.razorpay_order_id,
             };
 
             console.log('Saving booking to Supabase:', bookingData);

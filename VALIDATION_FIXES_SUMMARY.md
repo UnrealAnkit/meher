@@ -173,3 +173,4 @@ supabase functions deploy create-order \
 - All errors return proper JSON with clear messages
 - CORS headers are maintained on all responses
 
+
