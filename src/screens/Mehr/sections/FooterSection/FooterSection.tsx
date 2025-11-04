@@ -85,9 +85,11 @@ export const FooterSection = (): JSX.Element => {
                 <div className="[font-family:'Raleway',Helvetica] font-bold text-white text-sm tracking-[0] leading-4 whitespace-nowrap">
                   JOIN US ON OUR BELONGING PROJECT
                 </div>
-                <Button className="w-[233px] h-[38px] rounded-[50px] shadow-[0px_4px_4px_#00000040] bg-[#f9d2a3] hover:bg-[#f4c894] [font-family:'Arial-Bold',Helvetica] font-bold text-[#ab4b28] text-[17.5px] tracking-[0] leading-6">
-                  BOOK YOUR STAY
-                </Button>
+                <Link to="/book-your-stay">
+                  <Button className="w-[233px] h-[38px] rounded-[50px] shadow-[0px_4px_4px_#00000040] bg-[#f9d2a3] hover:bg-[#f4c894] [font-family:'Arial-Bold',Helvetica] font-bold text-[#ab4b28] text-[17.5px] tracking-[0] leading-6">
+                    BOOK YOUR STAY
+                  </Button>
+                </Link>
               </div>
 
               <div className="flex flex-col gap-[14px]">
