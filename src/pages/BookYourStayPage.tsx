@@ -425,7 +425,15 @@ export const BookYourStayPage = (): JSX.Element => {
 
       {/* Main Content */}
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-8 lg:pt-16">
-        {/* You can add additional content here if needed */}
+        {/* Accommodation Options Section */}
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
+          <h2 className="text-left [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[24px] sm:text-[32px] lg:text-[40px] tracking-[0] leading-tight mb-6 lg:mb-8">
+            OUR ACCOMMODATION OPTIONS
+          </h2>
+          <p className="text-left [font-family:'Poppins',Helvetica] font-light text-[#555555] text-[16px] sm:text-[18px] lg:text-[20px] leading-[24px] sm:leading-[28px] lg:leading-[32px] w-full">
+            Spread across three beautifully appointed hotel-style residences - Lhasa Inn & Kathmandu - Menla's elegant deluxe private rooms and suites with en suite bathrooms can accommodate one to four guests each. All rooms feature queen and/or twin beds, made up with high thread count organic linens, as well as air conditioning (May through September), comfy chairs, writing desk, dresser, telephone, free high-speed wifi, original artwork, and Tibetan accents.
+          </p>
+        </div>
       </div>
 
       {/* Customer Info Modal */}
