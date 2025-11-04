@@ -15,7 +15,7 @@ const navItems: NavItem[] = [
   { label: "ABOUT US", path: "/about" },
   { label: "BOOK NOW", hasDropdown: true, dropdownItems: [
     { label: "REJUVENATE", path: "/rejuvenate" },
-    { label: "STAY", path: "/stay" },
+    { label: "STAY", path: "/book-stay" },
     { label: "LEARNING", path: "/learning" }
   ]},
   { label: "CALENDAR", path: "/calendar" },

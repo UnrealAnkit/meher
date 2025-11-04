@@ -101,13 +101,10 @@ Deno.serve(async (req) => {
 
     if (error) {
       console.error('Database error:', error);
-      console.error('Failed insert data:', insertData);
       return new Response(
         JSON.stringify({ 
           error: 'Failed to create booking',
-          details: error.message,
-          code: error.code,
-          hint: error.hint
+          details: error.message 
         }),
         { 
           status: 500,
@@ -115,12 +112,6 @@ Deno.serve(async (req) => {
         }
       );
     }
-
-    console.log('Booking created successfully:', {
-      id: data?.id,
-      payment_id: data?.payment_id,
-      order_id: data?.order_id
-    });
 
     return new Response(
       JSON.stringify({ 
