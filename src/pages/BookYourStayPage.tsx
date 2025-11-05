@@ -446,47 +446,164 @@ export const BookYourStayPage = (): JSX.Element => {
           </p>
         </div>
 
-        {/* Accommodation Option - Single Room Design */}
+        {/* Accommodation Option - Classic Room */}
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
-          <div className="max-w-4xl">
-            {/* Classic Room Subtitle */}
-            <p className="text-[#ab4b28] font-bold text-xl sm:text-2xl lg:text-3xl mb-4 [font-family:'Poppins',Helvetica] text-left">
-              Classic Room
-            </p>
+          <h2 className="text-left [font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-[24px] sm:text-[32px] lg:text-[40px] mb-8">
+            Classic Room
+          </h2>
 
-            {/* Room Image Container with Text Below */}
-            <div className="mb-6">
-              <img 
-                src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York%20(2).png"
-                alt="Earth & Clay Classic Room"
-                className="max-w-full h-auto"
-                style={{ width: 'auto', height: 'auto' }}
-              />
-              
-              {/* Room Name and Price - Positioned in lower-middle-left area below image */}
-              <div className="mt-4 flex items-center justify-center">
-                <div className="text-left" style={{ marginLeft: '-55%' }}>
-                  {/* Room Name */}
-                  <h3 className="text-[#ab4b28] font-normal text-2xl sm:text-3xl lg:text-4xl mb-2 [font-family:'Poppins',Helvetica] uppercase">
-                    EARTH & CLAY
-                  </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
+            {/* Classic Room: Earth & Clay */}
+            <div className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <div className="overflow-hidden rounded-lg mb-6">
+                <img 
+                  src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York%20(2).png"
+                  alt="Earth & Clay Classic Room"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
+                EARTH & CLAY
+              </h3>
+              <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
+                At Rs. 3200
+              </p>
+              <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
+                Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
+              </p>
+              <div className="flex justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                  {/* Price */}
-                  <p className="text-[#ab4b28] font-normal text-lg sm:text-xl [font-family:'Poppins',Helvetica]" style={{ marginLeft: '30px' }}>
-                    At Rs. 3200
-                  </p>
-                </div>
+        {/* Deluxe Room Section */}
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
+          <h2 className="text-left [font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-[24px] sm:text-[32px] lg:text-[40px] mb-8">
+            Deluxe Room
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
+            {/* Room 1: Bloom and Herbs */}
+            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+              <div className="overflow-hidden rounded-lg mb-6">
+                <img 
+                  src="https://meher.b-cdn.net/DSC00941.jpg"
+                  alt="Bloom and Herbs Room"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
+                BLOOM AND HERBS
+              </h3>
+              <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
+                At Rs. 3200
+              </p>
+              <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
+                Soft, feminine, and therapeutic — where the scent of lavender meets the calm of sage. Blush and cream tones with herbal accents awaken gentle rejuvenation — a reminder that healing can be tender.
+              </p>
+              <div className="flex justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
             </div>
 
-            {/* Description */}
-            <p className="text-[#1E1E1E] font-light text-base sm:text-lg leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-left max-w-lg">
-              Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
-            </p>
+            {/* Room 2: Stone and Fog */}
+            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+              <div className="overflow-hidden rounded-lg mb-6">
+                <img 
+                  src="https://meher.b-cdn.net/DSC00969.jpg"
+                  alt="Stone and Fog Room"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
+                STONE AND FOG
+              </h3>
+              <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
+                At Rs. 3200
+              </p>
+              <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
+                Masculine, meditative, and minimal — inspired by mountain stillness and misty mornings. Charcoal hues, stone textures, and simple linen bring quiet clarity — perfect for contemplation and grounding energy.
+              </p>
+              <div className="flex justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
+              </div>
+            </div>
 
-            {/* Circular Indicator */}
-            <div className="flex items-center justify-center">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-[#ab4b28]" style={{ marginLeft: '-60%' }}></div>
+            {/* Room 3: Golden Grasslands */}
+            <div className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <div className="overflow-hidden rounded-lg mb-6">
+                <img 
+                  src="https://meher.b-cdn.net/DSC00890%20copy.jpg"
+                  alt="Golden Grasslands Room"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
+                GOLDEN GRASSLANDS
+              </h3>
+              <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
+                At Rs. 3200
+              </p>
+              <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
+                Cheerful, rustic, and abundant — a celebration of sunlight and simplicity. Ochre, wheat, and leaf-green accents bring warmth and openness, echoing the energy of harvest and gratitude.
+              </p>
+              <div className="flex justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Horizontal line below rooms */}
+          <div className="w-full mt-8 lg:mt-12" style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}></div>
+
+          {/* Next Row: Forest Bathing and Water and Sky */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mt-8 lg:mt-12">
+            {/* Room 4: Forest Bathing */}
+            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+              <div className="overflow-hidden rounded-lg mb-6">
+                <img 
+                  src="https://meher.b-cdn.net/DSC00829.jpg"
+                  alt="Forest Bathing Room"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
+                FOREST BATHING
+              </h3>
+              <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
+                At Rs. 3200
+              </p>
+              <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
+                Calm, reflective, and immersive – inspired by the serenity of the woods. Shades of moss, fern, and bark brown bring the forest indoors, inviting you to slow down, breathe deeper, and reconnect with nature's rhythm.
+              </p>
+              <div className="flex justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
+              </div>
+            </div>
+
+            {/* Room 5: Water and Sky */}
+            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+              <div className="overflow-hidden rounded-lg mb-6">
+                <img 
+                  src="https://meher.b-cdn.net/DSC00893%20copy.jpg"
+                  alt="Water and Sky Room"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
+                WATER AND SKY
+              </h3>
+              <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
+                At Rs. 3200
+              </p>
+              <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
+                Cool, serene, and fluid – this room mirrors the clarity of open skies and flowing rivers. Indigo and mist tones with light blue drapes create a space that soothes the mind, balances emotions, and restores inner flow.
+              </p>
+              <div className="flex justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
+              </div>
             </div>
           </div>
         </div>
