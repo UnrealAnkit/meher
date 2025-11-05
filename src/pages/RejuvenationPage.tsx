@@ -78,7 +78,7 @@ export const RejuvenationPage = (): JSX.Element => {
                 <div className="flex items-center justify-between mt-4">
                   {/* Price */}
                   <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[16px] sm:text-[18px] tracking-[0] leading-6">
-                    From Rs. XXXXXX
+                    From ₹21,250
                   </div>
                   
                   {/* Navigation Button */}
