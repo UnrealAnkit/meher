@@ -446,73 +446,47 @@ export const BookYourStayPage = (): JSX.Element => {
           </p>
         </div>
 
-        {/* Accommodation Options Cards */}
+        {/* Accommodation Option - Single Room Design */}
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Earth & Clay Card */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
-                <img 
-                  src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York.png"
-                  alt="Earth & Clay"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-4 [font-family:'Poppins',Helvetica] uppercase">
-                  EARTH & CLAY
-                </h3>
-                <p className="text-[#555555] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica]">
-                  Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
-                </p>
-                <div className="flex justify-center">
-                  <div className="w-3 h-3 rounded-full border-2 border-[#ab4b28]"></div>
+          <div className="max-w-4xl">
+            {/* Classic Room Subtitle */}
+            <p className="text-[#ab4b28] font-bold text-xl sm:text-2xl lg:text-3xl mb-4 [font-family:'Poppins',Helvetica] text-left">
+              Classic Room
+            </p>
+
+            {/* Room Image Container with Text Below */}
+            <div className="mb-6">
+              <img 
+                src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York%20(2).png"
+                alt="Earth & Clay Classic Room"
+                className="max-w-full h-auto"
+                style={{ width: 'auto', height: 'auto' }}
+              />
+              
+              {/* Room Name and Price - Positioned in lower-middle-left area below image */}
+              <div className="mt-4 flex items-center justify-center">
+                <div className="text-left" style={{ marginLeft: '-55%' }}>
+                  {/* Room Name */}
+                  <h3 className="text-[#ab4b28] font-normal text-2xl sm:text-3xl lg:text-4xl mb-2 [font-family:'Poppins',Helvetica] uppercase">
+                    EARTH & CLAY
+                  </h3>
+
+                  {/* Price */}
+                  <p className="text-[#ab4b28] font-normal text-lg sm:text-xl [font-family:'Poppins',Helvetica]" style={{ marginLeft: '30px' }}>
+                    At Rs. 3200
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Forest Bathing Card */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
-                <img 
-                  src="https://meher.b-cdn.net/Link.png"
-                  alt="Forest Bathing"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-4 [font-family:'Poppins',Helvetica] uppercase">
-                  FOREST BATHING
-                </h3>
-                <p className="text-[#555555] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica]">
-                  Calm, reflective, and immersive — inspired by the serenity of the woods. Shades of moss, fern, and bark brown bring the forest indoors, inviting you to slow down, breathe deeper, and reconnect with nature's rhythm.
-                </p>
-                <div className="flex justify-center">
-                  <div className="w-3 h-3 rounded-full border-2 border-[#ab4b28]"></div>
-                </div>
-              </div>
-            </div>
+            {/* Description */}
+            <p className="text-[#1E1E1E] font-light text-base sm:text-lg leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-left max-w-lg">
+              Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
+            </p>
 
-            {/* Water and Sky Card */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
-                <img 
-                  src="https://meher.b-cdn.net/Link%20(1).png"
-                  alt="Water and Sky"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-4 [font-family:'Poppins',Helvetica] uppercase">
-                  WATER AND SKY
-                </h3>
-                <p className="text-[#555555] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica]">
-                  Cool, serene, and fluid — this room mirrors the clarity of open skies and flowing rivers. Indigo and mist tones with light blue drapes create a space that soothes the mind, balances emotions, and restores inner flow.
-                </p>
-                <div className="flex justify-center">
-                  <div className="w-3 h-3 rounded-full border-2 border-[#ab4b28]"></div>
-                </div>
-              </div>
+            {/* Circular Indicator */}
+            <div className="flex items-center justify-center">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-[#ab4b28]" style={{ marginLeft: '-60%' }}></div>
             </div>
           </div>
         </div>
