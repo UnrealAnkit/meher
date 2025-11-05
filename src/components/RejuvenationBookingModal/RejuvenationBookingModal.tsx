@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, ArrowLeft } from 'lucide-react';
 import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL } from '../../lib/supabase';
 import { RAZORPAY_KEY_ID } from '../../config/razorpay';
@@ -15,6 +16,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
   isOpen,
   onClose,
 }) => {
+  const navigate = useNavigate();
   const [occupancyType, setOccupancyType] = useState<'double' | 'single'>('double');
   const [formData, setFormData] = useState({
     name: '',
@@ -340,18 +342,21 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               throw new Error('Booking was inserted but no data was returned. Please check admin panel.');
             }
 
-            setMessage({ 
-              type: 'success', 
-              text: `Payment successful! Payment ID: ${response.razorpay_payment_id}. Booking confirmed!` 
+            // Redirect to payment success page with all details
+            const successParams = new URLSearchParams({
+              payment_id: response.razorpay_payment_id,
+              order_id: response.razorpay_order_id,
+              event_name: 'MEHR Rejuvenation Retreat - 3 Day Package',
+              event_date: new Date().toISOString().split('T')[0],
+              amount: selectedTotal.toString(),
+              fee: '0',
+              total: selectedTotal.toString(),
+              customer_name: formData.name,
+              payment_method: 'Razorpay',
             });
             
-            // Reset form and close modal after 3 seconds
-            setTimeout(() => {
-              setFormData({ name: '', email: '', phoneNumber: '' });
-              setOccupancyType('double');
-              setSubmitting(false);
-              onClose();
-            }, 3000);
+            onClose();
+            navigate(`/payment/success?${successParams.toString()}`);
           } catch (err) {
             console.error('Error saving booking after payment:', err);
             
@@ -440,14 +445,39 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
       rzp.open();
       
+      // Handle payment failed event
+      rzp.on('payment.failed', function (response: any) {
+        const failedParams = new URLSearchParams({
+          transaction_no: order.id || 'N/A',
+          error: response.error?.description || response.error?.reason || 'Payment failed. Please try again.',
+          event_name: 'MEHR Rejuvenation Retreat - 3 Day Package',
+          event_date: new Date().toISOString().split('T')[0],
+          amount: selectedTotal.toString(),
+          payment_page: '/rejuvenation/package',
+        });
+        
+        onClose();
+        navigate(`/payment/failed?${failedParams.toString()}`);
+        setSubmitting(false);
+      });
+      
       // Don't set submitting to false here - let the handler do it
     } catch (err) {
       console.error('Error during payment setup:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      setMessage({ 
-        type: 'error', 
-        text: `Failed to process payment: ${errorMessage}. Please try again.` 
+      
+      // Redirect to failed page for critical errors
+      const failedParams = new URLSearchParams({
+        transaction_no: 'N/A',
+        error: errorMessage,
+        event_name: 'MEHR Rejuvenation Retreat - 3 Day Package',
+        event_date: new Date().toISOString().split('T')[0],
+        amount: selectedTotal.toString(),
+        payment_page: '/rejuvenation/package',
       });
+      
+      onClose();
+      navigate(`/payment/failed?${failedParams.toString()}`);
       setSubmitting(false);
     }
   };

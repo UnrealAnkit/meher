@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar, X } from "lucide-react";
@@ -31,6 +32,7 @@ declare global {
 }
 
 export const BookYourStayPage = (): JSX.Element => {
+  const navigate = useNavigate();
   const [checkIn, setCheckIn] = useState("2025-09-29");
   const [checkOut, setCheckOut] = useState("2025-09-30");
   const [adults, setAdults] = useState("1");
@@ -239,18 +241,20 @@ export const BookYourStayPage = (): JSX.Element => {
               throw new Error(`Database error: ${errorMessage}`);
             }
 
-            setMessage({ 
-              type: 'success', 
-              text: `Payment successful! Payment ID: ${response.razorpay_payment_id}. Booking confirmed!` 
+            // Redirect to payment success page with all details
+            const successParams = new URLSearchParams({
+              payment_id: response.razorpay_payment_id,
+              order_id: response.razorpay_order_id,
+              event_name: 'MEHR Stay Booking',
+              event_date: checkIn,
+              amount: totalAmount.toString(),
+              fee: '0',
+              total: totalAmount.toString(),
+              customer_name: customerData.name,
+              payment_method: 'Razorpay',
             });
             
-            // Reset form and close modal after 3 seconds
-            setTimeout(() => {
-              setCustomerData({ name: '', email: '', phone: '' });
-              setShowCustomerModal(false);
-              setMessage({ type: '', text: '' });
-              setSubmitting(false);
-            }, 3000);
+            navigate(`/payment/success?${successParams.toString()}`);
 
           } catch (error: any) {
             console.error('Payment processing error:', error);
@@ -280,10 +284,17 @@ export const BookYourStayPage = (): JSX.Element => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
       razorpay.on('payment.failed', function (response: any) {
-        setMessage({ 
-          type: 'error', 
-          text: `Payment failed: ${response.error.description || response.error.reason || 'Unknown error'}. Please try again.` 
+        // Redirect to payment failed page
+        const failedParams = new URLSearchParams({
+          transaction_no: order.id || 'N/A',
+          error: response.error?.description || response.error?.reason || 'Payment failed. Please try again.',
+          event_name: 'MEHR Stay Booking',
+          event_date: checkIn,
+          amount: totalAmount.toString(),
+          payment_page: '/book-your-stay',
         });
+        
+        navigate(`/payment/failed?${failedParams.toString()}`);
         setSubmitting(false);
       });
 
@@ -310,7 +321,7 @@ export const BookYourStayPage = (): JSX.Element => {
       {/* Hero Section */}
       <div className="w-full lg:max-w-[1440px] lg:mx-auto">
         <div className="flex flex-col lg:flex-row">
-          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-center lg:justify-start px-4 sm:px-6 lg:pl-16 pt-0 pb-8 lg:py-0">
+          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-center lg:justify-start px-4 sm:px-6 lg:pl-16 pt-8 sm:pt-12 lg:pt-0 pb-8 lg:py-0">
             <div className="w-full lg:max-w-[570px] text-left">
               <h1 className="text-[#A0522D] text-[32px] sm:text-[40px] md:text-[48px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
                 BOOK YOUR<br />STAY
@@ -433,6 +444,77 @@ export const BookYourStayPage = (): JSX.Element => {
           <p className="text-left [font-family:'Poppins',Helvetica] font-light text-[#555555] text-[16px] sm:text-[18px] lg:text-[20px] leading-[24px] sm:leading-[28px] lg:leading-[32px] w-full">
             Spread across three beautifully appointed hotel-style residences - Lhasa Inn & Kathmandu - Menla's elegant deluxe private rooms and suites with en suite bathrooms can accommodate one to four guests each. All rooms feature queen and/or twin beds, made up with high thread count organic linens, as well as air conditioning (May through September), comfy chairs, writing desk, dresser, telephone, free high-speed wifi, original artwork, and Tibetan accents.
           </p>
+        </div>
+
+        {/* Accommodation Options Cards */}
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Earth & Clay Card */}
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
+                <img 
+                  src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York.png"
+                  alt="Earth & Clay"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-4 [font-family:'Poppins',Helvetica] uppercase">
+                  EARTH & CLAY
+                </h3>
+                <p className="text-[#555555] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica]">
+                  Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
+                </p>
+                <div className="flex justify-center">
+                  <div className="w-3 h-3 rounded-full border-2 border-[#ab4b28]"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Forest Bathing Card */}
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
+                <img 
+                  src="https://meher.b-cdn.net/Link.png"
+                  alt="Forest Bathing"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-4 [font-family:'Poppins',Helvetica] uppercase">
+                  FOREST BATHING
+                </h3>
+                <p className="text-[#555555] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica]">
+                  Calm, reflective, and immersive — inspired by the serenity of the woods. Shades of moss, fern, and bark brown bring the forest indoors, inviting you to slow down, breathe deeper, and reconnect with nature's rhythm.
+                </p>
+                <div className="flex justify-center">
+                  <div className="w-3 h-3 rounded-full border-2 border-[#ab4b28]"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Water and Sky Card */}
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
+                <img 
+                  src="https://meher.b-cdn.net/Link%20(1).png"
+                  alt="Water and Sky"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-4 [font-family:'Poppins',Helvetica] uppercase">
+                  WATER AND SKY
+                </h3>
+                <p className="text-[#555555] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica]">
+                  Cool, serene, and fluid — this room mirrors the clarity of open skies and flowing rivers. Indigo and mist tones with light blue drapes create a space that soothes the mind, balances emotions, and restores inner flow.
+                </p>
+                <div className="flex justify-center">
+                  <div className="w-3 h-3 rounded-full border-2 border-[#ab4b28]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -12,6 +12,8 @@ import { LearningPage } from "./pages/LearningPage";
 import { RejuvenationPage } from "./pages/RejuvenationPage";
 import { RejuvenationPackagePage } from "./pages/RejuvenationPackagePage";
 import { BookYourStayPage } from "./pages/BookYourStayPage";
+import { PaymentSuccessfulPage } from "./pages/PaymentSuccessfulPage";
+import { PaymentFailedPage } from "./pages/PaymentFailedPage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
 import { RefundPolicyPage } from "./pages/RefundPolicyPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
@@ -83,6 +85,8 @@ function App() {
         <Route path="/rejuvenation/package" element={<RejuvenationPackagePage />} />
         <Route path="/book-your-stay" element={<BookYourStayPage />} />
         <Route path="/book-stay" element={<BookYourStayPage />} />
+        <Route path="/payment/success" element={<PaymentSuccessfulPage />} />
+        <Route path="/payment/failed" element={<PaymentFailedPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         
