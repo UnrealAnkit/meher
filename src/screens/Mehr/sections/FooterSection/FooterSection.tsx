@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
 import { Separator } from "../../../../components/ui/separator";
+import { Instagram } from "lucide-react";
 
 const moreLinks = [
   { text: "About us", path: "/about" },
@@ -108,11 +109,15 @@ export const FooterSection = (): JSX.Element => {
                 <div className="[font-family:'Raleway',Helvetica] font-bold text-white text-sm tracking-[0] leading-4 whitespace-nowrap">
                   Find us on
                 </div>
-                <img
-                  className="w-full max-w-[343px] h-9"
-                  alt="Container unordered"
-                  src="/container---unordered-list.svg"
-                />
+                <a
+                  href="https://www.instagram.com/mehr.experiences?igsh=Z2w2ejYxODgxZjAw&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 [font-family:'Raleway',Helvetica] font-normal text-white/90 text-sm tracking-[0] leading-4 hover:text-white transition-colors"
+                >
+                  <Instagram className="w-5 h-5" />
+                  <span>Instagram</span>
+                </a>
               </div>
             </div>
           </div>
