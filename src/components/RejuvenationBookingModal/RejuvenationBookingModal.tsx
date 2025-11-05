@@ -486,124 +486,123 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto p-4">
-      <div className="bg-white rounded-lg w-full max-w-md my-8 shadow-2xl relative">
-        {/* Header */}
-        <div className="bg-[#A0522D] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10 rounded-t-lg">
+      <div className="bg-white rounded-lg w-full max-w-md my-4 sm:my-8 shadow-2xl relative flex flex-col max-h-[95vh]">
+        {/* Header - Sticky */}
+        <div className="bg-[#A0522D] px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-10 rounded-t-lg flex-shrink-0">
           <button
             onClick={onClose}
             className="flex items-center gap-2 text-[#FFDAB9] hover:text-white transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="[font-family:'Poppins',Helvetica] font-medium">GO BACK</span>
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="[font-family:'Poppins',Helvetica] font-medium text-sm sm:text-base">GO BACK</span>
           </button>
-          <h2 className="[font-family:'Poppins',Helvetica] font-bold text-white text-lg uppercase">
+          <h2 className="[font-family:'Poppins',Helvetica] font-bold text-white text-base sm:text-lg uppercase">
             BOOK RETREAT
           </h2>
           <button
             onClick={onClose}
             className="text-white hover:text-[#FFDAB9] transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gray-300"></div>
+        <div className="h-px bg-gray-300 flex-shrink-0"></div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[calc(90vh-80px)] overflow-y-auto">
+        {/* Scrollable Form Content */}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+          <div className="p-4 sm:p-5 space-y-3 sm:space-y-4 overflow-y-auto flex-1">
           {/* Message */}
           {message.text && (
             <div
-              className={`p-4 rounded-lg ${
+              className={`p-3 rounded-lg ${
                 message.type === 'success'
                   ? 'bg-green-50 text-green-700 border border-green-200'
                   : 'bg-red-50 text-red-700 border border-red-200'
-              } [font-family:'Poppins',Helvetica] text-sm`}
+              } [font-family:'Poppins',Helvetica] text-xs`}
             >
               {message.text}
             </div>
           )}
 
           {/* Package Info */}
-          <div className="bg-gradient-to-br from-[#FFF8F0] to-[#FFDAB9] p-5 rounded-xl border-2 border-[#A0522D]/20 shadow-sm">
-            <div className="mb-4 pb-4 border-b border-[#A0522D]/30">
-              <h3 className="[font-family:'Poppins',Helvetica] text-xl font-bold text-[#A0522D] mb-1">
+          <div className="bg-gradient-to-br from-[#FFF8F0] to-[#FFDAB9] p-4 rounded-xl border-2 border-[#A0522D]/20 shadow-sm">
+            <div className="mb-3 pb-3 border-b border-[#A0522D]/30">
+              <h3 className="[font-family:'Poppins',Helvetica] text-lg font-bold text-[#A0522D] mb-0.5">
                 MEHR Rejuvenation Retreat
               </h3>
-              <p className="[font-family:'Poppins',Helvetica] text-xs text-gray-600 uppercase tracking-wide">
+              <p className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-600 uppercase tracking-wide">
                 3 Days / 2 Nights Package
               </p>
             </div>
 
             {/* Occupancy Selection */}
-            <div className="mb-4">
-              <label className="block [font-family:'Poppins',Helvetica] text-sm font-semibold text-[#A0522D] mb-2 uppercase">
+            <div className="mb-3">
+              <label className="block [font-family:'Poppins',Helvetica] text-xs font-semibold text-[#A0522D] mb-1.5 uppercase">
                 Select Occupancy Type
               </label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setOccupancyType('double')}
-                  className={`py-2 px-3 rounded-lg border-2 transition-all ${
+                  className={`py-2 px-2.5 rounded-lg border-2 transition-all ${
                     occupancyType === 'double'
-                      ? 'border-[#A0522D] bg-[#A0522D] text-white'
+                      ? 'border-[#A0522D] bg-[#A0522D] text-white shadow-sm'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-[#A0522D]/50'
                   } [font-family:'Poppins',Helvetica]`}
                 >
-                  <div className="font-semibold text-xs mb-0.5">Double Occupancy</div>
-                  <div className="text-[10px] opacity-90">₹2,500 per night</div>
+                  <div className="font-semibold text-[11px] mb-0.5">Double</div>
+                  <div className="text-[9px] opacity-90">₹2,500/night</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => setOccupancyType('single')}
-                  className={`py-2 px-3 rounded-lg border-2 transition-all ${
+                  className={`py-2 px-2.5 rounded-lg border-2 transition-all ${
                     occupancyType === 'single'
-                      ? 'border-[#A0522D] bg-[#A0522D] text-white'
+                      ? 'border-[#A0522D] bg-[#A0522D] text-white shadow-sm'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-[#A0522D]/50'
                   } [font-family:'Poppins',Helvetica]`}
                 >
-                  <div className="font-semibold text-xs mb-0.5">Single Occupancy</div>
-                  <div className="text-[10px] opacity-90">₹3,500 per night</div>
+                  <div className="font-semibold text-[11px] mb-0.5">Single</div>
+                  <div className="text-[9px] opacity-90">₹3,500/night</div>
                 </button>
               </div>
             </div>
 
             {/* Pricing Breakdown */}
-            <div className="space-y-3 pt-3 border-t border-[#A0522D]/20">
+            <div className="space-y-2 pt-2 border-t border-[#A0522D]/20">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col">
-                  <span className="[font-family:'Poppins',Helvetica] text-sm text-gray-700">
+                  <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-700">
                     Retreat Total Fee
                   </span>
-                  <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-500">
+                  <span className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-500">
                     (per person - 2 nights)
                   </span>
                 </div>
-                <span className="[font-family:'Poppins',Helvetica] text-sm font-medium text-[#A0522D]">
+                <span className="[font-family:'Poppins',Helvetica] text-xs font-medium text-[#A0522D]">
                   ₹{retreatFee.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex justify-between items-center">
                 <div className="flex flex-col">
-                  <span className="[font-family:'Poppins',Helvetica] text-sm text-gray-700">
+                  <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-700">
                     Stay
                   </span>
-                  <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-500">
-                    {occupancyType === 'double' ? '₹2,500 per night - double occupancy' : '₹3,500 per night - single occupancy'}
-                    <br />
-                    (2 nights)
+                  <span className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-500">
+                    {occupancyType === 'double' ? '₹2,500/night (2 nights)' : '₹3,500/night (2 nights)'}
                   </span>
                 </div>
-                <span className="[font-family:'Poppins',Helvetica] text-sm font-medium text-[#A0522D]">
+                <span className="[font-family:'Poppins',Helvetica] text-xs font-medium text-[#A0522D]">
                   ₹{selectedStay.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex justify-between items-center pt-2 border-t-2 border-[#A0522D]/30">
-                <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-[#A0522D]">
+                <span className="[font-family:'Poppins',Helvetica] font-bold text-sm text-[#A0522D]">
                   Total Price
                 </span>
-                <span className="[font-family:'Poppins',Helvetica] font-bold text-lg text-[#A0522D]">
+                <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-[#A0522D]">
                   ₹{selectedTotal.toLocaleString('en-IN')}
                 </span>
               </div>
@@ -612,7 +611,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
           {/* Name Field */}
           <div>
-            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-sm mb-2 uppercase">
+            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               NAME
             </label>
             <input
@@ -621,14 +620,14 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:bg-gray-200 focus:outline-none [font-family:'Poppins',Helvetica] text-[#1E1E1E] transition-colors"
+              className="w-full px-3 py-2.5 rounded-lg bg-gray-100 border-2 border-transparent focus:bg-gray-50 focus:border-[#A0522D] focus:outline-none [font-family:'Poppins',Helvetica] text-sm text-[#1E1E1E] transition-all"
               placeholder="Enter your name"
             />
           </div>
 
           {/* Email Field */}
           <div>
-            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-sm mb-2 uppercase">
+            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               EMAIL
             </label>
             <input
@@ -637,14 +636,14 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:bg-gray-200 focus:outline-none [font-family:'Poppins',Helvetica] text-[#1E1E1E] transition-colors"
+              className="w-full px-3 py-2.5 rounded-lg bg-gray-100 border-2 border-transparent focus:bg-gray-50 focus:border-[#A0522D] focus:outline-none [font-family:'Poppins',Helvetica] text-sm text-[#1E1E1E] transition-all"
               placeholder="Enter your email"
             />
           </div>
 
           {/* Mobile Field */}
           <div>
-            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-sm mb-2 uppercase">
+            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               MOBILE
             </label>
             <input
@@ -653,28 +652,31 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               value={formData.phoneNumber}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-gray-100 border-none focus:bg-gray-200 focus:outline-none [font-family:'Poppins',Helvetica] text-[#1E1E1E] transition-colors"
+              className="w-full px-3 py-2.5 rounded-lg bg-gray-100 border-2 border-transparent focus:bg-gray-50 focus:border-[#A0522D] focus:outline-none [font-family:'Poppins',Helvetica] text-sm text-[#1E1E1E] transition-all"
               placeholder="Enter your mobile number"
             />
           </div>
+          </div>
 
-          {/* Submit and Pay Now Buttons */}
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="flex-1 bg-[#A0522D] hover:bg-[#8b3a1f] disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
-            >
-              {submitting ? 'SUBMITTING...' : 'SUBMIT BOOKING'}
-            </button>
-            <button
-              type="button"
-              onClick={handlePayNow}
-              disabled={submitting}
-              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
-            >
-              PAY NOW
-            </button>
+          {/* Sticky Footer with Buttons */}
+          <div className="border-t border-gray-200 bg-white p-4 sm:p-5 flex-shrink-0 rounded-b-lg">
+            <div className="flex gap-2.5 sm:gap-3">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex-1 bg-[#A0522D] hover:bg-[#8b3a1f] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-2.5 sm:py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold text-xs sm:text-sm uppercase transition-colors shadow-sm"
+              >
+                {submitting ? 'SUBMITTING...' : 'SUBMIT BOOKING'}
+              </button>
+              <button
+                type="button"
+                onClick={handlePayNow}
+                disabled={submitting}
+                className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-2.5 sm:py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold text-xs sm:text-sm uppercase transition-colors shadow-sm"
+              >
+                PAY NOW
+              </button>
+            </div>
           </div>
         </form>
       </div>
