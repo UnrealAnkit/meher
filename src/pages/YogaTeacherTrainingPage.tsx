@@ -42,7 +42,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
             {/* Pricing Information */}
             <div className="mt-4 mb-8">
               <p className="[font-family:'Poppins'] font-normal text-[#ab4b28] text-[18px] sm:text-[20px] lg:text-[22px]">
-                From ₹ — (per person)
+                From ₹96,760 (Including GST) per person
               </p>
             </div>
 
@@ -147,10 +147,13 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
               </h2>
               <div className="space-y-4 [font-family:'Poppins']">
                 <p className="font-light text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  Yoga Teacher Training Certification Program: INR 82,000 + GST
+                  Yoga Teacher Training Certification Program: ₹82,000 + GST (₹96,760 including GST)
                 </p>
                 <p className="font-light text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  Food & Accommodation at MEHR: INR 68,000
+                  Food & Accommodation at MEHR: ₹68,000
+                </p>
+                <p className="font-light text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                  Total (With Food & Accommodation): ₹1,50,000 + GST (₹1,77,000 including GST)
                 </p>
                 <p className="font-light text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
                   Foreign Nationals: € 1400 (All Inclusive)

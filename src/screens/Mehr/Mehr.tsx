@@ -135,34 +135,34 @@ export const Mehr = (): JSX.Element => {
 
       </section>
 
-      <section className="relative w-full flex justify-center mt-[94px] mb-[72px] bg-white">
-        <div className="w-[1340px] shadow-[0px_4px_4px_#00000040] bg-[#f9d2a3] py-[58px] px-[220px]">
-          <p className="[font-family:'Poppins',Helvetica] font-semibold text-[#24312e] text-xl text-center tracking-[0] leading-10">
+      <section className="relative w-full flex justify-center mt-8 sm:mt-12 md:mt-16 lg:mt-[94px] mb-8 sm:mb-12 md:mb-16 lg:mb-[72px] bg-white px-4 sm:px-6 md:px-8">
+        <div className="w-full max-w-[1340px] shadow-[0px_4px_4px_#00000040] bg-[#f9d2a3] py-6 sm:py-8 md:py-12 lg:py-[58px] px-4 sm:px-6 md:px-12 lg:px-[220px]">
+          <p className="[font-family:'Poppins',Helvetica] font-semibold text-[#24312e] text-sm sm:text-base md:text-lg lg:text-xl text-center tracking-[0] leading-6 sm:leading-7 md:leading-8 lg:leading-10">
             MEHR (Mandala Estate for Healing & Rejuvenation) is a living ecosystem of healing estates and rejuvenation experiences! Be it short breaks from daily routine at our 'in city' retreats or our 'in nature' estates, or our deep healing journeys, we provide a one-stop solution to your needs.
           </p>
         </div>
       </section>
 
       {/* Buttons Section - Outside the description card */}
-      <section className="relative w-full flex justify-center -mt-8 mb-[72px] bg-white">
-        <div className="flex justify-center gap-6">
-          <Link to="/book-your-stay">
+      <section className="relative w-full flex justify-center -mt-4 sm:-mt-6 md:-mt-8 mb-8 sm:mb-12 md:mb-16 lg:mb-[72px] bg-white px-4">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-4 md:gap-6 w-full max-w-6xl">
+          <Link to="/book-your-stay" className="w-full sm:w-auto">
             <Button 
-              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white px-8 py-4 text-lg font-bold rounded-full transition-all duration-300 shadow-lg"
+              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
             >
               BOOK YOUR STAY
             </Button>
           </Link>
-          <Link to="/rejuvenation">
+          <Link to="/rejuvenation" className="w-full sm:w-auto">
             <Button 
-              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white px-8 py-4 text-lg font-bold rounded-full transition-all duration-300 shadow-lg"
+              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
             >
               EXPLORE THERAPIES
             </Button>
           </Link>
-          <Link to="/calendar">
+          <Link to="/calendar" className="w-full sm:w-auto">
             <Button 
-              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white px-8 py-4 text-lg font-bold rounded-full transition-all duration-300 shadow-lg"
+              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
             >
               EXPLORE EVENTS
             </Button>
@@ -171,8 +171,8 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* Not Just a Stay Section */}
-      <section className="relative w-full flex justify-center bg-white">
-        <div className="relative w-[1340px] h-[500px] -mt-[50px] overflow-hidden rounded-lg">
+      <section className="relative w-full flex justify-center bg-white px-4 sm:px-6 md:px-8 lg:px-0">
+        <div className="relative w-full max-w-[1340px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[500px] -mt-8 sm:-mt-10 md:-mt-12 lg:-mt-[50px] overflow-hidden rounded-lg">
           {/* Base Image */}
           <div className="absolute inset-0">
             <img
@@ -300,23 +300,23 @@ export const Mehr = (): JSX.Element => {
           </div>
           
           {/* Text Content Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-center px-8 py-12">
-            <div className="max-w-4xl">
+          <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-10 md:py-12 lg:py-16">
+            <div className="max-w-4xl mx-auto w-full">
               {/* ABOUT US */}
-              <div className="mb-4">
-                <h3 className="[font-family:'Poppins',Helvetica] font-bold text-white text-lg tracking-[2px] uppercase drop-shadow-lg">
+              <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+                <h3 className="[font-family:'Poppins',Helvetica] font-bold text-white text-xs sm:text-sm md:text-base lg:text-lg tracking-[1px] sm:tracking-[1.5px] md:tracking-[2px] uppercase drop-shadow-lg">
                   ABOUT US
                 </h3>
               </div>
               
               {/* Main Title */}
-              <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-4xl md:text-5xl tracking-[1px] leading-tight mb-8 drop-shadow-2xl">
+              <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.5px] sm:tracking-[0.75px] md:tracking-[1px] leading-tight sm:leading-tight md:leading-tight mb-4 sm:mb-5 md:mb-6 lg:mb-8 drop-shadow-2xl">
                 Not just a stay.<br />
-                <span className="block mt-2">A bridge to wholeness.</span>
+                <span className="block mt-1 sm:mt-1.5 md:mt-2">A bridge to wholeness.</span>
               </h2>
               
               {/* Description */}
-              <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg md:text-xl leading-relaxed drop-shadow-lg">
+              <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed sm:leading-relaxed md:leading-relaxed drop-shadow-lg">
                 At MEHR, every guest is invited to begin an inward journey. Whether
                 you are a patient needing long-term care, a wellness seeker looking
                 for detox, or simply someone wishing to pause for a night, MEHR

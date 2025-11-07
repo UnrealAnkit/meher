@@ -77,7 +77,7 @@ export const LearningPage = (): JSX.Element => {
                 <div className="flex items-center justify-between">
                   {/* Price */}
                   <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[18px] tracking-[0] leading-6">
-                    From ₹XX,XXX
+                    From ₹96,760
                   </div>
                   
                   {/* Navigation Button */}
@@ -141,7 +141,7 @@ export const LearningPage = (): JSX.Element => {
                 <div className="flex items-center justify-between">
                   {/* Price */}
                   <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[18px] tracking-[0] leading-6">
-                    From ₹XX,XXX
+                    Contact for Pricing
                   </div>
                   
                   {/* Navigation Button */}
