@@ -4,9 +4,9 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { RejuvenationBookingModal } from "../components/RejuvenationBookingModal/RejuvenationBookingModal";
 
 export const RejuvenationPackagePage = (): JSX.Element => {
-  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(1).png";
-  const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(2).png";
-  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(3).png";
+  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(4).png";
+  const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(5).png";
+  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(6).png";
 
   const [showBookingModal, setShowBookingModal] = useState(false);
 
@@ -18,57 +18,23 @@ export const RejuvenationPackagePage = (): JSX.Element => {
       </div>
 
       {/* Main Content - Images Section */}
-      <div className="flex-grow bg-white w-full overflow-x-hidden">
-        <div className="w-full max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
-          {/* Images Grid - Figma Layout: 2-Column with Left Full Height, Right Split */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-            {/* Left Column - Full Height Image 1 */}
-            <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
-              <img
-                src={image1}
-                alt="Rejuvenation Package Image 1"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-
-            {/* Right Column - Split into 2 Rows */}
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8">
-              {/* Top Right - Image 2 */}
-              <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
-                <img
-                  src={image2}
-                  alt="Rejuvenation Package Image 2"
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Bottom Right - Two Image 3s Side by Side */}
-              <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
-                  <img
-                    src={image3}
-                    alt="Rejuvenation Package Image 3"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
-                  <img
-                    src={image3}
-                    alt="Rejuvenation Package Image 4"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </div>
+      <div className="flex-grow bg-white w-full overflow-x-hidden pt-8 lg:pt-12">
+        {/* Images Grid - All 3 images in one row, with equal spacing */}
+        <div className="flex w-full justify-center items-center gap-8 lg:gap-12 px-4 sm:px-6 lg:px-16">
+          <div className="w-[660px] h-[534px] flex items-center justify-center">
+            <img src={image1} alt="Rejuvenation Package Image 1" className="w-full h-full object-contain block m-0 p-0" />
           </div>
+          <div className="w-[300px] h-[527px] flex items-center justify-center">
+            <img src={image2} alt="Rejuvenation Package Image 2" className="w-full h-full object-contain block m-0 p-0" />
+          </div>
+          <div className="w-[300px] h-[527px] flex items-center justify-center">
+            <img src={image3} alt="Rejuvenation Package Image 3" className="w-full h-full object-contain block m-0 p-0" />
+          </div>
+        </div>
 
-          {/* Text Content Section */}
-          <div className="w-full mt-12">
-            <div className="text-left px-4 sm:px-6 lg:px-0">
+        {/* Text Content Section */}
+        <div className="w-full mt-12 px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
+            <div className="text-left">
               <h2 className="[font-family:'Poppins'] font-normal text-[#A0522D] text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] leading-[32px] sm:leading-[38px] lg:leading-[44px] mb-4">
                 Rejuvenation Package: A 3-Day Journey To Reset Your Body,<br />
                 Reconnect With Your Mind, And Renew Your Spirit.
@@ -350,7 +316,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
             </div>
           </div>
         </div>
-      </div>
 
       <FooterSection />
 
