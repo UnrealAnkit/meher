@@ -124,13 +124,13 @@ export const NavbarSection = (): JSX.Element => {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="absolute top-24 left-0 right-0 bg-[#ab4b28] shadow-lg lg:hidden z-50">
-            <div className="flex flex-col py-4">
+            <div className="flex flex-col divide-y divide-white/30">
               {navItems.map((item, index) => (
                 <div key={index}>
                   {item.hasDropdown ? (
-                    <div className="px-4 py-2">
+                    <div className="px-4">
                       <button
-                        className="w-full flex items-center justify-between [font-family:'Poppins'] font-light text-white text-[18px] tracking-[2px] leading-[26px] drop-shadow-lg"
+                        className="w-full flex items-center justify-between [font-family:'Poppins'] font-light text-white text-[18px] tracking-[2px] leading-[26px] drop-shadow-lg py-4"
                         onClick={toggleMobileDropdown}
                         aria-expanded={isMobileDropdownOpen}
                         aria-controls="mobile-booknow-menu"
@@ -144,10 +144,10 @@ export const NavbarSection = (): JSX.Element => {
                       <div
                         id="mobile-booknow-menu"
                         className={`overflow-hidden transition-all duration-300 ${
-                          isMobileDropdownOpen ? 'max-h-96 mt-2' : 'max-h-0'
+                          isMobileDropdownOpen ? 'max-h-96' : 'max-h-0'
                         }`}
                       >
-                        <div className="ml-2 bg-[#ab4b28] rounded-md border border-white/20 divide-y divide-white/30">
+                        <div className="bg-[#ab4b28] divide-y divide-white/30">
                           {item.dropdownItems?.map((dropdownItem, dropdownIndex) => (
                             <Link
                               key={dropdownIndex}
@@ -164,7 +164,7 @@ export const NavbarSection = (): JSX.Element => {
                   ) : (
                     <Link
                       to={item.path!}
-                      className="[font-family:'Poppins'] font-light text-white text-[18px] tracking-[2px] leading-[26px] px-4 py-3 hover:bg-[#8d3d20] transition-colors text-left drop-shadow-lg"
+                      className="block [font-family:'Poppins'] font-light text-white text-[18px] tracking-[2px] leading-[26px] px-4 py-4 hover:bg-[#8d3d20] transition-colors text-left drop-shadow-lg"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.label}
@@ -172,13 +172,15 @@ export const NavbarSection = (): JSX.Element => {
                   )}
                 </div>
               ))}
-              <Link
-                to="/explore"
-                className="mx-4 mt-2 px-6 py-2 rounded-full bg-transparent border border-white text-white hover:bg-white hover:text-[#ab4b28] transition-colors text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                EXPLORE MORE
-              </Link>
+              <div className="px-4 py-4">
+                <Link
+                  to="/explore"
+                  className="block w-full px-6 py-2 rounded-full bg-transparent border border-white text-white hover:bg-white hover:text-[#ab4b28] transition-colors text-center [font-family:'Poppins']"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  EXPLORE MORE
+                </Link>
+              </div>
             </div>
           </div>
         )}

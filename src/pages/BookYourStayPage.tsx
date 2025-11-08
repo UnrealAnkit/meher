@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
@@ -163,20 +163,40 @@ export const BookYourStayPage = (): JSX.Element => {
         handler: async function (response: any) {
           try {
             if (response.error) {
-              setMessage({ 
-                type: 'error', 
-                text: `Payment failed: ${response.error.description || 'Unknown error'}. Please try again.` 
+              const failedParams = new URLSearchParams({
+                order_id: order.id || 'N/A',
+                payment_id: response.razorpay_payment_id || 'N/A',
+                error: response.error.description || response.error.reason || 'Payment failed. Please try again.',
+                event_name: 'MEHR Stay Booking',
+                event_date: checkIn,
+                amount: totalAmount.toString(),
+                fee: '0',
+                total: totalAmount.toString(),
+                customer_name: customerData.name,
+                payment_method: 'Razorpay',
+                payment_page: '/book-your-stay',
               });
               setSubmitting(false);
+              navigate(`/payment/failed?${failedParams.toString()}`);
               return;
             }
 
             if (!response.razorpay_payment_id || !response.razorpay_order_id || !response.razorpay_signature) {
-              setMessage({ 
-                type: 'error', 
-                text: 'Payment response is incomplete. Please contact support.' 
+              const failedParams = new URLSearchParams({
+                order_id: order.id || 'N/A',
+                payment_id: 'N/A',
+                error: 'Payment response is incomplete. Please contact support.',
+                event_name: 'MEHR Stay Booking',
+                event_date: checkIn,
+                amount: totalAmount.toString(),
+                fee: '0',
+                total: totalAmount.toString(),
+                customer_name: customerData.name,
+                payment_method: 'Razorpay',
+                payment_page: '/book-your-stay',
               });
               setSubmitting(false);
+              navigate(`/payment/failed?${failedParams.toString()}`);
               return;
             }
 
@@ -196,22 +216,42 @@ export const BookYourStayPage = (): JSX.Element => {
 
             if (!verifyResponse.ok) {
               const verifyError = await verifyResponse.json().catch(() => ({ error: 'Verification failed' }));
-              setMessage({ 
-                type: 'error', 
-                text: `Payment verification failed: ${verifyError.error || 'Unknown error'}. Please contact support with Payment ID: ${response.razorpay_payment_id}`
+              const failedParams = new URLSearchParams({
+                order_id: response.razorpay_order_id || order.id || 'N/A',
+                payment_id: response.razorpay_payment_id || 'N/A',
+                error: `Payment verification failed: ${verifyError.error || 'Unknown error'}. Please contact support.`,
+                event_name: 'MEHR Stay Booking',
+                event_date: checkIn,
+                amount: totalAmount.toString(),
+                fee: '0',
+                total: totalAmount.toString(),
+                customer_name: customerData.name,
+                payment_method: 'Razorpay',
+                payment_page: '/book-your-stay',
               });
               setSubmitting(false);
+              navigate(`/payment/failed?${failedParams.toString()}`);
               return;
             }
 
             const verifyResult = await verifyResponse.json();
             
             if (!verifyResult.success && !verifyResult.verified) {
-              setMessage({ 
-                type: 'error', 
-                text: `Payment verification failed: ${verifyResult.error || 'Invalid signature'}. Please contact support.`
+              const failedParams = new URLSearchParams({
+                order_id: response.razorpay_order_id || order.id || 'N/A',
+                payment_id: response.razorpay_payment_id || 'N/A',
+                error: `Payment verification failed: ${verifyResult.error || 'Invalid signature'}. Please contact support.`,
+                event_name: 'MEHR Stay Booking',
+                event_date: checkIn,
+                amount: totalAmount.toString(),
+                fee: '0',
+                total: totalAmount.toString(),
+                customer_name: customerData.name,
+                payment_method: 'Razorpay',
+                payment_page: '/book-your-stay',
               });
               setSubmitting(false);
+              navigate(`/payment/failed?${failedParams.toString()}`);
               return;
             }
 
@@ -264,11 +304,21 @@ export const BookYourStayPage = (): JSX.Element => {
 
           } catch (error: any) {
             console.error('Payment processing error:', error);
-            setMessage({ 
-              type: 'error', 
-              text: error.message || 'An error occurred during payment processing. Please contact support.' 
+            const failedParams = new URLSearchParams({
+              order_id: order.id || 'N/A',
+              payment_id: 'N/A',
+              error: error.message || 'An error occurred during payment processing. Please contact support.',
+              event_name: 'MEHR Stay Booking',
+              event_date: checkIn,
+              amount: totalAmount.toString(),
+              fee: '0',
+              total: totalAmount.toString(),
+              customer_name: customerData.name,
+              payment_method: 'Razorpay',
+              payment_page: '/book-your-stay',
             });
             setSubmitting(false);
+            navigate(`/payment/failed?${failedParams.toString()}`);
           }
         },
         prefill: {
@@ -292,11 +342,16 @@ export const BookYourStayPage = (): JSX.Element => {
       razorpay.on('payment.failed', function (response: any) {
         // Redirect to payment failed page
         const failedParams = new URLSearchParams({
-          transaction_no: order.id || 'N/A',
+          order_id: order.id || 'N/A',
+          payment_id: response.razorpay_payment_id || 'N/A',
           error: response.error?.description || response.error?.reason || 'Payment failed. Please try again.',
           event_name: 'MEHR Stay Booking',
           event_date: checkIn,
           amount: totalAmount.toString(),
+          fee: '0',
+          total: totalAmount.toString(),
+          customer_name: customerData.name,
+          payment_method: 'Razorpay',
           payment_page: '/book-your-stay',
         });
         
@@ -306,11 +361,21 @@ export const BookYourStayPage = (): JSX.Element => {
 
     } catch (error: any) {
       console.error('Payment initialization error:', error);
-      setMessage({ 
-        type: 'error', 
-        text: error.message || 'Failed to initialize payment. Please try again.' 
+      const failedParams = new URLSearchParams({
+        order_id: 'N/A',
+        payment_id: 'N/A',
+        error: error.message || 'Failed to initialize payment. Please try again.',
+        event_name: 'MEHR Stay Booking',
+        event_date: checkIn,
+        amount: totalAmount.toString(),
+        fee: '0',
+        total: totalAmount.toString(),
+        customer_name: customerData.name,
+        payment_method: 'Razorpay',
+        payment_page: '/book-your-stay',
       });
       setSubmitting(false);
+      navigate(`/payment/failed?${failedParams.toString()}`);
     }
   };
 
