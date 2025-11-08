@@ -49,7 +49,7 @@ export const RejuvenationPage = (): JSX.Element => {
               {/* Image Section - Top */}
               <div className="h-[250px] sm:h-[300px] lg:h-[300px]">
                 <img 
-                  src="https://meher.b-cdn.net/Frame%2026.png"
+                  src="https://meher.b-cdn.net/Frame%2026%20(3).png"
                   alt="Rejuvenation Package"
                   className="w-full h-full object-cover"
                 />
