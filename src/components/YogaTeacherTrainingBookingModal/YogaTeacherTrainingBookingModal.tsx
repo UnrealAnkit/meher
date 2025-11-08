@@ -41,6 +41,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
 }) => {
   const navigate = useNavigate();
   const [bookingType, setBookingType] = useState<'with' | 'without'>('with');
+  const [testMode, setTestMode] = useState(false); // Test mode for ₹1 verification
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -131,7 +132,8 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
       }
 
       // Convert amount to paise (GST already calculated above)
-      const amountInPaise = Math.round(totalWithGST * 100);
+      // If test mode is enabled, use ₹1 for verification
+      const amountInPaise = testMode ? 100 : Math.round(totalWithGST * 100);
 
       if (amountInPaise <= 0) {
         setMessage({ type: 'error', text: 'Invalid amount. Please check your selection.' });
@@ -182,12 +184,16 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
 
       // Step 3: Initialize Razorpay checkout
       const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
+      const description = testMode 
+        ? `TEST MODE (₹1 Verification) - Yoga Teacher Training - ${bookingTypeText}`
+        : `Yoga Teacher Training Certificate Program - ${bookingTypeText}`;
+      
       const options = {
         key: RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency || "INR",
         name: "MEHR Yoga Teacher Training",
-        description: `Yoga Teacher Training Certificate Program - ${bookingTypeText}`,
+        description: description,
         order_id: order.id,
         handler: async function (response: any) {
           try {
@@ -412,33 +418,65 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               </div>
             </div>
 
-            {/* Fees Breakdown */}
-            <div className="border-t border-gray-300 pt-4 space-y-2">
-              <div className="flex justify-between text-[#1E1E1E]">
-                <span>Yoga Teacher Training Certificate Program Fee</span>
-                <span>₹{programFee.toLocaleString('en-IN')}</span>
-              </div>
-              {bookingType === 'with' && (
-                <div className="flex justify-between text-[#1E1E1E]">
-                  <span>Food And Accommodation</span>
-                  <span>₹{foodAccommodation.toLocaleString('en-IN')}</span>
+            {/* Test Mode Toggle */}
+            <div className="mb-4">
+              <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-yellow-50 border border-yellow-300">
+                <input
+                  type="checkbox"
+                  checked={testMode}
+                  onChange={(e) => setTestMode(e.target.checked)}
+                  className="w-5 h-5 text-[#A0522D] rounded focus:ring-2 focus:ring-[#A0522D]"
+                />
+                <div>
+                  <div className="font-semibold text-[#A0522D]">Test Mode (₹1 Verification)</div>
+                  <div className="text-sm text-gray-600">Enable to test payment with ₹1 charge</div>
                 </div>
-              )}
-              <div className="flex justify-between text-[#1E1E1E]">
-                <span>Subtotal</span>
-                <span>₹{selectedTotal.toLocaleString('en-IN')}</span>
-              </div>
-              <div className="flex justify-between text-[#1E1E1E]">
-                <span>GST (18%)</span>
-                <span>₹{Math.round(gstAmount).toLocaleString('en-IN')}</span>
-              </div>
+              </label>
             </div>
 
-            {/* Total Price */}
-            <div className="border-t-2 border-[#A0522D] mt-4 pt-4 flex justify-between items-center">
-              <span className="text-[#A0522D] font-bold text-lg">TOTAL PRICE (Including GST)</span>
-              <span className="text-[#A0522D] font-bold text-2xl">₹{Math.round(totalWithGST).toLocaleString('en-IN')}</span>
-            </div>
+            {/* Fees Breakdown */}
+            {!testMode ? (
+              <>
+                <div className="border-t border-gray-300 pt-4 space-y-2">
+                  <div className="flex justify-between text-[#1E1E1E]">
+                    <span>Yoga Teacher Training Certificate Program Fee</span>
+                    <span>₹{programFee.toLocaleString('en-IN')}</span>
+                  </div>
+                  {bookingType === 'with' && (
+                    <div className="flex justify-between text-[#1E1E1E]">
+                      <span>Food And Accommodation</span>
+                      <span>₹{foodAccommodation.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-[#1E1E1E]">
+                    <span>Subtotal</span>
+                    <span>₹{selectedTotal.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between text-[#1E1E1E]">
+                    <span>GST (18%)</span>
+                    <span>₹{Math.round(gstAmount).toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+
+                {/* Total Price */}
+                <div className="border-t-2 border-[#A0522D] mt-4 pt-4 flex justify-between items-center">
+                  <span className="text-[#A0522D] font-bold text-lg">TOTAL PRICE (Including GST)</span>
+                  <span className="text-[#A0522D] font-bold text-2xl">₹{Math.round(totalWithGST).toLocaleString('en-IN')}</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="border-t border-gray-300 pt-4 space-y-2">
+                  <div className="flex justify-between text-yellow-700 bg-yellow-50 p-3 rounded">
+                    <span className="font-semibold">Test Mode - Verification Amount</span>
+                    <span className="font-bold">₹1</span>
+                  </div>
+                  <div className="text-sm text-gray-600 italic p-2 bg-gray-50 rounded">
+                    * This is a test payment. You will be charged ₹1 only to verify the payment gateway integration.
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Message */}

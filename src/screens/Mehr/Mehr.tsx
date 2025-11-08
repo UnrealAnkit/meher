@@ -330,7 +330,7 @@ export const Mehr = (): JSX.Element => {
       {/* White background section to eliminate pink strip */}
       <section className="relative w-full bg-white h-[100px]"></section>
 
-      <section className="relative w-full bg-[#ab4b28] py-[37px] mt-[100px]" data-stats-section>
+      <section className="relative w-full bg-[#ab4b28] pt-6 sm:pt-8 md:pt-10 lg:pt-[25px] pb-12 sm:pb-16 md:pb-20 lg:pb-[60px] mt-12 sm:mt-16 md:mt-20 lg:mt-[100px]" data-stats-section>
         <div className="flex justify-center items-center gap-[20px] sm:gap-[40px] md:gap-[60px] lg:gap-[80px] xl:gap-[120px] max-w-[1200px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
           {statsData.map((stat, index) => (
             <React.Fragment key={index}>

@@ -18,6 +18,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 }) => {
   const navigate = useNavigate();
   const [occupancyType, setOccupancyType] = useState<'double' | 'single'>('double');
+  const [testMode, setTestMode] = useState(false); // Test mode for ₹1 verification
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -107,7 +108,8 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       }
 
       // Convert amount to paise (multiply by 100)
-      const amountInPaise = Math.round(selectedTotal * 100);
+      // If test mode is enabled, use ₹1 for verification
+      const amountInPaise = testMode ? 100 : Math.round(selectedTotal * 100);
 
       // Validate converted amount
       if (amountInPaise <= 0 || !isFinite(amountInPaise) || !Number.isInteger(amountInPaise)) {
@@ -203,12 +205,16 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       // ⚠️ CRITICAL: This MUST match RAZORPAY_KEY_ID in Supabase Edge Function
       // Error "The id provided does not exist" occurs when keys don't match
 
+      const description = testMode 
+        ? `TEST MODE (₹1 Verification) - Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`
+        : `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`;
+
       const options = {
         key: RAZORPAY_KEY_ID, // Razorpay Key ID (mandatory) - MUST match server-side key
         amount: order.amount, // Integer in smallest currency subunit (mandatory) - already in paise
         currency: order.currency || "INR", // Currency code (mandatory)
         name: "MEHR Rejuvenation Retreat", // Business name (mandatory)
-        description: `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`, // Transaction description (optional)
+        description: description, // Transaction description (optional)
         image: window.location.origin + "/image-5-1.png", // Business logo (optional)
         order_id: order.id, // Order ID from server (mandatory)
         handler: async function (response: any) {
@@ -570,43 +576,75 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               </div>
             </div>
 
-            {/* Pricing Breakdown */}
-            <div className="space-y-2 pt-2 border-t border-[#A0522D]/20">
-              <div className="flex justify-between items-center">
-                <div className="flex flex-col">
-                  <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-700">
-                    Retreat Total Fee
-                  </span>
-                  <span className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-500">
-                    (per person - 2 nights)
-                  </span>
+            {/* Test Mode Toggle */}
+            <div className="mb-3">
+              <label className="flex items-center gap-2 cursor-pointer p-2.5 rounded-lg bg-yellow-50 border border-yellow-300">
+                <input
+                  type="checkbox"
+                  checked={testMode}
+                  onChange={(e) => setTestMode(e.target.checked)}
+                  className="w-4 h-4 text-[#A0522D] rounded focus:ring-2 focus:ring-[#A0522D]"
+                />
+                <div>
+                  <div className="font-semibold text-[#A0522D] text-xs">Test Mode (₹1 Verification)</div>
+                  <div className="text-[10px] text-gray-600">Test payment with ₹1 charge</div>
                 </div>
-                <span className="[font-family:'Poppins',Helvetica] text-xs font-medium text-[#A0522D]">
-                  ₹{retreatFee.toLocaleString('en-IN')}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex flex-col">
-                  <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-700">
-                    Stay
-                  </span>
-                  <span className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-500">
-                    {occupancyType === 'double' ? '₹2,500/night (2 nights)' : '₹3,500/night (2 nights)'}
-                  </span>
-                </div>
-                <span className="[font-family:'Poppins',Helvetica] text-xs font-medium text-[#A0522D]">
-                  ₹{selectedStay.toLocaleString('en-IN')}
-                </span>
-              </div>
-              <div className="flex justify-between items-center pt-2 border-t-2 border-[#A0522D]/30">
-                <span className="[font-family:'Poppins',Helvetica] font-bold text-sm text-[#A0522D]">
-                  Total Price
-                </span>
-                <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-[#A0522D]">
-                  ₹{selectedTotal.toLocaleString('en-IN')}
-                </span>
-              </div>
+              </label>
             </div>
+
+            {/* Pricing Breakdown */}
+            {!testMode ? (
+              <div className="space-y-2 pt-2 border-t border-[#A0522D]/20">
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col">
+                    <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-700">
+                      Retreat Total Fee
+                    </span>
+                    <span className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-500">
+                      (per person - 2 nights)
+                    </span>
+                  </div>
+                  <span className="[font-family:'Poppins',Helvetica] text-xs font-medium text-[#A0522D]">
+                    ₹{retreatFee.toLocaleString('en-IN')}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col">
+                    <span className="[font-family:'Poppins',Helvetica] text-xs text-gray-700">
+                      Stay
+                    </span>
+                    <span className="[font-family:'Poppins',Helvetica] text-[10px] text-gray-500">
+                      {occupancyType === 'double' ? '₹2,500/night (2 nights)' : '₹3,500/night (2 nights)'}
+                    </span>
+                  </div>
+                  <span className="[font-family:'Poppins',Helvetica] text-xs font-medium text-[#A0522D]">
+                    ₹{selectedStay.toLocaleString('en-IN')}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t-2 border-[#A0522D]/30">
+                  <span className="[font-family:'Poppins',Helvetica] font-bold text-sm text-[#A0522D]">
+                    Total Price
+                  </span>
+                  <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-[#A0522D]">
+                    ₹{selectedTotal.toLocaleString('en-IN')}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2 pt-2 border-t border-[#A0522D]/20">
+                <div className="flex justify-between items-center bg-yellow-50 p-2 rounded">
+                  <span className="[font-family:'Poppins',Helvetica] font-semibold text-xs text-yellow-700">
+                    Test Mode - Verification Amount
+                  </span>
+                  <span className="[font-family:'Poppins',Helvetica] font-bold text-sm text-yellow-700">
+                    ₹1
+                  </span>
+                </div>
+                <div className="text-[10px] text-gray-600 italic p-2 bg-gray-50 rounded">
+                  * Test payment only. You will be charged ₹1 to verify the payment gateway.
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Name Field */}

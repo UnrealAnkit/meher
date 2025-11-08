@@ -10,16 +10,16 @@
  *   order creation (server) and checkout (client)
  */
 
-export const RAZORPAY_KEY_ID = "rzp_test_RapqMdrvD1ZIvp";
+export const RAZORPAY_KEY_ID = "rzp_live_RdBJHsKgb896uM";
 
 /**
- * Razorpay Test Key ID
+ * Razorpay Live Key ID
  * 
  * This is used in:
  * - Supabase Edge Function (should match RAZORPAY_KEY_ID env var)
  * - Frontend checkout options
  * 
- * For production, replace with your live key from Razorpay Dashboard
+ * Production key from Razorpay Dashboard - approved and ready for live payments
  */
 
 
