@@ -142,7 +142,10 @@ export const LearningPage = (): JSX.Element => {
                   </div>
                   
                   {/* Navigation Button */}
-                  <button className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#ab4b28] bg-transparent hover:bg-[#ab4b28] transition-colors duration-300 flex items-center justify-center group flex-shrink-0">
+                  <Link
+                    to="/aerial-yoga-teacher-training"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#ab4b28] bg-transparent hover:bg-[#ab4b28] transition-colors duration-300 flex items-center justify-center group flex-shrink-0"
+                  >
                     <svg 
                       width="16" 
                       height="16" 
@@ -158,7 +161,7 @@ export const LearningPage = (): JSX.Element => {
                         strokeLinejoin="round"
                       />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

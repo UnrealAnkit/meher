@@ -11,24 +11,24 @@ import TherapiesSection from "./sections/TherapiesSection/index";
 
 const statsData = [
   {
-    number: "100+",
-    targetNumber: 100,
-    label: "programs",
+    number: "50+",
+    targetNumber: 50,
+    label: "wellness activities",
   },
   {
-    number: "45+",
-    targetNumber: 45,
-    label: "doctors",
+    number: "15+",
+    targetNumber: 15,
+    label: "Doctors & Experts",
   },
   {
-    number: "17+",
-    targetNumber: 17,
-    label: "skilled experts",
+    number: "10+",
+    targetNumber: 10,
+    label: "holistic experiences & learning",
   },
   {
-    number: "67+",
-    targetNumber: 67,
-    label: "happy clients",
+    number: "150+",
+    targetNumber: 150,
+    label: "happy seekers and counting..",
   },
 ];
 
@@ -331,19 +331,19 @@ export const Mehr = (): JSX.Element => {
       <section className="relative w-full bg-white h-[100px]"></section>
 
       <section className="relative w-full bg-[#ab4b28] pt-6 sm:pt-8 md:pt-10 lg:pt-[25px] pb-12 sm:pb-16 md:pb-20 lg:pb-[60px] mt-12 sm:mt-16 md:mt-20 lg:mt-[100px]" data-stats-section>
-        <div className="flex justify-center items-center gap-[20px] sm:gap-[40px] md:gap-[60px] lg:gap-[80px] xl:gap-[120px] max-w-[1200px] mx-auto px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24">
+        <div className="flex justify-center items-center gap-[15px] sm:gap-[30px] md:gap-[50px] lg:gap-[70px] xl:gap-[100px] max-w-[1400px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
           {statsData.map((stat, index) => (
             <React.Fragment key={index}>
               <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="[font-family:'Poppins',Helvetica] font-normal text-[60px] sm:text-[70px] lg:text-[76px] text-center leading-[70px] sm:leading-[80px] lg:leading-[91px] text-white tracking-[0] whitespace-nowrap">
+                <div className="[font-family:'Poppins',Helvetica] font-normal text-[50px] sm:text-[60px] md:text-[70px] lg:text-[76px] text-center leading-[60px] sm:leading-[70px] md:leading-[80px] lg:leading-[91px] text-white tracking-[0] whitespace-nowrap mb-2">
                   {hasAnimated ? `${animatedNumbers[index]}+` : "0+"}
                 </div>
-                <div className="[font-family:'Poppins',Helvetica] font-light text-[20px] sm:text-[24px] lg:text-[28px] tracking-[0] leading-8 sm:leading-9 lg:leading-10 text-white text-center whitespace-nowrap">
+                <div className="[font-family:'Poppins',Helvetica] font-light text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] tracking-[0] leading-[20px] sm:leading-[22px] md:leading-[24px] lg:leading-[26px] text-white text-center whitespace-nowrap">
                   {stat.label}
                 </div>
               </div>
               {index < statsData.length - 1 && (
-                <div className="w-px h-[80px] sm:h-[90px] lg:h-[109px] bg-white flex-shrink-0" />
+                <div className="w-px h-[100px] sm:h-[110px] md:h-[120px] lg:h-[130px] bg-white flex-shrink-0" />
               )}
             </React.Fragment>
           ))}
@@ -365,21 +365,21 @@ export const Mehr = (): JSX.Element => {
                    <li className="flex items-start">
                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                      <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
-                       Located on the riverbanks in Koregaon Park provides peace within the city.
+                       Located on the riverbanks in Koregaon Park, MEHR provides peace within the city.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                      <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
-                       Connected to CH2 World Foundation gives you access to 50+ therapies, expert doctors, and emotional wellness programs.
+                       Connected to CH2 World Foundation, it gives you access to 50+ therapies, expert doctors, and emotional wellness programs.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                      <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
-                       Integrated with Raaha which is a community space with soulful experiences of music, dance, meditation, and art.
+                       Integrated with Raaha, which is a community space with soulful experiences of music, dance, meditation, and art.
                       </p>
                     </li>
                     
@@ -393,7 +393,7 @@ export const Mehr = (): JSX.Element => {
                     <li className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                      <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
-                        20 mins from Pune International Airport, 3.5 hours from Mumbai International Airport
+                        20 mins from Pune International Airport, 3.5 hours (by road) from Mumbai International Airport
                       </p>
                     </li>
                   </ul>
@@ -404,7 +404,7 @@ export const Mehr = (): JSX.Element => {
                   <img
                    className="w-4/5 h-[120%] object-cover rounded-tl-[12px] rounded-tr-[12px] shadow-lg translate-y-[-8%]"
                     alt="Wellness Session"
-                    src="/rectangle-3.png"
+                    src="https://meher.b-cdn.net/Rectangle%203.png"
                     style={{ marginBottom: '-20%' }}
                 />
               </div>
