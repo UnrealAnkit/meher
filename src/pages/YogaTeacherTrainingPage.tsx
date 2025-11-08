@@ -18,17 +18,20 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
       </div>
 
       {/* Main Content - Images Section */}
-      <div className="flex-grow bg-white w-full overflow-x-hidden pt-8 lg:pt-12">
-        {/* Images Grid - All 3 images in one row, with equal spacing */}
-        <div className="flex w-full justify-center items-center gap-8 lg:gap-12 px-4 sm:px-6 lg:px-16">
-          <div className="w-[660px] h-[534px] flex items-center justify-center">
-            <img src={image1} alt="Yoga Teacher Training Image 1" className="w-full h-full object-contain block m-0 p-0" />
+      <div className="flex-grow bg-white w-full overflow-x-hidden pt-4 sm:pt-6 lg:pt-12">
+        {/* Images Grid - Responsive: 1 column on mobile, 3 columns on desktop */}
+        <div className="flex flex-col md:flex-row flex-nowrap w-full justify-center items-center gap-4 sm:gap-6 lg:gap-12 px-4 sm:px-6 lg:px-16">
+          {/* First Image - Larger */}
+          <div className="w-full md:w-[660px] flex-shrink-0 max-w-full h-auto md:h-[534px] flex items-center justify-center">
+            <img src={image1} alt="Yoga Teacher Training Image 1" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full" loading="lazy" />
           </div>
-          <div className="w-[300px] h-[527px] flex items-center justify-center">
-            <img src={image2} alt="Yoga Teacher Training Image 2" className="w-full h-full object-contain block m-0 p-0" />
+          {/* Second Image */}
+          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center">
+            <img src={image2} alt="Yoga Teacher Training Image 2" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full" loading="lazy" />
           </div>
-          <div className="w-[300px] h-[527px] flex items-center justify-center">
-            <img src={image3} alt="Yoga Teacher Training Image 3" className="w-full h-full object-contain block m-0 p-0" />
+          {/* Third Image */}
+          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center">
+            <img src={image3} alt="Yoga Teacher Training Image 3" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full" loading="lazy" />
           </div>
         </div>
 
