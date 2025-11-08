@@ -22,7 +22,7 @@ export const LearningPage = (): JSX.Element => {
           </div>
           <div className="flex-1">
             <img 
-              src="/Group Yoga class Marbella.png"
+              src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(11).png"
               alt="Experience a Learning Programme" 
               className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
             />

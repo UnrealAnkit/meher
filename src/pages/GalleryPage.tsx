@@ -101,8 +101,8 @@ export const GalleryPage = (): JSX.Element => {
       {/* Hero Section */}
       <div className="mx-auto w-full max-w-[1440px]">
         <div className="flex flex-col md:flex-row">
-          <div className="flex-1 bg-[#FFDAB9] flex items-start justify-start pl-4 md:pl-16 pt-8 md:pt-0 pb-32 md:pb-24">
-            <div className="max-w-[570px] text-left pt-4 md:pt-0">
+          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-start pl-4 md:pl-16 pt-8 md:pt-0 pb-32 md:pb-24">
+            <div className="max-w-[570px] text-left">
               <h1 className="text-[#A0522D] text-[32px] md:text-[48px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
                 GALLERY
               </h1>

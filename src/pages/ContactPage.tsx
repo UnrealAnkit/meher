@@ -50,7 +50,7 @@ export const ContactPage: React.FC = () => {
           </div>
           <div className="flex-1 w-full">
             <img 
-              src="/Group Yoga class Marbella.png"
+              src="https://meher.b-cdn.net/Frame%2013%20(1).png"
               alt="Contact Us" 
               className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover"
             />
