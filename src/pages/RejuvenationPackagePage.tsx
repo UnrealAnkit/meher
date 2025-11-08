@@ -22,16 +22,22 @@ export const RejuvenationPackagePage = (): JSX.Element => {
         {/* Images Grid - Responsive: 1 column on mobile, 3 columns on desktop */}
         <div className="flex flex-col md:flex-row flex-nowrap w-full justify-center items-center gap-4 sm:gap-6 lg:gap-12 px-4 sm:px-6 lg:px-16">
           {/* First Image - Larger */}
-          <div className="w-full md:w-[660px] flex-shrink-0 max-w-full h-auto md:h-[534px] flex items-center justify-center">
-            <img src={image1} alt="Rejuvenation Package Image 1" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full" loading="lazy" />
+          <div className="w-full md:w-[660px] flex-shrink-0 max-w-full h-auto md:h-[534px] flex items-center justify-center animate-fadeInSlide">
+            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
+              <img src={image1} alt="Rejuvenation Package Image 1" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+            </div>
           </div>
           {/* Second Image */}
-          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center">
-            <img src={image2} alt="Rejuvenation Package Image 2" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full" loading="lazy" />
+          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
+            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
+              <img src={image2} alt="Rejuvenation Package Image 2" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+            </div>
           </div>
           {/* Third Image */}
-          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center">
-            <img src={image3} alt="Rejuvenation Package Image 3" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full" loading="lazy" />
+          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
+            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
+              <img src={image3} alt="Rejuvenation Package Image 3" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+            </div>
           </div>
         </div>
 
