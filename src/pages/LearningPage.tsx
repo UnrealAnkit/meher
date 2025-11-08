@@ -10,13 +10,10 @@ export const LearningPage = (): JSX.Element => {
         <NavbarSection />
       </div>
 
-      {/* Spacer */}
-      <div className="h-16"></div>
-
       {/* Hero Section */}
       <div className="mx-auto w-full max-w-[1440px]">
         <div className="flex flex-col md:flex-row">
-          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-start px-6 py-12 sm:px-8 md:px-12 lg:pl-16">
+          <div className="flex-1 bg-[#FFDAB9] flex items-center justify-start px-6 sm:px-8 md:px-12 lg:pl-16 py-6 sm:py-8 md:py-10">
             <div className="max-w-[570px] text-left">
               <h1 className="text-[#A0522D] text-[32px] sm:text-[40px] md:text-[52px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
                 EXPERIENCE A<br />LEARNING<br />PROGRAMME
