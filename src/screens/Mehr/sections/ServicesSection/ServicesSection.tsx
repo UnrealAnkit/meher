@@ -16,7 +16,7 @@ const cardsData = [
     title: "STAY OPTIONS",
     description:
       "Whether it's a one-night city escape, a weekend retreat, a week-long journey, or a month of doctor-guided care — choose the stay that best supports your path to healing and renewal.",
-    image: "/rectangle.png",
+    image: "https://meher.b-cdn.net/Rectangle%20(3).png",
     imageClasses: "rounded-t-[15px] object-cover",
     path: "/book-your-stay",
   },
@@ -24,7 +24,7 @@ const cardsData = [
     title: "Rejuvenation Experiences",
     description:
       "Rejuvenation Experiences — unwind with sauna & steam, mud baths, therapeutic massages, yoga, sound healing, and meditation for complete mind-body renewal.",
-    image: "/rectangle-4.png",
+    image: "https://meher.b-cdn.net/Rectangle%20(2).png",
     imageClasses: "rounded-t-[15px]",
     path: "/rejuvenation",
   },
@@ -51,7 +51,11 @@ export const ServicesSection = (): JSX.Element => {
                 </div>
 
                 <div className="flex-1 flex flex-col items-center px-4 pt-[18px]">
-                  <h3 className="[font-family:'Poppins'] font-semibold text-black text-[32px] tracking-[0] leading-5 text-center whitespace-nowrap">
+                  <h3 className={`[font-family:'Poppins'] font-semibold text-[32px] tracking-[0] leading-5 text-center whitespace-nowrap ${
+                    card.title === "STAY OPTIONS" || card.title === "Rejuvenation Experiences"
+                      ? "text-[#ab4b28]"
+                      : "text-black"
+                  }`}>
                     {card.title}
                   </h3>
 
