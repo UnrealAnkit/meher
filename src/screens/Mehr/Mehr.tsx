@@ -171,8 +171,8 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* Not Just a Stay Section */}
-      <section className="relative w-full flex justify-center bg-white px-4 sm:px-6 md:px-8 lg:px-0">
-        <div className="relative w-full max-w-[1340px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[500px] -mt-8 sm:-mt-10 md:-mt-12 lg:-mt-[50px] overflow-hidden rounded-lg">
+      <section className="relative w-full flex justify-center bg-white px-4 sm:px-6 md:px-8 lg:px-0 mt-8 sm:mt-10 md:mt-12 lg:mt-16">
+        <div className="relative w-full max-w-[1340px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[500px] overflow-hidden rounded-lg">
           {/* Base Image */}
           <div className="absolute inset-0">
             <img
@@ -331,68 +331,70 @@ export const Mehr = (): JSX.Element => {
       <section className="relative w-full bg-white h-[100px]"></section>
 
       <section className="relative w-full bg-[#ab4b28] pt-6 sm:pt-8 md:pt-10 lg:pt-[25px] pb-12 sm:pb-16 md:pb-20 lg:pb-[60px] mt-12 sm:mt-16 md:mt-20 lg:mt-[100px]" data-stats-section>
-        <div className="flex justify-center items-center gap-[15px] sm:gap-[30px] md:gap-[50px] lg:gap-[70px] xl:gap-[100px] max-w-[1400px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-          {statsData.map((stat, index) => (
-            <React.Fragment key={index}>
-              <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="[font-family:'Poppins',Helvetica] font-normal text-[50px] sm:text-[60px] md:text-[70px] lg:text-[76px] text-center leading-[60px] sm:leading-[70px] md:leading-[80px] lg:leading-[91px] text-white tracking-[0] whitespace-nowrap mb-2">
-                  {hasAnimated ? `${animatedNumbers[index]}+` : "0+"}
+        <div className="flex flex-row justify-center items-center gap-1 sm:gap-2 md:gap-[12px] lg:gap-[20px] xl:gap-[35px] 2xl:gap-[55px] max-w-[1400px] mx-auto px-4 sm:px-5 md:px-6 lg:px-10 xl:px-14 overflow-x-auto">
+          <div className="flex flex-row justify-center items-center gap-1 sm:gap-2 md:gap-[12px] lg:gap-[20px] xl:gap-[35px] 2xl:gap-[55px] min-w-max">
+            {statsData.map((stat, index) => (
+              <React.Fragment key={index}>
+                <div className="flex flex-col items-center flex-shrink-0">
+                  <div className="[font-family:'Poppins',Helvetica] font-normal text-[20px] sm:text-[30px] md:text-[45px] lg:text-[55px] xl:text-[65px] 2xl:text-[76px] text-center leading-[24px] sm:leading-[38px] md:leading-[55px] lg:leading-[65px] xl:leading-[75px] 2xl:leading-[91px] text-white tracking-[-0.5px] sm:tracking-[0] whitespace-nowrap mb-0.5 sm:mb-1 md:mb-2">
+                    {hasAnimated ? `${animatedNumbers[index]}+` : "0+"}
+                  </div>
+                  <div className="[font-family:'Poppins',Helvetica] font-light text-[9px] sm:text-[10px] md:text-[13px] lg:text-[15px] xl:text-[17px] 2xl:text-[19px] tracking-[-0.3px] sm:tracking-[-0.2px] md:tracking-[-0.1px] lg:tracking-[0] leading-[11px] sm:leading-[12px] md:leading-[15px] lg:leading-[17px] xl:leading-[19px] 2xl:leading-[21px] text-white text-center whitespace-nowrap">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="[font-family:'Poppins',Helvetica] font-light text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] tracking-[0] leading-[20px] sm:leading-[22px] md:leading-[24px] lg:leading-[26px] text-white text-center whitespace-nowrap">
-                  {stat.label}
-                </div>
-              </div>
-              {index < statsData.length - 1 && (
-                <div className="w-px h-[100px] sm:h-[110px] md:h-[120px] lg:h-[130px] bg-white flex-shrink-0" />
-              )}
-            </React.Fragment>
-          ))}
+                {index < statsData.length - 1 && (
+                  <div className="w-[0.5px] sm:w-px h-[50px] sm:h-[70px] md:h-[90px] lg:h-[100px] xl:h-[110px] 2xl:h-[130px] bg-white flex-shrink-0" />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* What makes MEHR unique section */}
-      <section className="relative w-full py-10 bg-white">
-        <div className="max-w-7xl mx-auto pl-6 pr-0">
-           <div className="bg-[#f9d2a3] rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-8 px-8 pb-0 overflow-hidden">
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+      <section className="relative w-full py-6 sm:py-8 md:py-10 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:pl-6 md:pr-0">
+           <div className="bg-[#f9d2a3] rounded-[12px] sm:rounded-[15px] md:rounded-[18px] shadow-[0px_4px_3.3px_#00000040] pt-6 sm:pt-7 md:pt-8 px-4 sm:px-6 md:px-8 pb-0 overflow-hidden">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7 md:gap-8 items-stretch">
                {/* Text Content */}
-               <div className="pr-4 pt-4 pb-8">
-                  <h2 className="[font-family:'Poppins'] font-light text-black text-2xl mb-6 leading-tight">
+               <div className="pr-0 sm:pr-2 md:pr-4 pt-2 sm:pt-3 md:pt-4 pb-6 sm:pb-7 md:pb-8">
+                  <h2 className="[font-family:'Poppins'] font-light text-black text-xl sm:text-[22px] md:text-2xl mb-4 sm:mb-5 md:mb-6 leading-tight">
                     What makes MEHR unique:
                   </h2>
                 
-                  <ul className="space-y-4">
+                  <ul className="space-y-3 sm:space-y-3.5 md:space-y-4">
                    <li className="flex items-start">
-                     <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
+                     <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-2 sm:mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-black text-sm sm:text-[15px] md:text-base leading-[20px] sm:leading-[22px] md:leading-[24px]">
                        Located on the riverbanks in Koregaon Park, MEHR provides peace within the city.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
-                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-2 sm:mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-black text-sm sm:text-[15px] md:text-base leading-[20px] sm:leading-[22px] md:leading-[24px]">
                        Connected to CH2 World Foundation, it gives you access to 50+ therapies, expert doctors, and emotional wellness programs.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
-                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-2 sm:mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-black text-sm sm:text-[15px] md:text-base leading-[20px] sm:leading-[22px] md:leading-[24px]">
                        Integrated with Raaha, which is a community space with soulful experiences of music, dance, meditation, and art.
                       </p>
                     </li>
                     
                     <li className="flex items-start">
-                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-2 sm:mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-black text-sm sm:text-[15px] md:text-base leading-[20px] sm:leading-[22px] md:leading-[24px]">
                         Not an escape from life, but an integration with yourself and your community.
                       </p>
                     </li>
 
                     <li className="flex items-start">
-                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                     <p className="[font-family:'Poppins'] font-medium text-black text-base leading-[24px]">
+                      <div className="w-1.5 h-1.5 bg-[#ab4b28] rounded-full mt-2 mr-2 sm:mr-3 flex-shrink-0"></div>
+                     <p className="[font-family:'Poppins'] font-medium text-black text-sm sm:text-[15px] md:text-base leading-[20px] sm:leading-[22px] md:leading-[24px]">
                         20 mins from Pune International Airport, 3.5 hours (by road) from Mumbai International Airport
                       </p>
                     </li>
@@ -400,12 +402,12 @@ export const Mehr = (): JSX.Element => {
               </div>
               
               {/* Wellness Session Image */}
-                <div className="relative flex justify-end h-full -mr-8 -mt-8">
+                <div className="relative flex justify-center lg:justify-end h-auto lg:h-full -mr-0 lg:-mr-8 -mt-0 lg:-mt-8 order-first lg:order-last">
                   <img
-                   className="w-4/5 h-[120%] object-cover rounded-tl-[12px] rounded-tr-[12px] shadow-lg translate-y-[-8%]"
+                   className="w-full sm:w-4/5 lg:w-4/5 h-auto lg:h-[120%] max-h-[300px] sm:max-h-[400px] lg:max-h-none object-cover rounded-tl-[12px] rounded-tr-[12px] lg:shadow-lg lg:translate-y-[-8%]"
                     alt="Wellness Session"
                     src="https://meher.b-cdn.net/Rectangle%203.png"
-                    style={{ marginBottom: '-20%' }}
+                    style={{ marginBottom: '0' }}
                 />
               </div>
             </div>
@@ -496,13 +498,13 @@ export const Mehr = (): JSX.Element => {
           {/* Button */}
           <div className="flex justify-center">
             <Link to="/book-your-stay">
-              <Button
+            <Button
                 className="w-[369px] h-11 rounded-[60px] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100"
-              >
+            >
                 <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-center tracking-[0] leading-5">
-                  PLAN YOUR RETREAT WITH US
-                </span>
-              </Button>
+                PLAN YOUR RETREAT WITH US
+              </span>
+            </Button>
             </Link>
           </div>
         </div>
