@@ -77,13 +77,13 @@ const TherapiesSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative w-full bg-[#f9d2a3] py-20">
-      <div className="max-w-[1440px] mx-auto">
-        <h2 className="text-center [font-family:'Poppins',Helvetica] font-light text-black text-[40px] tracking-[0] leading-5 mb-16">
+    <section className="relative w-full bg-[#f9d2a3] py-10 sm:py-14 md:py-16 lg:py-20">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+        <h2 className="text-center [font-family:'Poppins',Helvetica] font-light text-black text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[40px] tracking-[0] leading-[28px] sm:leading-[32px] md:leading-[36px] lg:leading-[40px] mb-8 sm:mb-12 md:mb-14 lg:mb-16">
           THERAPIES & PROGRAMS
         </h2>
         
-        <div className="relative w-full h-[500px] overflow-hidden">
+        <div className="relative w-full h-[600px] sm:h-[650px] md:h-[480px] lg:h-[500px] overflow-hidden">
            {/* Background Image Layer */}
            <div className="absolute inset-0">
              {isLoaded && (
@@ -125,23 +125,28 @@ const TherapiesSection: React.FC = () => {
           </div>
 
           {/* Interactive Sections */}
-          <div className="relative h-full flex">
+          <div className="relative h-full flex flex-col md:flex-row">
             {therapyData.map((therapy, index) => (
               <div
                 key={therapy.id}
-                className="relative flex-1 h-full cursor-pointer group"
+                className="relative flex-1 h-full min-h-[120px] sm:min-h-[130px] md:min-h-0 cursor-pointer group"
                 onMouseEnter={() => setHoveredCard(therapy.id)}
                 onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => setHoveredCard(hoveredCard === therapy.id ? null : therapy.id)}
               >
-                {/* Vertical Divider */}
+                {/* Vertical Divider - Hidden on mobile, shown on desktop */}
                 {index > 0 && (
-                  <div className="absolute left-0 top-0 w-[1px] h-full bg-white/30" />
+                  <div className="hidden md:block absolute left-0 top-0 w-[1px] h-full bg-white/30" />
+                )}
+                {/* Horizontal Divider - Shown on mobile, hidden on desktop */}
+                {index > 0 && (
+                  <div className="md:hidden absolute top-0 left-0 w-full h-[1px] bg-white/30" />
                 )}
 
                 {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-2 sm:p-3 md:p-4">
                   <motion.h3 
-                    className="text-white text-2xl font-semibold mb-4 relative z-10"
+                    className="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-1 sm:mb-2 md:mb-4 relative z-10 px-1"
                     animate={{ 
                       y: hoveredCard === therapy.id ? -10 : 0,
                       transition: { duration: 0.3, ease: "easeInOut" }
@@ -157,7 +162,7 @@ const TherapiesSection: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="text-white text-sm leading-relaxed max-w-md"
+                        className="text-white text-[10px] sm:text-xs md:text-sm leading-relaxed max-w-md px-2"
                       >
                         {therapy.description}
                       </motion.div>
@@ -166,7 +171,7 @@ const TherapiesSection: React.FC = () => {
 
                   {/* Arrow */}
                   <motion.div
-                    className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+                    className="absolute bottom-2 sm:bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ 
                       opacity: hoveredCard === therapy.id ? 1 : 0,
@@ -175,11 +180,11 @@ const TherapiesSection: React.FC = () => {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <svg 
-                      width="24" 
-                      height="24" 
+                      width="20" 
+                      height="20" 
                       viewBox="0 0 24 24" 
                       fill="none" 
-                      className="text-white"
+                      className="text-white sm:w-6 sm:h-6"
                     >
                       <path 
                         d="M7 14L12 9L17 14" 
@@ -208,10 +213,10 @@ const TherapiesSection: React.FC = () => {
         </div>
 
         {/* Explore Programs Button */}
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-8 sm:mt-10 md:mt-12">
           <Button
             onClick={() => navigate('/learning')}
-            className="w-[314px] h-11 bg-[#f9d2a3] hover:bg-[#f5c88f] border border-black rounded-[60px] [font-family:'Poppins',Helvetica] font-light text-black text-xl tracking-[0.50px] leading-[22px]"
+            className="w-full sm:w-[280px] md:w-[300px] lg:w-[314px] h-10 sm:h-11 bg-[#f9d2a3] hover:bg-[#f5c88f] border border-black rounded-[60px] [font-family:'Poppins',Helvetica] font-light text-black text-base sm:text-lg md:text-xl tracking-[0.50px] leading-[20px] sm:leading-[22px]"
           >
             EXPLORE PROGRAMS
           </Button>

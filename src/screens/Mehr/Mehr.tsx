@@ -328,27 +328,25 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* White background section to eliminate pink strip */}
-      <section className="relative w-full bg-white h-[100px]"></section>
+      <section className="relative w-full bg-white h-[40px] sm:h-[50px] md:h-[60px] lg:h-[80px]"></section>
 
-      <section className="relative w-full bg-[#ab4b28] pt-6 sm:pt-8 md:pt-10 lg:pt-[25px] pb-12 sm:pb-16 md:pb-20 lg:pb-[60px] mt-12 sm:mt-16 md:mt-20 lg:mt-[100px]" data-stats-section>
-        <div className="flex flex-row justify-center items-center gap-1 sm:gap-2 md:gap-[12px] lg:gap-[20px] xl:gap-[35px] 2xl:gap-[55px] max-w-[1400px] mx-auto px-4 sm:px-5 md:px-6 lg:px-10 xl:px-14 overflow-x-auto">
-          <div className="flex flex-row justify-center items-center gap-1 sm:gap-2 md:gap-[12px] lg:gap-[20px] xl:gap-[35px] 2xl:gap-[55px] min-w-max">
-            {statsData.map((stat, index) => (
-              <React.Fragment key={index}>
-                <div className="flex flex-col items-center flex-shrink-0">
-                  <div className="[font-family:'Poppins',Helvetica] font-normal text-[20px] sm:text-[30px] md:text-[45px] lg:text-[55px] xl:text-[65px] 2xl:text-[76px] text-center leading-[24px] sm:leading-[38px] md:leading-[55px] lg:leading-[65px] xl:leading-[75px] 2xl:leading-[91px] text-white tracking-[-0.5px] sm:tracking-[0] whitespace-nowrap mb-0.5 sm:mb-1 md:mb-2">
-                    {hasAnimated ? `${animatedNumbers[index]}+` : "0+"}
-                  </div>
-                  <div className="[font-family:'Poppins',Helvetica] font-light text-[9px] sm:text-[10px] md:text-[13px] lg:text-[15px] xl:text-[17px] 2xl:text-[19px] tracking-[-0.3px] sm:tracking-[-0.2px] md:tracking-[-0.1px] lg:tracking-[0] leading-[11px] sm:leading-[12px] md:leading-[15px] lg:leading-[17px] xl:leading-[19px] 2xl:leading-[21px] text-white text-center whitespace-nowrap">
-                    {stat.label}
-                  </div>
+      <section className="relative w-full bg-[#ab4b28] pt-6 sm:pt-8 md:pt-10 lg:pt-[25px] pb-12 sm:pb-16 md:pb-20 lg:pb-[60px] mt-4 sm:mt-6 md:mt-8 lg:mt-[40px]" data-stats-section>
+        <div className="flex flex-row justify-center items-center gap-1 sm:gap-2 md:gap-[8px] lg:gap-[15px] xl:gap-[28px] 2xl:gap-[48px] max-w-[1400px] mx-auto px-3 sm:px-4 md:px-5 lg:px-7 xl:px-11">
+          {statsData.map((stat, index) => (
+            <React.Fragment key={index}>
+              <div className="flex flex-col items-center flex-1 min-w-0 px-0.5 sm:px-1">
+                <div className="[font-family:'Poppins',Helvetica] font-normal text-[22px] sm:text-[32px] md:text-[46px] lg:text-[56px] xl:text-[66px] 2xl:text-[76px] text-center leading-[26px] sm:leading-[38px] md:leading-[54px] lg:leading-[66px] xl:leading-[76px] 2xl:leading-[91px] text-white tracking-[-0.5px] sm:tracking-[0] whitespace-nowrap mb-1 sm:mb-1.5 md:mb-2 lg:mb-2.5">
+                  {hasAnimated ? `${animatedNumbers[index]}+` : "0+"}
                 </div>
-                {index < statsData.length - 1 && (
-                  <div className="w-[0.5px] sm:w-px h-[50px] sm:h-[70px] md:h-[90px] lg:h-[100px] xl:h-[110px] 2xl:h-[130px] bg-white flex-shrink-0" />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+                <div className="[font-family:'Poppins',Helvetica] font-light text-[12px] sm:text-[13px] md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[20px] tracking-[-0.1px] sm:tracking-[0] leading-[16px] sm:leading-[17px] md:leading-[18px] lg:leading-[20px] xl:leading-[22px] 2xl:leading-[24px] text-white text-center max-w-[75px] sm:max-w-[85px] md:max-w-[95px] lg:max-w-[110px] xl:max-w-[130px] 2xl:max-w-none">
+                  {stat.label}
+                </div>
+              </div>
+              {index < statsData.length - 1 && (
+                <div className="w-[0.5px] sm:w-px h-[65px] sm:h-[85px] md:h-[105px] lg:h-[115px] xl:h-[125px] 2xl:h-[140px] bg-white flex-shrink-0" />
+              )}
+            </React.Fragment>
+          ))}
         </div>
       </section>
 
@@ -416,8 +414,8 @@ export const Mehr = (): JSX.Element => {
       </section>
 
       {/* OUR SERVICES section */}
-      <section className="relative w-full py-20 bg-white">
-        <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[40px] tracking-[0] leading-5 mb-12">
+      <section className="relative w-full py-10 sm:py-14 md:py-16 lg:py-20 bg-white">
+        <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] tracking-[0] leading-[34px] sm:leading-[38px] md:leading-[42px] lg:leading-5 mb-8 sm:mb-10 md:mb-11 lg:mb-12">
           OUR SERVICES
         </h2>
         <ServicesSection />
