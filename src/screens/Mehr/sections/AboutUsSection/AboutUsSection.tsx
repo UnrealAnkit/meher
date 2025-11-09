@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
 
 const therapyCategories = [
@@ -48,14 +49,16 @@ export const AboutUsSection = (): JSX.Element => {
       </div>
 
       <div className="flex justify-center mt-[63px]">
-        <Button
-          variant="outline"
-          className="h-auto rounded-[60px] border border-solid border-[#24312e] px-[85px] py-3 bg-transparent hover:bg-transparent"
-        >
-          <span className="[font-family:'Raleway',Helvetica] font-extrabold text-[#181818] text-sm tracking-[0] leading-5">
-            EXPLORE PROGRAMS
-          </span>
-        </Button>
+        <Link to="/learning">
+          <Button
+            variant="outline"
+            className="h-auto rounded-[60px] border border-solid border-[#24312e] px-[85px] py-3 bg-transparent hover:bg-transparent"
+          >
+            <span className="[font-family:'Raleway',Helvetica] font-extrabold text-[#181818] text-sm tracking-[0] leading-5">
+              EXPLORE PROGRAMS
+            </span>
+          </Button>
+        </Link>
       </div>
     </section>
   );

@@ -210,7 +210,7 @@ const TherapiesSection: React.FC = () => {
         {/* Explore Programs Button */}
         <div className="flex justify-center mt-12">
           <Button
-            onClick={() => navigate('/programs')}
+            onClick={() => navigate('/learning')}
             className="w-[314px] h-11 bg-[#f9d2a3] hover:bg-[#f5c88f] border border-black rounded-[60px] [font-family:'Poppins',Helvetica] font-light text-black text-xl tracking-[0.50px] leading-[22px]"
           >
             EXPLORE PROGRAMS

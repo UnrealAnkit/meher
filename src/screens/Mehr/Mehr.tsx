@@ -495,14 +495,15 @@ export const Mehr = (): JSX.Element => {
 
           {/* Button */}
           <div className="flex justify-center">
-            <Button
-              variant="outline"
-              className="w-[369px] h-11 rounded-[60px] border border-solid border-[#24312e] bg-white hover:bg-gray-50 h-auto"
-            >
-              <span className="[font-family:'Raleway',Helvetica] font-extrabold text-[#181818] text-sm text-center tracking-[0] leading-5">
-                PLAN YOUR RETREAT WITH US
-              </span>
-            </Button>
+            <Link to="/book-your-stay">
+              <Button
+                className="w-[369px] h-11 rounded-[60px] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100"
+              >
+                <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-center tracking-[0] leading-5">
+                  PLAN YOUR RETREAT WITH US
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

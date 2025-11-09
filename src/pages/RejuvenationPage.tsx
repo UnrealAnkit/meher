@@ -74,13 +74,8 @@ export const RejuvenationPage = (): JSX.Element => {
                   </p>
                 </div>
 
-                {/* Bottom Section with Price and Button */}
-                <div className="flex items-center justify-between mt-4">
-                  {/* Price */}
-                  <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[16px] sm:text-[18px] tracking-[0] leading-6">
-                    From ₹21,250
-                  </div>
-                  
+                {/* Bottom Section with Button */}
+                <div className="flex items-center justify-end mt-4 mb-4">
                   {/* Navigation Button */}
                   <Link
                     to="/rejuvenation/package"
@@ -102,6 +97,11 @@ export const RejuvenationPage = (): JSX.Element => {
                       />
                     </svg>
                   </Link>
+                </div>
+
+                {/* Price at the bottom */}
+                <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[16px] sm:text-[18px] tracking-[0] leading-6">
+                  From ₹21,250
                 </div>
               </div>
             </div>
