@@ -38,7 +38,6 @@ export const BookYourStayPage = (): JSX.Element => {
   const [adults, setAdults] = useState("1");
   const [promoCode, setPromoCode] = useState("");
   const [showCustomerModal, setShowCustomerModal] = useState(false);
-  const [testMode, setTestMode] = useState(false); // Test mode for ₹1 verification
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [customerData, setCustomerData] = useState({
@@ -98,8 +97,7 @@ export const BookYourStayPage = (): JSX.Element => {
       }
 
       // Convert amount to paise
-      // If test mode is enabled, use ₹1 for verification
-      const amountInPaise = testMode ? 100 : Math.round(totalAmount * 100);
+      const amountInPaise = Math.round(totalAmount * 100);
 
       if (amountInPaise <= 0) {
         setMessage({ type: 'error', text: 'Invalid amount. Please check your dates and number of guests.' });
@@ -149,9 +147,7 @@ export const BookYourStayPage = (): JSX.Element => {
       };
 
       // Step 3: Initialize Razorpay checkout
-      const description = testMode 
-        ? `TEST MODE (₹1 Verification) - Stay Booking - ${nights} night(s) for ${adults} adult(s)`
-        : `Stay Booking - ${nights} night(s) for ${adults} adult(s)`;
+      const description = `Stay Booking - ${nights} night(s) for ${adults} adult(s)`;
       
       const options = {
         key: RAZORPAY_KEY_ID,
@@ -753,48 +749,20 @@ export const BookYourStayPage = (): JSX.Element => {
                 />
               </div>
 
-              {/* Test Mode Toggle */}
-              <div className="mb-4">
-                <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-yellow-50 border border-yellow-300">
-                  <input
-                    type="checkbox"
-                    checked={testMode}
-                    onChange={(e) => setTestMode(e.target.checked)}
-                    className="w-5 h-5 text-[#ab4b28] rounded focus:ring-2 focus:ring-[#ab4b28]"
-                  />
-                  <div>
-                    <div className="font-semibold text-[#ab4b28] [font-family:'Poppins',Helvetica]">Test Mode (₹1 Verification)</div>
-                    <div className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Enable to test payment with ₹1 charge</div>
-                  </div>
-                </label>
+              <div className="bg-[#f9f5f0] p-4 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Nights:</span>
+                  <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">{nights}</span>
+                </div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Adults:</span>
+                  <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">{adults}</span>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-gray-300">
+                  <span className="text-base font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">Total Amount:</span>
+                  <span className="text-xl font-bold text-[#ab4b28] [font-family:'Poppins',Helvetica]">₹{totalAmount.toLocaleString('en-IN')}</span>
+                </div>
               </div>
-
-              {!testMode ? (
-                <div className="bg-[#f9f5f0] p-4 rounded-lg">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Nights:</span>
-                    <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">{nights}</span>
-                  </div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Adults:</span>
-                    <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">{adults}</span>
-                  </div>
-                  <div className="flex justify-between items-center pt-2 border-t border-gray-300">
-                    <span className="text-base font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">Total Amount:</span>
-                    <span className="text-xl font-bold text-[#ab4b28] [font-family:'Poppins',Helvetica]">₹{totalAmount.toLocaleString('en-IN')}</span>
-                  </div>
-                </div>
-              ) : (
-                <div className="bg-[#f9f5f0] p-4 rounded-lg">
-                  <div className="flex justify-between items-center bg-yellow-50 p-3 rounded">
-                    <span className="font-semibold text-yellow-700 [font-family:'Poppins',Helvetica]">Test Mode - Verification Amount</span>
-                    <span className="text-xl font-bold text-yellow-700 [font-family:'Poppins',Helvetica]">₹1</span>
-                  </div>
-                  <div className="text-sm text-gray-600 italic mt-2 [font-family:'Poppins',Helvetica]">
-                    * This is a test payment. You will be charged ₹1 only to verify the payment gateway integration.
-                  </div>
-                </div>
-              )}
 
               <button
                 onClick={handlePayment}

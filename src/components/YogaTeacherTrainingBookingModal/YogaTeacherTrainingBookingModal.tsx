@@ -41,7 +41,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
 }) => {
   const navigate = useNavigate();
   const [bookingType, setBookingType] = useState<'with' | 'without'>('with');
-  const [testMode, setTestMode] = useState(false); // Test mode for ₹1 verification
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -132,8 +131,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
       }
 
       // Convert amount to paise (GST already calculated above)
-      // If test mode is enabled, use ₹1 for verification
-      const amountInPaise = testMode ? 100 : Math.round(totalWithGST * 100);
+      const amountInPaise = Math.round(totalWithGST * 100);
 
       if (amountInPaise <= 0) {
         setMessage({ type: 'error', text: 'Invalid amount. Please check your selection.' });
@@ -184,9 +182,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
 
       // Step 3: Initialize Razorpay checkout
       const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
-      const description = testMode 
-        ? `TEST MODE (₹1 Verification) - Yoga Teacher Training - ${bookingTypeText}`
-        : `Yoga Teacher Training Certificate Program - ${bookingTypeText}`;
+      const description = `Yoga Teacher Training Certificate Program - ${bookingTypeText}`;
       
       const options = {
         key: RAZORPAY_KEY_ID,

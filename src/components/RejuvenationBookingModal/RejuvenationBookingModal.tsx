@@ -18,7 +18,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 }) => {
   const navigate = useNavigate();
   const [occupancyType, setOccupancyType] = useState<'double' | 'single'>('double');
-  const [testMode, setTestMode] = useState(false); // Test mode for ₹1 verification
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -108,8 +107,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       }
 
       // Convert amount to paise (multiply by 100)
-      // If test mode is enabled, use ₹1 for verification
-      const amountInPaise = testMode ? 100 : Math.round(selectedTotal * 100);
+      const amountInPaise = Math.round(selectedTotal * 100);
 
       // Validate converted amount
       if (amountInPaise <= 0 || !isFinite(amountInPaise) || !Number.isInteger(amountInPaise)) {
@@ -205,9 +203,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       // ⚠️ CRITICAL: This MUST match RAZORPAY_KEY_ID in Supabase Edge Function
       // Error "The id provided does not exist" occurs when keys don't match
 
-      const description = testMode 
-        ? `TEST MODE (₹1 Verification) - Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`
-        : `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`;
+      const description = `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`;
 
       const options = {
         key: RAZORPAY_KEY_ID, // Razorpay Key ID (mandatory) - MUST match server-side key
