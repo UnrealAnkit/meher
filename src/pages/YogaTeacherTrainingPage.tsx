@@ -18,7 +18,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow bg-white w-full overflow-x-hidden pt-4 sm:pt-6 lg:pt-12">
+      <div className="flex-grow bg-white w-full overflow-x-hidden pt-0 sm:pt-0 lg:pt-12">
         {/* Desktop Images Section - Show at top on desktop only */}
         <div className="hidden lg:flex flex-row flex-nowrap w-full justify-center items-center gap-12 px-16">
           {/* First Image - Larger */}
@@ -42,7 +42,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
         </div>
 
         {/* Text Content Section */}
-        <div className="w-full mt-12 px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
+        <div className="w-full mt-0 px-4 sm:px-6 lg:px-16 py-6 sm:py-8 lg:py-16">
           <div className="text-left">
             <h1 className="[font-family:'Poppins'] font-normal text-[#A0522D] text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] leading-tight mb-4">
               Yoga Teacher Training Certificate Program
@@ -95,7 +95,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
             </div>
 
             {/* Mobile/Tablet Images Section - Show above "What makes this program unique" */}
-            <div className="lg:hidden mt-12">
+            <div className="lg:hidden mt-8">
               {/* One large image on top */}
               <div className="w-full mb-4">
                 <div className="w-full overflow-hidden rounded-xl shadow-lg">
@@ -114,7 +114,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
             </div>
 
             {/* What makes this program unique */}
-            <div className="mt-12 lg:mt-16">
+            <div className="mt-6 lg:mt-16">
               <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                 What makes this program unique
               </h2>
