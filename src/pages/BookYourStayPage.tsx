@@ -651,7 +651,7 @@ export const BookYourStayPage = (): JSX.Element => {
             </Link>
 
             {/* Room 5: Water and Sky */}
-            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+            <Link to="/book-stay/water-and-sky" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/DSC00893%20copy.jpg"
@@ -663,7 +663,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 WATER AND SKY
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 2500
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Cool, serene, and fluid – this room mirrors the clarity of open skies and flowing rivers. Indigo and mist tones with light blue drapes create a space that soothes the mind, balances emotions, and restores inner flow.
@@ -671,7 +671,7 @@ export const BookYourStayPage = (): JSX.Element => {
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

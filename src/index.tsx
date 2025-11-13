@@ -19,6 +19,7 @@ import { BloomAndHerbsPage } from "./pages/BloomAndHerbsPage";
 import { StoneAndFogPage } from "./pages/StoneAndFogPage";
 import { GoldenGrasslandsPage } from "./pages/GoldenGrasslandsPage";
 import { ForestBathingPage } from "./pages/ForestBathingPage";
+import { WaterAndSkyPage } from "./pages/WaterAndSkyPage";
 import { PaymentSuccessfulPage } from "./pages/PaymentSuccessfulPage";
 import { PaymentFailedPage } from "./pages/PaymentFailedPage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
@@ -99,6 +100,7 @@ function App() {
         <Route path="/book-stay/stone-and-fog" element={<StoneAndFogPage />} />
         <Route path="/book-stay/golden-grasslands" element={<GoldenGrasslandsPage />} />
         <Route path="/book-stay/forest-bathing" element={<ForestBathingPage />} />
+        <Route path="/book-stay/water-and-sky" element={<WaterAndSkyPage />} />
         <Route path="/payment/success" element={<PaymentSuccessfulPage />} />
         <Route path="/payment/failed" element={<PaymentFailedPage />} />
         <Route path="/blogs" element={<BlogsPage />} />

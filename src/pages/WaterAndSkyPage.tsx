@@ -31,7 +31,7 @@ declare global {
   }
 }
 
-export const BloomAndHerbsPage = (): JSX.Element => {
+export const WaterAndSkyPage = (): JSX.Element => {
   const navigate = useNavigate();
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -41,7 +41,7 @@ export const BloomAndHerbsPage = (): JSX.Element => {
     email: '',
     phone: '',
   });
-  const price = 3000;
+  const price = 2500;
 
   async function handlePayment() {
     // Validate customer data
@@ -113,7 +113,7 @@ export const BloomAndHerbsPage = (): JSX.Element => {
       };
 
       // Step 3: Initialize Razorpay checkout
-      const description = `Bloom and Herbs Room Booking`;
+      const description = `Water and Sky Room Booking`;
       
       const options = {
         key: RAZORPAY_KEY_ID,
@@ -129,14 +129,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
                 order_id: order.id || 'N/A',
                 payment_id: response.razorpay_payment_id || 'N/A',
                 error: response.error.description || response.error.reason || 'Payment failed. Please try again.',
-                event_name: 'Bloom and Herbs Room Booking',
+                event_name: 'Water and Sky Room Booking',
                 event_date: new Date().toLocaleDateString(),
                 amount: price.toString(),
                 fee: '0',
                 total: price.toString(),
                 customer_name: customerData.name,
                 payment_method: 'Razorpay',
-                payment_page: '/book-stay/bloom-and-herbs',
+                payment_page: '/book-stay/water-and-sky',
               });
               setSubmitting(false);
               navigate(`/payment/failed?${failedParams.toString()}`);
@@ -148,14 +148,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
                 order_id: order.id || 'N/A',
                 payment_id: 'N/A',
                 error: 'Payment response is incomplete. Please contact support.',
-                event_name: 'Bloom and Herbs Room Booking',
+                event_name: 'Water and Sky Room Booking',
                 event_date: new Date().toLocaleDateString(),
                 amount: price.toString(),
                 fee: '0',
                 total: price.toString(),
                 customer_name: customerData.name,
                 payment_method: 'Razorpay',
-                payment_page: '/book-stay/bloom-and-herbs',
+                payment_page: '/book-stay/water-and-sky',
               });
               setSubmitting(false);
               navigate(`/payment/failed?${failedParams.toString()}`);
@@ -182,14 +182,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
                 order_id: response.razorpay_order_id || order.id || 'N/A',
                 payment_id: response.razorpay_payment_id || 'N/A',
                 error: `Payment verification failed: ${verifyError.error || 'Unknown error'}. Please contact support.`,
-                event_name: 'Bloom and Herbs Room Booking',
+                event_name: 'Water and Sky Room Booking',
                 event_date: new Date().toLocaleDateString(),
                 amount: price.toString(),
                 fee: '0',
                 total: price.toString(),
                 customer_name: customerData.name,
                 payment_method: 'Razorpay',
-                payment_page: '/book-stay/bloom-and-herbs',
+                payment_page: '/book-stay/water-and-sky',
               });
               setSubmitting(false);
               navigate(`/payment/failed?${failedParams.toString()}`);
@@ -203,14 +203,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
                 order_id: response.razorpay_order_id || order.id || 'N/A',
                 payment_id: response.razorpay_payment_id || 'N/A',
                 error: `Payment verification failed: ${verifyResult.error || 'Invalid signature'}. Please contact support.`,
-                event_name: 'Bloom and Herbs Room Booking',
+                event_name: 'Water and Sky Room Booking',
                 event_date: new Date().toLocaleDateString(),
                 amount: price.toString(),
                 fee: '0',
                 total: price.toString(),
                 customer_name: customerData.name,
                 payment_method: 'Razorpay',
-                payment_page: '/book-stay/bloom-and-herbs',
+                payment_page: '/book-stay/water-and-sky',
               });
               setSubmitting(false);
               navigate(`/payment/failed?${failedParams.toString()}`);
@@ -220,15 +220,15 @@ export const BloomAndHerbsPage = (): JSX.Element => {
             // Step 5: Save booking to database
             const bookingData = {
               event_id: null,
-              event_title: 'Bloom and Herbs Room Booking',
+              event_title: 'Water and Sky Room Booking',
               event_date: new Date().toLocaleDateString(),
-              selected_slot: 'Bloom and Herbs Room',
+              selected_slot: 'Water and Sky Room',
               price: `₹${price.toLocaleString('en-IN')}`,
               customer_name: customerData.name,
               customer_email: customerData.email,
               customer_phone: customerData.phone,
               status: 'confirmed',
-              notes: 'Bloom and Herbs Room Booking',
+              notes: 'Water and Sky Room Booking',
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
             };
@@ -253,7 +253,7 @@ export const BloomAndHerbsPage = (): JSX.Element => {
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
-              event_name: 'Forest Bathing Room Booking',
+              event_name: 'Water and Sky Room Booking',
               event_date: new Date().toLocaleDateString(),
               amount: price.toString(),
               fee: '0',
@@ -270,14 +270,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
               order_id: order.id || 'N/A',
               payment_id: 'N/A',
               error: error.message || 'An unexpected error occurred. Please contact support.',
-              event_name: 'Bloom and Herbs Room Booking',
+              event_name: 'Water and Sky Room Booking',
               event_date: new Date().toLocaleDateString(),
               amount: price.toString(),
               fee: '0',
               total: price.toString(),
               customer_name: customerData.name,
               payment_method: 'Razorpay',
-              payment_page: '/book-stay/bloom-and-herbs',
+              payment_page: '/book-stay/water-and-sky',
             });
             setSubmitting(false);
             navigate(`/payment/failed?${failedParams.toString()}`);
@@ -314,7 +314,7 @@ export const BloomAndHerbsPage = (): JSX.Element => {
       {/* Hero Video Section */}
       <section className="relative w-full bg-white">
         <video
-          src="https://meher.b-cdn.net/Bloom%20%26%20Herbs.mp4"
+          src="https://meher.b-cdn.net/Water%20%26%20Sky.mp4"
           autoPlay
           loop
           muted
@@ -329,13 +329,13 @@ export const BloomAndHerbsPage = (): JSX.Element => {
           {/* Heading with Price Badge */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 lg:mb-8">
             <h1 className="[font-family:'Poppins',Helvetica] font-normal text-[#ab4b28] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
-              BLOOM AND HERBS
+              WATER AND SKY
             </h1>
             {/* Price Badge */}
             <div className="flex-shrink-0">
               <div className="bg-[#f9d2a3] rounded-lg px-6 py-4 border-2 border-[#ab4b28] inline-block">
                 <div className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-2xl sm:text-3xl">
-                  ₹ 3000
+                  ₹ 2500
                 </div>
               </div>
             </div>
@@ -343,11 +343,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
           
           {/* Description */}
           <div className="space-y-4 sm:space-y-6">
-            <p className="[font-family:'Poppins',Helvetica] font-normal text-black text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed w-full">
-              Soft, feminine, and profoundly therapeutic — a haven where the delicate scent of lavender dances with the grounding calm of sage.
+            <p className="[font-family:'Poppins',Helvetica] font-normal text-[#7a574f] text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed w-full">
+              Cool, serene, and fluid — a tranquil escape that mirrors the vast clarity of open skies and the effortless grace of flowing rivers.
             </p>
-            <p className="[font-family:'Poppins',Helvetica] font-normal text-black text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed w-full">
-              It's where stillness blooms — a cocoon of serenity that nurtures your senses, restores your spirit, and reminds you that true healing unfolds gently, like petals opening to light.
+            <p className="[font-family:'Poppins',Helvetica] font-normal text-[#7a574f] text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed w-full">
+              Hues of indigo and mist mingle with airy blue drapes, creating an ambience that feels like a slow, deep breath.
+            </p>
+            <p className="[font-family:'Poppins',Helvetica] font-normal text-[#7a574f] text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed w-full">
+              Here, the mind finds calm, emotions find balance, and your spirit rediscovers its natural rhythm — a gentle return to flow and freedom.
             </p>
           </div>
         </div>
@@ -364,10 +367,10 @@ export const BloomAndHerbsPage = (): JSX.Element => {
           {/* Gallery Grid: Left column (1 large), Right column (1 top, 2 below) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:items-stretch">
             {/* Left Column: Single large image */}
-            <div className="relative w-full h-full rounded-lg overflow-hidden">
+            <div className="relative w-full h-full rounded-lg overflow-hidden min-h-[400px] lg:min-h-[600px]">
               <img
-                src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(31).png"
-                alt="Bloom and Herbs Room View 1"
+                src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(35).png"
+                alt="Water and Sky Room View 1"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -375,30 +378,30 @@ export const BloomAndHerbsPage = (): JSX.Element => {
 
             {/* Right Column: 1 image on top, 2 images below */}
             <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 h-full">
-              {/* Top image in right column */}
-              <div className="relative w-full flex-1 rounded-lg overflow-hidden">
+              {/* Top image - wider */}
+              <div className="relative w-full flex-1 rounded-lg overflow-hidden min-h-[250px]">
                 <img
-                  src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(32).png"
-                  alt="Bloom and Herbs Room View 2"
+                  src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(36).png"
+                  alt="Water and Sky Room View 2"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>
 
-              {/* Two images below */}
+              {/* Bottom two images side by side */}
               <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 flex-1">
-                <div className="relative w-full h-full rounded-lg overflow-hidden">
+                <div className="relative w-full h-full rounded-lg overflow-hidden min-h-[200px]">
                   <img
-                    src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(33).png"
-                    alt="Bloom and Herbs Room View 3"
+                    src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(37).png"
+                    alt="Water and Sky Room View 3"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
                 </div>
-                <div className="relative w-full h-full rounded-lg overflow-hidden">
+                <div className="relative w-full h-full rounded-lg overflow-hidden min-h-[200px]">
                   <img
-                    src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(34).png"
-                    alt="Bloom and Herbs Room View 4"
+                    src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(38).png"
+                    alt="Water and Sky Room View 4"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
@@ -517,4 +520,5 @@ export const BloomAndHerbsPage = (): JSX.Element => {
     </div>
   );
 };
+
 
