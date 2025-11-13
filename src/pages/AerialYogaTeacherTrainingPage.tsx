@@ -17,26 +17,26 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
         <NavbarSection />
       </div>
 
-      {/* Main Content - Images Section */}
+      {/* Main Content */}
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-4 sm:pt-6 lg:pt-12">
-        {/* Images Grid - Responsive: 1 column on mobile, 3 columns on desktop */}
-        <div className="flex flex-col md:flex-row flex-nowrap w-full justify-center items-center gap-4 sm:gap-6 lg:gap-12 px-4 sm:px-6 lg:px-16">
+        {/* Desktop Images Section - Show at top on desktop only */}
+        <div className="hidden lg:flex flex-row flex-nowrap w-full justify-center items-center gap-12 px-16">
           {/* First Image - Larger */}
-          <div className="w-full md:w-[660px] flex-shrink-0 max-w-full h-auto md:h-[534px] flex items-center justify-center animate-fadeInSlide">
+          <div className="w-[660px] flex-shrink-0 h-[534px] flex items-center justify-center animate-fadeInSlide">
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image1} alt="Aerial Yoga Teacher Training Image 1" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={image1} alt="Aerial Yoga Teacher Training Image 1" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
           {/* Second Image */}
-          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
+          <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image2} alt="Aerial Yoga Teacher Training Image 2" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={image2} alt="Aerial Yoga Teacher Training Image 2" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
           {/* Third Image */}
-          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
+          <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image3} alt="Aerial Yoga Teacher Training Image 3" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={image3} alt="Aerial Yoga Teacher Training Image 3" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
         </div>
@@ -69,6 +69,46 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
               </p>
             </div>
 
+            {/* Mobile/Tablet Images Section - Show above "What makes MEHR unique" */}
+            <div className="lg:hidden mt-12">
+              {/* One large image on top */}
+              <div className="w-full mb-4">
+                <div className="w-full overflow-hidden rounded-xl shadow-lg">
+                  <img src={image1} alt="Aerial Yoga Teacher Training Image 1" className="w-full h-auto object-cover" loading="lazy" />
+                </div>
+              </div>
+              {/* Two images side by side below */}
+              <div className="flex gap-4">
+                <div className="flex-1 overflow-hidden rounded-xl shadow-lg">
+                  <img src={image2} alt="Aerial Yoga Teacher Training Image 2" className="w-full h-auto object-cover" loading="lazy" />
+                </div>
+                <div className="flex-1 overflow-hidden rounded-xl shadow-lg">
+                  <img src={image3} alt="Aerial Yoga Teacher Training Image 3" className="w-full h-auto object-cover" loading="lazy" />
+                </div>
+              </div>
+            </div>
+
+            {/* What makes MEHR unique */}
+            <div className="mt-12 lg:mt-16">
+              <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
+                What makes MEHR unique
+              </h2>
+              <div className="space-y-4 [font-family:'Poppins']">
+                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                  50+ wellness activities
+                </p>
+                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                  15+ Doctors & Experts
+                </p>
+                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                  10+ holistic experiences & learning
+                </p>
+                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                  150+ happy seekers and counting..
+                </p>
+              </div>
+            </div>
+
             {/* Meet the Instructor Section */}
             <div className="mt-12 lg:mt-16">
               {/* Image and Text Side by Side */}
@@ -92,27 +132,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
                     Practicing Yoga since 1998 and teaching since 2014, Yoko's approach blends traditional yogic philosophy with modern movement techniques, offering a practice that is both rooted in ancient wisdom and attuned to the needs of contemporary bodies and minds.
                   </p>
                 </div>
-              </div>
-            </div>
-
-            {/* What makes MEHR unique */}
-            <div className="mt-12 lg:mt-16">
-              <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
-                What makes MEHR unique
-              </h2>
-              <div className="space-y-4 [font-family:'Poppins']">
-                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  50+ wellness activities
-                </p>
-                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  15+ Doctors & Experts
-                </p>
-                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  10+ holistic experiences & learning
-                </p>
-                <p className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  150+ happy seekers and counting..
-                </p>
               </div>
             </div>
 

@@ -17,26 +17,26 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
         <NavbarSection />
       </div>
 
-      {/* Main Content - Images Section */}
+      {/* Main Content */}
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-4 sm:pt-6 lg:pt-12">
-        {/* Images Grid - Responsive: 1 column on mobile, 3 columns on desktop */}
-        <div className="flex flex-col md:flex-row flex-nowrap w-full justify-center items-center gap-4 sm:gap-6 lg:gap-12 px-4 sm:px-6 lg:px-16">
+        {/* Desktop Images Section - Show at top on desktop only */}
+        <div className="hidden lg:flex flex-row flex-nowrap w-full justify-center items-center gap-12 px-16">
           {/* First Image - Larger */}
-          <div className="w-full md:w-[660px] flex-shrink-0 max-w-full h-auto md:h-[534px] flex items-center justify-center animate-fadeInSlide">
+          <div className="w-[660px] flex-shrink-0 h-[534px] flex items-center justify-center animate-fadeInSlide">
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image1} alt="Yoga Teacher Training Image 1" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={image1} alt="Yoga Teacher Training Image 1" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
           {/* Second Image */}
-          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
+          <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image2} alt="Yoga Teacher Training Image 2" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={image2} alt="Yoga Teacher Training Image 2" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
           {/* Third Image */}
-          <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
+          <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image3} alt="Yoga Teacher Training Image 3" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+              <img src={image3} alt="Yoga Teacher Training Image 3" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
         </div>
@@ -94,30 +94,21 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
               </p>
             </div>
 
-            {/* Meet the Instructor Section */}
-            <div className="mt-12 lg:mt-16">
-              {/* Image and Text Side by Side */}
-              <div className="flex flex-col sm:flex-row sm:items-start gap-6 lg:gap-8">
-                {/* Profile Image */}
-                <div className="flex-shrink-0">
-                  <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] lg:w-[240px] lg:h-[240px] rounded-full overflow-hidden border-4 border-white shadow-lg">
-                    <img
-                      src="https://meher.b-cdn.net/janie.png"
-                      alt="Dr. Pallavi Kavhane"
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
+            {/* Mobile/Tablet Images Section - Show above "What makes this program unique" */}
+            <div className="lg:hidden mt-12">
+              {/* One large image on top */}
+              <div className="w-full mb-4">
+                <div className="w-full overflow-hidden rounded-xl shadow-lg">
+                  <img src={image1} alt="Yoga Teacher Training Image 1" className="w-full h-auto object-cover" loading="lazy" />
                 </div>
-
-                {/* Text Content */}
-                <div className="flex-1 sm:pt-0">
-                  <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[24px] sm:text-[28px] lg:text-[32px] mb-4 lg:mb-5">
-                    Dr. Pallavi Kavhane, Ph.D. in Yoga
-                  </h3>
-                  <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                    A World Yogasana Champion and Global Ambassador of Yoga, Dr. Kavhane has represented India internationally, winning gold medals in Spain, Portugal, and Argentina. With a D.Litt., Ph.D., and Masters in Yoga & Physical Education, she has conducted over 3,000 sessions worldwide, training 5,000+ students and completing more than 5,00,000 hours of yoga teaching.
-                  </p>
+              </div>
+              {/* Two images side by side below */}
+              <div className="flex gap-4">
+                <div className="flex-1 overflow-hidden rounded-xl shadow-lg">
+                  <img src={image2} alt="Yoga Teacher Training Image 2" className="w-full h-auto object-cover" loading="lazy" />
+                </div>
+                <div className="flex-1 overflow-hidden rounded-xl shadow-lg">
+                  <img src={image3} alt="Yoga Teacher Training Image 3" className="w-full h-auto object-cover" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -147,6 +138,34 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
               <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
                 Learning at MEHR also offers a unique advantage: being located in the heart of the city yet surrounded by serene nature at the riverbanks. Your stay in Pune will be memorable, with access to landmarks like the Dagdusheth Temple, city museums, and the Osho Ashram (just 650 m away).
               </p>
+            </div>
+
+            {/* Meet the Instructor Section */}
+            <div className="mt-12 lg:mt-16">
+              {/* Image and Text Side by Side */}
+              <div className="flex flex-col sm:flex-row sm:items-start gap-6 lg:gap-8">
+                {/* Profile Image */}
+                <div className="flex-shrink-0">
+                  <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] lg:w-[240px] lg:h-[240px] rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img
+                      src="https://meher.b-cdn.net/janie.png"
+                      alt="Dr. Pallavi Kavhane"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="flex-1 sm:pt-0">
+                  <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[24px] sm:text-[28px] lg:text-[32px] mb-4 lg:mb-5">
+                    Dr. Pallavi Kavhane, Ph.D. in Yoga
+                  </h3>
+                  <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
+                    A World Yogasana Champion and Global Ambassador of Yoga, Dr. Kavhane has represented India internationally, winning gold medals in Spain, Portugal, and Argentina. With a D.Litt., Ph.D., and Masters in Yoga & Physical Education, she has conducted over 3,000 sessions worldwide, training 5,000+ students and completing more than 5,00,000 hours of yoga teaching.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Fees BreakDown */}
