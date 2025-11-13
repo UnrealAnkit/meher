@@ -599,7 +599,7 @@ export const BookYourStayPage = (): JSX.Element => {
             </Link>
 
             {/* Room 3: Golden Grasslands */}
-            <div className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+            <Link to="/book-stay/golden-grasslands" className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/DSC00890%20copy.jpg"
@@ -611,7 +611,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 GOLDEN GRASSLANDS
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 3000
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Cheerful, rustic, and abundant — a celebration of sunlight and simplicity. Ochre, wheat, and leaf-green accents bring warmth and openness, echoing the energy of harvest and gratitude.
@@ -619,7 +619,7 @@ export const BookYourStayPage = (): JSX.Element => {
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Horizontal line below rooms */}
@@ -628,7 +628,7 @@ export const BookYourStayPage = (): JSX.Element => {
           {/* Next Row: Forest Bathing and Water and Sky */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mt-8 lg:mt-12">
             {/* Room 4: Forest Bathing */}
-            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+            <Link to="/book-stay/forest-bathing" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/DSC00829.jpg"
@@ -648,7 +648,7 @@ export const BookYourStayPage = (): JSX.Element => {
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
-            </div>
+            </Link>
 
             {/* Room 5: Water and Sky */}
             <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
