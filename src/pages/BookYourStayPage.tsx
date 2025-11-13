@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar, X } from "lucide-react";
@@ -521,7 +521,7 @@ export const BookYourStayPage = (): JSX.Element => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
             {/* Classic Room: Earth & Clay */}
-            <div className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+            <Link to="/book-stay/earth-and-clay" className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York%20(2).png"
@@ -541,7 +541,7 @@ export const BookYourStayPage = (): JSX.Element => {
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 
