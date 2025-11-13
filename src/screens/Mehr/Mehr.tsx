@@ -432,61 +432,75 @@ export const Mehr = (): JSX.Element => {
       {/* PLAN YOUR RETREAT section */}
       <section className="relative w-full pt-5 pb-20 bg-white">
         <div className="max-w-[1440px] mx-auto px-4">
-          {/* Descriptive paragraph */}
+          {/* Main Heading */}
+          <div className="text-center mb-4">
+            <h2 className="[font-family:'Poppins',Helvetica] font-light text-[#24312e] text-2xl sm:text-3xl md:text-4xl tracking-[0] leading-tight uppercase">
+              HEALING IN COMMUNITY
+            </h2>
+          </div>
+
+          {/* Subheading */}
           <div className="text-center mb-6">
-            <p className="[font-family:'Poppins',Helvetica] font-medium text-[#7a574f] text-2xl tracking-[0] leading-[27px] max-w-[887px] mx-auto">
+            <h3 className="[font-family:'Poppins',Helvetica] font-medium text-[#7a574f] text-base sm:text-lg md:text-xl tracking-[0] leading-tight">
+              CORPORATE – GROUPS – FESTIVALS – INTERNATIONAL
+            </h3>
+          </div>
+
+          {/* Descriptive paragraph */}
+          <div className="text-center mb-8">
+            <p className="[font-family:'Poppins',Helvetica] font-normal text-[#7a574f] text-base sm:text-lg md:text-xl lg:text-2xl tracking-[0] leading-[24px] sm:leading-[27px] max-w-[887px] mx-auto">
               MEHR Curates Soulful Experiences — From Intimate Family Retreats To Corporate Offsites And Wellness Festivals.
             </p>
           </div>
 
           {/* Four-column section */}
-          <div className="bg-[#ab4b28] rounded-[20px] p-16 mb-12">
+          <div className="bg-[#ab4b28] rounded-[20px] p-6 sm:p-8 md:p-12 lg:p-16 mb-12">
             <div className="flex flex-col lg:flex-row gap-0">
               {/* CORPORATE */}
-              <div className="flex-1 flex flex-col px-6 py-4">
-                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+              <div className="flex-1 flex flex-col px-4 py-6 sm:px-6 sm:py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-xl sm:text-2xl lg:text-3xl tracking-[0] leading-6 sm:leading-7 lg:leading-8 mb-3 sm:mb-4">
                   CORPORATE
                 </h3>
-                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-base sm:text-lg tracking-[0] leading-6 sm:leading-7">
                   Leadership Workshops, Stress Management, And Creativity Retreats Designed For Teams.
                 </p>
               </div>
 
-              {/* Vertical separator */}
-              <div className="w-0.5 bg-white flex-shrink-0"></div>
+              {/* Horizontal separator for mobile, vertical for desktop */}
+              <div className="h-px w-full lg:h-auto lg:w-0.5 lg:self-stretch bg-white flex-shrink-0 my-4 lg:my-0"></div>
 
               {/* GROUPS */}
-              <div className="flex-1 flex flex-col px-6 py-4">
-                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+              <div className="flex-1 flex flex-col px-4 py-6 sm:px-6 sm:py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-xl sm:text-2xl lg:text-3xl tracking-[0] leading-6 sm:leading-7 lg:leading-8 mb-3 sm:mb-4">
                   GROUPS
                 </h3>
-                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-base sm:text-lg tracking-[0] leading-6 sm:leading-7">
                   Intimate Retreats For Families, Communities, And Small Circles.
                 </p>
               </div>
 
-              {/* Vertical separator */}
-              <div className="w-0.5 bg-white flex-shrink-0"></div>
+              {/* Horizontal separator for mobile, vertical for desktop */}
+              <div className="h-px w-full lg:h-auto lg:w-0.5 lg:self-stretch bg-white flex-shrink-0 my-4 lg:my-0"></div>
 
               {/* FESTIVALS */}
-              <div className="flex-1 flex flex-col px-6 py-4">
-                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+              <div className="flex-1 flex flex-col px-4 py-6 sm:px-6 sm:py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-xl sm:text-2xl lg:text-3xl tracking-[0] leading-6 sm:leading-7 lg:leading-8 mb-3 sm:mb-4">
                   FESTIVALS
                 </h3>
-                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-base sm:text-lg tracking-[0] leading-6 sm:leading-7">
                   Immersive Wellness Festivals Blending Art, Music, Meditation, Therapies, And Soulful Food.
                 </p>
               </div>
 
-              {/* Vertical separator */}
-              <div className="w-0.5 bg-white flex-shrink-0"></div>
+              {/* Horizontal separator for mobile, vertical for desktop */}
+              <div className="h-px w-full lg:h-auto lg:w-0.5 lg:self-stretch bg-white flex-shrink-0 my-4 lg:my-0"></div>
 
               {/* INTERNATIONAL */}
-              <div className="flex-1 flex flex-col px-6 py-4">
-                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-3xl tracking-[0] leading-8 mb-4">
+              <div className="flex-1 flex flex-col px-4 py-6 sm:px-6 sm:py-4">
+                <h3 className="[font-family:'Poppins',Helvetica] font-semibold text-white text-xl sm:text-2xl lg:text-3xl tracking-[0] leading-6 sm:leading-7 lg:leading-8 mb-3 sm:mb-4">
                   INTERNATIONAL
                 </h3>
-                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg tracking-[0] leading-7">
+                <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-base sm:text-lg tracking-[0] leading-6 sm:leading-7">
                   Curated Retreats Abroad — Starting In Thailand, Expanding Globally.
                 </p>
               </div>
