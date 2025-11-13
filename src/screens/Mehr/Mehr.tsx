@@ -425,12 +425,12 @@ export const Mehr = (): JSX.Element => {
       <TherapiesSection />
 
       {/* MOMENTS OF HEALING section */}
-      <section className="relative w-full py-10 bg-white">
+      <section className="relative w-full pt-4 pb-10 bg-white">
         <GallerySection />
       </section>
 
       {/* PLAN YOUR RETREAT section */}
-      <section className="relative w-full pt-5 pb-20 bg-white">
+      <section className="relative w-full pt-5 pb-4 bg-white">
         <div className="max-w-[1440px] mx-auto px-4">
           {/* Descriptive paragraph */}
           <div className="text-center mb-8">

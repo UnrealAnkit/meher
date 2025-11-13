@@ -23,7 +23,7 @@ export const TestimonialsSection = (): JSX.Element => {
   }, [images.length]);
 
   return (
-    <section className="w-full bg-white py-20">
+    <section className="w-full bg-white pt-6 pb-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-center [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[28px] sm:text-[32px] md:text-[40px] tracking-[0] leading-[34px] sm:leading-[38px] md:leading-[48px] mb-8 sm:mb-12 md:mb-16">
           MOMENTS OF HEALING
