@@ -28,14 +28,6 @@ const cardsData = [
     imageClasses: "rounded-t-[15px]",
     path: "/rejuvenation",
   },
-  {
-    title: "EARTH AND CLAY",
-    description:
-      "Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.",
-    image: "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(17).png",
-    imageClasses: "rounded-t-[15px] object-cover",
-    path: "/book-stay/earth-and-clay",
-  },
 ];
 
 export const ServicesSection = (): JSX.Element => {
@@ -60,7 +52,7 @@ export const ServicesSection = (): JSX.Element => {
 
                 <div className="flex-1 flex flex-col items-center px-3 sm:px-4 pt-4 sm:pt-[14px] md:pt-[18px]">
                   <h3 className={`[font-family:'Poppins'] font-semibold text-[24px] sm:text-[28px] md:text-[30px] lg:text-[32px] tracking-[0] leading-[28px] sm:leading-[32px] md:leading-[36px] lg:leading-5 text-center ${
-                    card.title === "STAY OPTIONS" || card.title === "Rejuvenation Experiences" || card.title === "EARTH AND CLAY"
+                    card.title === "STAY OPTIONS" || card.title === "Rejuvenation Experiences"
                       ? "text-[#ab4b28]"
                       : "text-black"
                   }`}>

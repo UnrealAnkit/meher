@@ -576,7 +576,7 @@ export const BookYourStayPage = (): JSX.Element => {
             </Link>
 
             {/* Room 2: Stone and Fog */}
-            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+            <Link to="/book-stay/stone-and-fog" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/DSC00969.jpg"
@@ -588,7 +588,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 STONE AND FOG
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 2500
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Masculine, meditative, and minimal — inspired by mountain stillness and misty mornings. Charcoal hues, stone textures, and simple linen bring quiet clarity — perfect for contemplation and grounding energy.
@@ -596,7 +596,7 @@ export const BookYourStayPage = (): JSX.Element => {
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
-            </div>
+            </Link>
 
             {/* Room 3: Golden Grasslands */}
             <div className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
