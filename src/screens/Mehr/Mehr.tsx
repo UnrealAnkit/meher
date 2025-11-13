@@ -432,20 +432,6 @@ export const Mehr = (): JSX.Element => {
       {/* PLAN YOUR RETREAT section */}
       <section className="relative w-full pt-5 pb-20 bg-white">
         <div className="max-w-[1440px] mx-auto px-4">
-          {/* Main Heading */}
-          <div className="text-center mb-4">
-            <h2 className="[font-family:'Poppins',Helvetica] font-light text-[#24312e] text-2xl sm:text-3xl md:text-4xl tracking-[0] leading-tight uppercase">
-              HEALING IN COMMUNITY
-            </h2>
-          </div>
-
-          {/* Subheading */}
-          <div className="text-center mb-6">
-            <h3 className="[font-family:'Poppins',Helvetica] font-medium text-[#7a574f] text-base sm:text-lg md:text-xl tracking-[0] leading-tight">
-              CORPORATE – GROUPS – FESTIVALS – INTERNATIONAL
-            </h3>
-          </div>
-
           {/* Descriptive paragraph */}
           <div className="text-center mb-8">
             <p className="[font-family:'Poppins',Helvetica] font-normal text-[#7a574f] text-base sm:text-lg md:text-xl lg:text-2xl tracking-[0] leading-[24px] sm:leading-[27px] max-w-[887px] mx-auto">
