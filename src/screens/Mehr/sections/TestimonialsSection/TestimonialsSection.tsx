@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export const TestimonialsSection = (): JSX.Element => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const images = [
+    { src: "https://meher.b-cdn.net/aerial%20yoga.png", alt: "Aerial Yoga" },
+    { src: "https://meher.b-cdn.net/hanging%20aerial.png", alt: "Hanging Aerial" },
+    { src: "https://meher.b-cdn.net/space%20sound%20healing.png", alt: "Space Sound Healing" },
+    { src: "https://meher.b-cdn.net/yoga.png", alt: "Yoga" },
+    { src: "https://meher.b-cdn.net/wooden%20bed.png", alt: "Wooden Bed" },
+    { src: "https://meher.b-cdn.net/pregnancy%20yoga.png", alt: "Pregnancy Yoga" },
+    { src: "https://meher.b-cdn.net/ice%20bath.png", alt: "Ice Bath" },
+  ];
+
+  // Auto-advance slideshow every 3 seconds on mobile
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % images.length);
+    }, 3000);
+    
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
     <section className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
@@ -8,7 +29,44 @@ export const TestimonialsSection = (): JSX.Element => {
           MOMENTS OF HEALING
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* Mobile Slideshow */}
+        <div className="md:hidden relative w-full h-[400px] rounded-2xl overflow-hidden mb-6">
+          <div className="relative w-full h-full">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-1000 ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                <img 
+                  src={image.src} 
+                  alt={image.alt} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Slide indicators */}
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentSlide 
+                    ? 'bg-white w-6' 
+                    : 'bg-white/50'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Grid Layout */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* First column - Image 1 (303x303) and Image 5 */}
           <div className="col-span-1 md:col-span-3 space-y-4">
             <div className="w-full md:w-[303px] h-[250px] sm:h-[280px] md:h-[303px] rounded-2xl overflow-hidden mx-auto md:mx-0">
