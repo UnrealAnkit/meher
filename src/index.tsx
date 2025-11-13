@@ -15,6 +15,7 @@ import { YogaTeacherTrainingPage } from "./pages/YogaTeacherTrainingPage";
 import { AerialYogaTeacherTrainingPage } from "./pages/AerialYogaTeacherTrainingPage";
 import { BookYourStayPage } from "./pages/BookYourStayPage";
 import { EarthAndClayPage } from "./pages/EarthAndClayPage";
+import { BloomAndHerbsPage } from "./pages/BloomAndHerbsPage";
 import { PaymentSuccessfulPage } from "./pages/PaymentSuccessfulPage";
 import { PaymentFailedPage } from "./pages/PaymentFailedPage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
@@ -91,6 +92,7 @@ function App() {
         <Route path="/book-your-stay" element={<BookYourStayPage />} />
         <Route path="/book-stay" element={<BookYourStayPage />} />
         <Route path="/book-stay/earth-and-clay" element={<EarthAndClayPage />} />
+        <Route path="/book-stay/bloom-and-herbs" element={<BloomAndHerbsPage />} />
         <Route path="/payment/success" element={<PaymentSuccessfulPage />} />
         <Route path="/payment/failed" element={<PaymentFailedPage />} />
         <Route path="/blogs" element={<BlogsPage />} />

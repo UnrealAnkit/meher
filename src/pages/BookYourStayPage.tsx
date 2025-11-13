@@ -553,7 +553,7 @@ export const BookYourStayPage = (): JSX.Element => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
             {/* Room 1: Bloom and Herbs */}
-            <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+            <Link to="/book-stay/bloom-and-herbs" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/DSC00941.jpg"
@@ -573,7 +573,7 @@ export const BookYourStayPage = (): JSX.Element => {
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
               </div>
-            </div>
+            </Link>
 
             {/* Room 2: Stone and Fog */}
             <div className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
