@@ -6,7 +6,7 @@ import { EventCard } from "../components/EventCard";
 import { supabase, CalendarEvent } from "../lib/supabase";
 
 export const CalendarPage = (): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date(2025, 10, 1)); // November 1st, 2025
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // Current system date
   const [supabaseEvents, setSupabaseEvents] = useState<any[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(false);
 
@@ -198,7 +198,7 @@ export const CalendarPage = (): JSX.Element => {
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 lg:max-w-none">
           {/* Calendar Section */}
           <div className="w-full lg:w-[300px] flex-shrink-0 mx-auto lg:mx-0 lg:pl-0">
-            <Calendar onDateSelect={handleDateSelect} initialDate={new Date(2025, 10, 1)} />
+            <Calendar onDateSelect={handleDateSelect} initialDate={new Date()} />
           </div>
             
           {/* Content Section - Event Cards */}
