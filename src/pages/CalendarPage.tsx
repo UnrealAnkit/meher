@@ -87,6 +87,29 @@ export const CalendarPage = (): JSX.Element => {
     }
   ];
 
+  // Helper function to convert time string to minutes for sorting (e.g., "10:00 AM" -> 600)
+  const timeToMinutes = (timeStr: string): number => {
+    const trimmed = timeStr.trim().toUpperCase();
+    const match = trimmed.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/);
+    if (!match) return Infinity; // Invalid time format goes to end
+    
+    let hours = parseInt(match[1], 10);
+    const minutes = parseInt(match[2], 10);
+    const period = match[3];
+    
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    
+    return hours * 60 + minutes;
+  };
+
+  // Helper function to get earliest time slot from an event
+  const getEarliestTime = (timeSlots: string[]): number => {
+    if (!timeSlots || timeSlots.length === 0) return Infinity;
+    const times = timeSlots.map(timeToMinutes);
+    return Math.min(...times);
+  };
+
   // Fetch events from Supabase for any selected date
   const fetchEventsForDate = useCallback(async (date: Date) => {
     try {
@@ -100,8 +123,7 @@ export const CalendarPage = (): JSX.Element => {
       const { data, error } = await supabase
         .from('calendar_events')
         .select('*')
-        .eq('event_date', formattedDate)
-        .order('created_at', { ascending: false });
+        .eq('event_date', formattedDate);
 
       if (error) {
         console.error('Error fetching events:', error);
@@ -123,11 +145,19 @@ export const CalendarPage = (): JSX.Element => {
           dateTime: dateTimeString,
           image: event.image_url || '/rectangle-1.png',
           expandedDescription: event.expanded_description || '',
-          eventDate: new Date(event.event_date)
+          eventDate: new Date(event.event_date),
+          timeSlots: event.time_slots // Keep time slots for sorting
         };
       });
 
-      setSupabaseEvents(convertedEvents);
+      // Sort events by earliest time slot in ascending order
+      const sortedEvents = convertedEvents.sort((a, b) => {
+        const timeA = getEarliestTime(a.timeSlots || []);
+        const timeB = getEarliestTime(b.timeSlots || []);
+        return timeA - timeB; // Ascending order
+      });
+
+      setSupabaseEvents(sortedEvents);
     } catch (err) {
       console.error('Error fetching Supabase events:', err);
     } finally {
@@ -152,7 +182,22 @@ export const CalendarPage = (): JSX.Element => {
                           selectedDate.getFullYear() === 2025;
   
   // Show November 1st events (hardcoded) or fetch events from Supabase for any other date
-  const events = isNovemberFirst ? allEvents : supabaseEvents;
+  let events = isNovemberFirst ? allEvents : supabaseEvents;
+  
+  // Sort November 1st events by time as well (if they have time slots in dateTime)
+  if (isNovemberFirst) {
+    events = [...allEvents].sort((a, b) => {
+      // Extract time from dateTime string (e.g., "Pick a slot: 10:00 AM, 11:00 AM")
+      const extractEarliestTime = (dateTime: string): number => {
+        const match = dateTime.match(/Pick a slot:\s*([^,]+)/);
+        if (!match) return Infinity;
+        return timeToMinutes(match[1].trim());
+      };
+      const timeA = extractEarliestTime(a.dateTime);
+      const timeB = extractEarliestTime(b.dateTime);
+      return timeA - timeB; // Ascending order
+    });
+  }
 
   // Format date for display
   const formatDate = (date: Date): string => {

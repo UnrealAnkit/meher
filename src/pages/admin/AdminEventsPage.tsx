@@ -28,16 +28,55 @@ export const AdminEventsPage: React.FC = () => {
     fetchEvents();
   }, []);
 
+  // Helper function to convert time string to minutes for sorting (e.g., "10:00 AM" -> 600)
+  const timeToMinutes = (timeStr: string): number => {
+    const trimmed = timeStr.trim().toUpperCase();
+    const match = trimmed.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/);
+    if (!match) return Infinity; // Invalid time format goes to end
+    
+    let hours = parseInt(match[1], 10);
+    const minutes = parseInt(match[2], 10);
+    const period = match[3];
+    
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    
+    return hours * 60 + minutes;
+  };
+
+  // Helper function to get earliest time slot from an event
+  const getEarliestTime = (timeSlots: string[]): number => {
+    if (!timeSlots || timeSlots.length === 0) return Infinity;
+    const times = timeSlots.map(timeToMinutes);
+    return Math.min(...times);
+  };
+
   const fetchEvents = async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
         .from('calendar_events')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('event_date', { ascending: true }); // Sort by date first
 
       if (error) throw error;
-      setEvents(data || []);
+      
+      // Sort events by date, then by earliest time slot within each date
+      const sortedEvents = (data || []).sort((a, b) => {
+        // First sort by date
+        const dateA = new Date(a.event_date).getTime();
+        const dateB = new Date(b.event_date).getTime();
+        if (dateA !== dateB) {
+          return dateA - dateB; // Ascending date order
+        }
+        
+        // If same date, sort by earliest time slot
+        const timeA = getEarliestTime(a.time_slots || []);
+        const timeB = getEarliestTime(b.time_slots || []);
+        return timeA - timeB; // Ascending time order
+      });
+      
+      setEvents(sortedEvents);
     } catch (err) {
       console.error('Error fetching events:', err);
       showNotification('error', 'Failed to fetch events');
