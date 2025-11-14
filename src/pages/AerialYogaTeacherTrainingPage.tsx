@@ -202,6 +202,7 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
       <YogaTeacherTrainingBookingModal
         isOpen={showBookingModal}
         onClose={() => setShowBookingModal(false)}
+        programType="aerial"
       />
     </div>
   );

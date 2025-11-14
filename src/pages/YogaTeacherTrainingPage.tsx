@@ -208,6 +208,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
       <YogaTeacherTrainingBookingModal
         isOpen={showBookingModal}
         onClose={() => setShowBookingModal(false)}
+        programType="yoga"
       />
     </div>
   );

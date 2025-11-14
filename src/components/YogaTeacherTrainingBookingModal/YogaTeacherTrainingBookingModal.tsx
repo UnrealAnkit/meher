@@ -33,11 +33,13 @@ declare global {
 interface YogaTeacherTrainingBookingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  programType?: 'yoga' | 'aerial'; // 'yoga' for Yoga Teacher Training, 'aerial' for Aerial Yoga
 }
 
 export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookingModalProps> = ({
   isOpen,
   onClose,
+  programType = 'yoga', // Default to yoga teacher training
 }) => {
   const navigate = useNavigate();
   const [bookingType, setBookingType] = useState<'with' | 'without'>('with');
@@ -49,11 +51,12 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Pricing breakdown
-  const programFee = 82000;
-  const foodAccommodation = 68000;
-  const totalWith = programFee + foodAccommodation; // ₹1,50,000
-  const totalWithout = programFee; // ₹82,000
+  // Pricing breakdown - Different for Yoga vs Aerial Yoga
+  const isAerial = programType === 'aerial';
+  const programFee = isAerial ? 68000 : 82000;
+  const foodAccommodation = isAerial ? 58000 : 68000;
+  const totalWith = programFee + foodAccommodation;
+  const totalWithout = programFee;
 
   const selectedTotal = bookingType === 'with' ? totalWith : totalWithout;
   const gstRate = 0.18; // 18% GST
@@ -77,11 +80,13 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
       const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
       const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
       
+      const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
+      
       // Save booking to Supabase
       const { error } = await supabase.from('bookings').insert([
         {
           event_id: null,
-          event_title: 'Yoga Teacher Training Certificate Program',
+          event_title: programTitle,
           event_date: new Date().toISOString().split('T')[0],
           selected_slot: bookingTypeText,
           price: priceString,
@@ -182,13 +187,14 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
 
       // Step 3: Initialize Razorpay checkout
       const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
-      const description = `Yoga Teacher Training Certificate Program - ${bookingTypeText}`;
+      const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
+      const description = `${programTitle} - ${bookingTypeText}`;
       
       const options = {
         key: RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency || "INR",
-        name: "MEHR Yoga Teacher Training",
+        name: isAerial ? "MEHR Aerial Yoga Teacher Training" : "MEHR Yoga Teacher Training",
         description: description,
         order_id: order.id,
         handler: async function (response: any) {
@@ -249,9 +255,10 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
             // Step 5: Save booking to database
             const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
             const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
+            const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
             const bookingData = {
               event_id: null,
-              event_title: 'Yoga Teacher Training Certificate Program',
+              event_title: programTitle,
               event_date: new Date().toISOString().split('T')[0],
               selected_slot: bookingTypeText,
               price: priceString,
@@ -284,15 +291,16 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
-              event_name: 'Yoga Teacher Training Certificate Program',
+              event_name: programTitle,
               event_date: new Date().toISOString().split('T')[0],
-              amount: totalWithGST.toString(),
+              amount: Math.round(totalWithGST).toString(),
               fee: '0',
-              total: totalWithGST.toString(),
+              total: Math.round(totalWithGST).toString(),
               customer_name: formData.name,
               payment_method: 'Razorpay',
             });
             
+            onClose();
             navigate(`/payment/success?${successParams.toString()}`);
 
           } catch (error: any) {
@@ -323,15 +331,18 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
       const razorpay = new window.Razorpay(options);
       razorpay.open();
       razorpay.on('payment.failed', function (response: any) {
+        const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
+        const paymentPage = isAerial ? '/aerial-yoga-teacher-training' : '/yoga-teacher-training';
         const failedParams = new URLSearchParams({
           transaction_no: order.id || 'N/A',
           error: response.error?.description || response.error?.reason || 'Payment failed. Please try again.',
-          event_name: 'Yoga Teacher Training Certificate Program',
+          event_name: programTitle,
           event_date: new Date().toISOString().split('T')[0],
-          amount: totalWithGST.toString(),
-          payment_page: '/yoga-teacher-training',
+          amount: Math.round(totalWithGST).toString(),
+          payment_page: paymentPage,
         });
         
+        onClose();
         navigate(`/payment/failed?${failedParams.toString()}`);
         setSubmitting(false);
       });
@@ -375,10 +386,10 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
           {/* Program Details */}
           <div className="bg-[#FFF8F0] rounded-lg p-6 mb-6">
             <h3 className="text-[#A0522D] text-2xl font-bold mb-2">
-              Yoga Teacher Training Certificate Program
+              {isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program'}
             </h3>
             <p className="text-[#1E1E1E] text-base mb-6">
-              200 Hundred Hour Course
+              {isAerial ? 'Aerial Yoga Training Course' : '200 Hundred Hour Course'}
             </p>
 
             {/* Select Type */}
@@ -397,7 +408,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
                   }`}
                 >
                   <div className="font-semibold mb-1">With Food And Accomodation</div>
-                  <div className="text-sm">₹1,50,000 + GST</div>
+                  <div className="text-sm">₹{totalWith.toLocaleString('en-IN')} + GST</div>
                 </button>
                 <button
                   type="button"
@@ -409,70 +420,38 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
                   }`}
                 >
                   <div className="font-semibold mb-1">Without Food And Accomodation</div>
-                  <div className="text-sm">₹82,000 + GST</div>
+                  <div className="text-sm">₹{totalWithout.toLocaleString('en-IN')} + GST</div>
                 </button>
               </div>
             </div>
 
-            {/* Test Mode Toggle */}
-            <div className="mb-4">
-              <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-yellow-50 border border-yellow-300">
-                <input
-                  type="checkbox"
-                  checked={testMode}
-                  onChange={(e) => setTestMode(e.target.checked)}
-                  className="w-5 h-5 text-[#A0522D] rounded focus:ring-2 focus:ring-[#A0522D]"
-                />
-                <div>
-                  <div className="font-semibold text-[#A0522D]">Test Mode (₹1 Verification)</div>
-                  <div className="text-sm text-gray-600">Enable to test payment with ₹1 charge</div>
+            {/* Fees Breakdown */}
+            <div className="border-t border-gray-300 pt-4 space-y-2">
+              <div className="flex justify-between text-[#1E1E1E]">
+                <span>{isAerial ? 'Aerial Yoga Teacher Training Program Fee' : 'Yoga Teacher Training Certificate Program Fee'}</span>
+                <span>₹{programFee.toLocaleString('en-IN')}</span>
+              </div>
+              {bookingType === 'with' && (
+                <div className="flex justify-between text-[#1E1E1E]">
+                  <span>Food And Accommodation</span>
+                  <span>₹{foodAccommodation.toLocaleString('en-IN')}</span>
                 </div>
-              </label>
+              )}
+              <div className="flex justify-between text-[#1E1E1E]">
+                <span>Subtotal</span>
+                <span>₹{selectedTotal.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between text-[#1E1E1E]">
+                <span>GST (18%)</span>
+                <span>₹{Math.round(gstAmount).toLocaleString('en-IN')}</span>
+              </div>
             </div>
 
-            {/* Fees Breakdown */}
-            {!testMode ? (
-              <>
-                <div className="border-t border-gray-300 pt-4 space-y-2">
-                  <div className="flex justify-between text-[#1E1E1E]">
-                    <span>Yoga Teacher Training Certificate Program Fee</span>
-                    <span>₹{programFee.toLocaleString('en-IN')}</span>
-                  </div>
-                  {bookingType === 'with' && (
-                    <div className="flex justify-between text-[#1E1E1E]">
-                      <span>Food And Accommodation</span>
-                      <span>₹{foodAccommodation.toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between text-[#1E1E1E]">
-                    <span>Subtotal</span>
-                    <span>₹{selectedTotal.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="flex justify-between text-[#1E1E1E]">
-                    <span>GST (18%)</span>
-                    <span>₹{Math.round(gstAmount).toLocaleString('en-IN')}</span>
-                  </div>
-                </div>
-
-                {/* Total Price */}
-                <div className="border-t-2 border-[#A0522D] mt-4 pt-4 flex justify-between items-center">
-                  <span className="text-[#A0522D] font-bold text-lg">TOTAL PRICE (Including GST)</span>
-                  <span className="text-[#A0522D] font-bold text-2xl">₹{Math.round(totalWithGST).toLocaleString('en-IN')}</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="border-t border-gray-300 pt-4 space-y-2">
-                  <div className="flex justify-between text-yellow-700 bg-yellow-50 p-3 rounded">
-                    <span className="font-semibold">Test Mode - Verification Amount</span>
-                    <span className="font-bold">₹1</span>
-                  </div>
-                  <div className="text-sm text-gray-600 italic p-2 bg-gray-50 rounded">
-                    * This is a test payment. You will be charged ₹1 only to verify the payment gateway integration.
-                  </div>
-                </div>
-              </>
-            )}
+            {/* Total Price */}
+            <div className="border-t-2 border-[#A0522D] mt-4 pt-4 flex justify-between items-center">
+              <span className="text-[#A0522D] font-bold text-lg">TOTAL PRICE (Including GST)</span>
+              <span className="text-[#A0522D] font-bold text-2xl">₹{Math.round(totalWithGST).toLocaleString('en-IN')}</span>
+            </div>
           </div>
 
           {/* Message */}
