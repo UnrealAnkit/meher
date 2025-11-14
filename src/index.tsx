@@ -22,6 +22,7 @@ import { ForestBathingPage } from "./pages/ForestBathingPage";
 import { WaterAndSkyPage } from "./pages/WaterAndSkyPage";
 import { PaymentSuccessfulPage } from "./pages/PaymentSuccessfulPage";
 import { PaymentFailedPage } from "./pages/PaymentFailedPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { TermsAndConditionsPage } from "./pages/TermsAndConditionsPage";
 import { RefundPolicyPage } from "./pages/RefundPolicyPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
@@ -219,6 +220,9 @@ function App() {
             </AdminWrapper>
           }
         />
+        
+        {/* 404 Not Found - Catch all unmatched routes */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
