@@ -158,7 +158,15 @@ export const FooterSection = (): JSX.Element => {
           </div>
 
           <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 text-center lg:text-left">
-            Powered by
+            Powered by{" "}
+            <a
+              href="https://unrealankit.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#ab4b28] transition-colors underline"
+            >
+              unrealankit.tech
+            </a>
           </div>
         </div>
       </div>
