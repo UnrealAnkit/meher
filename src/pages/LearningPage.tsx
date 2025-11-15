@@ -166,6 +166,70 @@ export const LearningPage = (): JSX.Element => {
               </div>
             </div>
           </div>
+
+          {/* Third Programme Card - Sound Healing */}
+          <div className="max-w-[2000px] mx-auto mt-8 sm:mt-10 lg:mt-12">
+            <div className="bg-white rounded-[20px] shadow-[0px_4px_20px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-300 hover:shadow-[0px_6px_30px_rgba(0,0,0,0.15)]">
+              {/* Image Section - Top */}
+              <div className="h-[200px] sm:h-[250px] lg:h-[300px]">
+                <img 
+                  src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(39).png"
+                  alt="Sound Healing Training Workshop"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Text Section - Bottom */}
+              <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-between min-h-[280px]">
+                <div>
+                  {/* Programme Title */}
+                  <h3 className="[font-family:'Poppins'] font-bold text-[#ab4b28] text-[20px] sm:text-[24px] lg:text-[28px] tracking-[0] leading-tight mb-2">
+                    SOUND HEALING TRAINING WORKSHOP (3 LEVELS)
+                  </h3>
+                  
+                  {/* Batch Information */}
+                  <p className="[font-family:'Poppins'] font-light text-[#666666] text-[14px] sm:text-[15px] lg:text-[16px] tracking-[0] leading-6 mb-4">
+                    Level 1: Sounds for Self | 3rd & 4th Jan 2026
+                  </p>
+                  
+                  {/* Description */}
+                  <p className="[font-family:'Poppins'] font-light text-[#1E1E1E] text-[16px] sm:text-[18px] lg:text-[20px] leading-[26px] sm:leading-[28px] lg:leading-[32px] mb-6">
+                    Based on the fundamentals of Nada Yoga, History of Singing Bowls, Physics of Sound & Sound as a healing & meditative practice. Led by Janie Everett, a sound practitioner, Reiki master, and frequency medicine expert.
+                  </p>
+                </div>
+
+                {/* Bottom Section with Price and Button */}
+                <div className="flex items-center justify-between">
+                  {/* Price */}
+                  <div className="[font-family:'Poppins'] font-bold text-[#1E1E1E] text-[16px] sm:text-[17px] lg:text-[18px] tracking-[0] leading-6">
+                    From ₹ 13,000
+                  </div>
+                  
+                  {/* Navigation Button */}
+                  <Link
+                    to="/sound-healing"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#ab4b28] bg-transparent hover:bg-[#ab4b28] transition-colors duration-300 flex items-center justify-center group flex-shrink-0"
+                  >
+                    <svg 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      className="text-[#ab4b28] group-hover:text-white transition-colors duration-300"
+                    >
+                      <path 
+                        d="M9 18L15 12L9 6" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

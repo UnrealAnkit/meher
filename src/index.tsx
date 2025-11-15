@@ -13,6 +13,7 @@ import { RejuvenationPage } from "./pages/RejuvenationPage";
 import { RejuvenationPackagePage } from "./pages/RejuvenationPackagePage";
 import { YogaTeacherTrainingPage } from "./pages/YogaTeacherTrainingPage";
 import { AerialYogaTeacherTrainingPage } from "./pages/AerialYogaTeacherTrainingPage";
+import { SoundHealingPage } from "./pages/SoundHealingPage";
 import { BookYourStayPage } from "./pages/BookYourStayPage";
 import { EarthAndClayPage } from "./pages/EarthAndClayPage";
 import { BloomAndHerbsPage } from "./pages/BloomAndHerbsPage";
@@ -94,6 +95,7 @@ function App() {
         <Route path="/rejuvenation/package" element={<RejuvenationPackagePage />} />
         <Route path="/yoga-teacher-training" element={<YogaTeacherTrainingPage />} />
         <Route path="/aerial-yoga-teacher-training" element={<AerialYogaTeacherTrainingPage />} />
+        <Route path="/sound-healing" element={<SoundHealingPage />} />
         <Route path="/book-your-stay" element={<BookYourStayPage />} />
         <Route path="/book-stay" element={<BookYourStayPage />} />
         <Route path="/book-stay/earth-and-clay" element={<EarthAndClayPage />} />
