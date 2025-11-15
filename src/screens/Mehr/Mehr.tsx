@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { FooterSection } from "./sections/FooterSection";
 import { GallerySection } from "./sections/GallerySection";
-import { LaunchSection } from "./sections/LaunchSection";
 import { NavbarSection } from "./sections/NavbarSection";
 import { ServicesSection } from "./sections/ServicesSection";
 import { TestimonialsSection } from "./sections/TestimonialsSection";
@@ -427,46 +426,6 @@ export const Mehr = (): JSX.Element => {
       {/* MOMENTS OF HEALING section */}
       <section className="relative w-full pt-4 pb-10 bg-white">
         <GallerySection />
-      </section>
-
-      {/* Launch of MEHR Pune Banner */}
-      <section className="relative w-full bg-white">
-        <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <img
-              src="/Background (3).png"
-              alt="MEHR Pune Launch"
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          
-          {/* Gradient Overlay with Opacity */}
-          <div className="absolute inset-0">
-            <img
-              src="/Pseudo__after+Gradient.png"
-              alt="Gradient Overlay"
-              className="w-full h-full object-cover opacity-70"
-              loading="lazy"
-            />
-          </div>
-          
-          {/* Text Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-center items-start pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20">
-            <h2 className="[font-family:'Poppins',Helvetica] font-bold text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-2 sm:mb-3 md:mb-4 drop-shadow-lg">
-              Launch of MEHR Pune
-            </h2>
-            <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl drop-shadow-md mb-4 sm:mb-6 md:mb-8">
-              OCTOBER 2025
-            </p>
-            <Link to="/book-your-stay">
-              <Button className="[font-family:'Poppins',Helvetica] bg-white text-[#ab4b28] hover:bg-gray-100 active:bg-gray-200 px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100">
-                EXPLORE NOW
-              </Button>
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* PLAN YOUR RETREAT section */}
