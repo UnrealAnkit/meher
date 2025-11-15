@@ -1,6 +1,34 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, ArrowLeft, Calendar, Clock, IndianRupee } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL } from '../../lib/supabase';
+import { RAZORPAY_KEY_ID } from '../../config/razorpay';
+
+// Supabase anon key for Edge Function authentication
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
+
+// Load Razorpay script dynamically
+const loadRazorpayScript = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
+// Declare Razorpay type
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -21,6 +49,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   price,
   eventId,
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,6 +57,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   });
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  // Extract numeric price from price string (e.g., "Rs 500.00" -> 500)
+  const extractPrice = (priceStr: string): number => {
+    const match = priceStr.match(/[\d,]+\.?\d*/);
+    if (match) {
+      return parseFloat(match[0].replace(/,/g, ''));
+    }
+    return 0;
+  };
+
+  const amount = extractPrice(price);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -94,6 +134,237 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     } catch (err) {
       console.error('Error submitting booking:', err);
       setMessage({ type: 'error', text: 'Failed to submit booking. Please try again.' });
+      setSubmitting(false);
+    }
+  };
+
+  const handlePayNow = async () => {
+    // Validate form fields
+    if (!formData.name || !formData.email || !formData.phoneNumber) {
+      setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
+      return;
+    }
+
+    if (amount <= 0) {
+      setMessage({ type: 'error', text: 'Invalid price. Please contact support.' });
+      return;
+    }
+
+    setSubmitting(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      // Load Razorpay script
+      const razorpayLoaded = await loadRazorpayScript();
+      if (!razorpayLoaded) {
+        setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
+        setSubmitting(false);
+        return;
+      }
+
+      // Convert amount to paise
+      const amountInPaise = Math.round(amount * 100);
+
+      // Step 1: Create Razorpay order
+      const orderResponse = await fetch(CREATE_ORDER_FUNCTION_URL, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          amount: amountInPaise,
+          currency: "INR"
+        }),
+      });
+
+      if (!orderResponse.ok) {
+        const errorData = await orderResponse.json().catch(() => ({ error: 'Unknown error' }));
+        setMessage({ type: 'error', text: errorData.error || 'Failed to create payment order. Please try again.' });
+        setSubmitting(false);
+        return;
+      }
+
+      const order = await orderResponse.json();
+
+      if (!order.id) {
+        setMessage({ type: 'error', text: 'Failed to create payment order. Please try again.' });
+        setSubmitting(false);
+        return;
+      }
+
+      // Step 2: Format phone number
+      const formatPhoneNumber = (phone: string): string => {
+        const digits = phone.replace(/\D/g, '');
+        if (digits.length === 10) {
+          return `+91${digits}`;
+        } else if (digits.length > 10 && !digits.startsWith('91')) {
+          return `+91${digits.slice(-10)}`;
+        } else if (digits.startsWith('91')) {
+          return `+${digits}`;
+        }
+        return phone.startsWith('+') ? phone : `+91${digits}`;
+      };
+
+      // Step 3: Initialize Razorpay checkout
+      const options = {
+        key: RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency || "INR",
+        name: "MEHR Events",
+        description: `${eventTitle} - ${selectedSlot}`,
+        order_id: order.id,
+        handler: async function (response: any) {
+          try {
+            if (response.error) {
+              setMessage({ 
+                type: 'error', 
+                text: `Payment failed: ${response.error.description || 'Unknown error'}. Please try again.` 
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            if (!response.razorpay_payment_id || !response.razorpay_order_id || !response.razorpay_signature) {
+              setMessage({ 
+                type: 'error', 
+                text: 'Payment response is incomplete. Please contact support.' 
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            // Step 4: Verify payment signature
+            const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
+              method: "POST",
+              headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+
+            if (!verifyResponse.ok) {
+              const verifyError = await verifyResponse.json().catch(() => ({ error: 'Verification failed' }));
+              setMessage({ 
+                type: 'error', 
+                text: `Payment verification failed: ${verifyError.error || 'Unknown error'}. Please contact support with Payment ID: ${response.razorpay_payment_id}`
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            const verifyResult = await verifyResponse.json();
+            
+            if (!verifyResult.success && !verifyResult.verified) {
+              setMessage({ 
+                type: 'error', 
+                text: `Payment verification failed: ${verifyResult.error || 'Invalid signature'}. Please contact support.`
+              });
+              setSubmitting(false);
+              return;
+            }
+
+            // Step 5: Save booking to database
+            const bookingData = {
+              event_id: eventId || null,
+              event_title: eventTitle,
+              event_date: eventDate,
+              selected_slot: selectedSlot,
+              price: price,
+              customer_name: formData.name,
+              customer_email: formData.email,
+              customer_phone: formData.phoneNumber,
+              status: 'confirmed',
+              notes: `Payment ID: ${response.razorpay_payment_id}`,
+              payment_id: response.razorpay_payment_id,
+              order_id: response.razorpay_order_id,
+            };
+
+            const bookingResponse = await fetch(CREATE_BOOKING_FUNCTION_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              },
+              body: JSON.stringify(bookingData)
+            });
+
+            const bookingResponseData = await bookingResponse.json();
+
+            if (!bookingResponse.ok || !bookingResponseData.success) {
+              const errorMessage = bookingResponseData.error || bookingResponseData.details || 'Failed to create booking';
+              throw new Error(`Database error: ${errorMessage}`);
+            }
+
+            // Redirect to payment success page
+            const successParams = new URLSearchParams({
+              payment_id: response.razorpay_payment_id,
+              order_id: response.razorpay_order_id,
+              event_name: eventTitle,
+              event_date: eventDate,
+              amount: amount.toString(),
+              fee: '0',
+              total: amount.toString(),
+              customer_name: formData.name,
+              payment_method: 'Razorpay',
+            });
+            
+            onClose();
+            navigate(`/payment/success?${successParams.toString()}`);
+
+          } catch (error: any) {
+            console.error('Payment processing error:', error);
+            setMessage({ 
+              type: 'error', 
+              text: error.message || 'An error occurred during payment processing. Please contact support.' 
+            });
+            setSubmitting(false);
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formatPhoneNumber(formData.phoneNumber),
+        },
+        theme: {
+          color: "#ab4b28"
+        },
+        modal: {
+          ondismiss: function() {
+            setSubmitting(false);
+            setMessage({ type: '', text: '' });
+          }
+        }
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+      razorpay.on('payment.failed', function (response: any) {
+        const failedParams = new URLSearchParams({
+          transaction_no: order.id || 'N/A',
+          error: response.error?.description || response.error?.reason || 'Payment failed. Please try again.',
+          event_name: eventTitle,
+          event_date: eventDate,
+          amount: amount.toString(),
+          payment_page: '/calendar',
+        });
+        
+        onClose();
+        navigate(`/payment/failed?${failedParams.toString()}`);
+        setSubmitting(false);
+      });
+
+    } catch (error: any) {
+      console.error('Payment initialization error:', error);
+      setMessage({ 
+        type: 'error', 
+        text: error.message || 'Failed to initialize payment. Please try again.' 
+      });
       setSubmitting(false);
     }
   };
@@ -250,14 +521,24 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             />
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
-          >
-            {submitting ? 'SUBMITTING...' : 'SUBMIT'}
-          </button>
+          {/* Buttons */}
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="flex-1 bg-[#ab4b28] hover:bg-[#8b3a1f] disabled:bg-gray-400 text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
+            >
+              {submitting ? 'SUBMITTING...' : 'SUBMIT BOOKING'}
+            </button>
+            <button
+              type="button"
+              onClick={handlePayNow}
+              disabled={submitting || amount <= 0}
+              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-lg [font-family:'Poppins',Helvetica] font-bold uppercase transition-colors"
+            >
+              {submitting ? 'PROCESSING...' : 'PAY NOW'}
+            </button>
+          </div>
         </form>
       </div>
     </div>

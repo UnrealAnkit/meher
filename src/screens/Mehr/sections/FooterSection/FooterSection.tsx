@@ -122,7 +122,7 @@ export const FooterSection = (): JSX.Element => {
       </div>
 
       <div className="relative w-full min-h-[56px] bg-[#f9d2a3]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-[83px] py-3 lg:py-0 h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-3 lg:gap-0">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-[83px] py-3 lg:py-3 h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-3 lg:gap-0">
           <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 text-center lg:text-left">
             © 2025 Ch2. All rights reserved.
           </div>
@@ -157,7 +157,7 @@ export const FooterSection = (): JSX.Element => {
             </Link>
           </div>
 
-          <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 text-center lg:text-left">
+          <div className="[font-family:'Raleway',Helvetica] font-normal text-[#355149] text-xs sm:text-sm tracking-[0] leading-5 text-center lg:text-left flex items-center">
             Powered by{" "}
             <a
               href="https://unrealankit.tech"
