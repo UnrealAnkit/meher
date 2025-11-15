@@ -510,6 +510,48 @@ export const Mehr = (): JSX.Element => {
 
       <TestimonialsSection />
 
+      {/* Launch of MEHR Pune Banner */}
+      <section className="relative w-full bg-white py-8 sm:py-10 md:py-12 lg:py-16">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+          <div className="relative w-full h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <img
+                src="/Background (4).png"
+                alt="MEHR Pune Launch"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            
+            {/* Gradient Overlay with Opacity */}
+            <div className="absolute inset-0">
+              <img
+                src="/Pseudo__after+Gradient.png"
+                alt="Gradient Overlay"
+                className="w-full h-full object-cover opacity-70"
+                loading="lazy"
+              />
+            </div>
+            
+            {/* Text Overlay */}
+            <div className="absolute inset-0 flex flex-col justify-center items-start pl-6 sm:pl-8 md:pl-12 lg:pl-16">
+              <h2 className="[font-family:'Poppins',Helvetica] font-bold text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-2 sm:mb-3 drop-shadow-lg">
+                Launch of MEHR Pune
+              </h2>
+              <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-md mb-3 sm:mb-4 md:mb-6">
+                OCTOBER 2025
+              </p>
+              <Link to="/book-your-stay">
+                <Button className="[font-family:'Poppins',Helvetica] bg-white text-[#ab4b28] hover:bg-gray-100 active:bg-gray-200 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100">
+                  EXPLORE NOW
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <FooterSection />
     </div>
   );
