@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
@@ -42,6 +42,11 @@ export const WaterAndSkyPage = (): JSX.Element => {
     phone: '',
   });
   const price = 2500;
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   async function handlePayment() {
     // Validate customer data
@@ -333,8 +338,8 @@ export const WaterAndSkyPage = (): JSX.Element => {
             </h1>
             {/* Price Badge */}
             <div className="flex-shrink-0">
-              <div className="bg-[#f9d2a3] rounded-lg px-6 py-4 border-2 border-[#ab4b28] inline-block">
-                <div className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-2xl sm:text-3xl">
+              <div className="bg-[#f9d2a3] rounded-lg px-4 py-2 border-2 border-[#ab4b28] inline-block">
+                <div className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-lg sm:text-xl">
                   ₹ 2500
                 </div>
               </div>
@@ -417,7 +422,7 @@ export const WaterAndSkyPage = (): JSX.Element => {
         <div className="w-full max-w-7xl mx-auto flex justify-center">
           <button 
             onClick={() => setShowCustomerModal(true)}
-            className="[font-family:'Poppins',Helvetica] bg-[#ab4b28] hover:bg-[#8b3a1f] text-white px-8 sm:px-12 md:px-16 py-4 sm:py-5 rounded-lg font-semibold text-lg sm:text-xl md:text-2xl transition-colors duration-200 shadow-lg hover:shadow-xl"
+            className="[font-family:'Poppins',Helvetica] bg-[#ab4b28] hover:bg-[#8b3a1f] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
             PAY NOW
           </button>
