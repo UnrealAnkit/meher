@@ -69,7 +69,7 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
               </h2>
               <ul className="space-y-0 list-disc list-inside [font-family:'Poppins']">
                 <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                  Classroom sessions led by experts — Dr. Pallavi Kavhane and her team
+                  Classroom sessions led by experts
                 </li>
                 <li className="font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
                   Self-practice and teaching assistance sessions
@@ -138,34 +138,6 @@ export const YogaTeacherTrainingPage = (): JSX.Element => {
               <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
                 Learning at MEHR also offers a unique advantage: being located in the heart of the city yet surrounded by serene nature at the riverbanks. Your stay in Pune will be memorable, with access to landmarks like the Dagdusheth Temple, city museums, and the Osho Ashram (just 650 m away).
               </p>
-            </div>
-
-            {/* Meet the Instructor Section */}
-            <div className="mt-12 lg:mt-16">
-              {/* Image and Text Side by Side */}
-              <div className="flex flex-col sm:flex-row sm:items-start gap-6 lg:gap-8">
-                {/* Profile Image */}
-                <div className="flex-shrink-0">
-                  <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] lg:w-[240px] lg:h-[240px] rounded-full overflow-hidden border-4 border-white shadow-lg">
-                    <img
-                      src="https://meher.b-cdn.net/janie.png"
-                      alt="Dr. Pallavi Kavhane"
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-
-                {/* Text Content */}
-                <div className="flex-1 sm:pt-0">
-                  <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[24px] sm:text-[28px] lg:text-[32px] mb-4 lg:mb-5">
-                    Dr. Pallavi Kavhane, Ph.D. in Yoga
-                  </h3>
-                  <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                    A World Yogasana Champion and Global Ambassador of Yoga, Dr. Kavhane has represented India internationally, winning gold medals in Spain, Portugal, and Argentina. With a D.Litt., Ph.D., and Masters in Yoga & Physical Education, she has conducted over 3,000 sessions worldwide, training 5,000+ students and completing more than 5,00,000 hours of yoga teaching.
-                  </p>
-                </div>
-              </div>
             </div>
 
             {/* Fees BreakDown */}

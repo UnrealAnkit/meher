@@ -148,21 +148,21 @@ export const Mehr = (): JSX.Element => {
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-4 md:gap-6 w-full max-w-6xl">
           <Link to="/book-your-stay" className="w-full sm:w-auto">
             <Button 
-              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
+              className="[font-family:'Poppins',Helvetica] bg-[#ab4b28] border-2 border-[#ab4b28] text-white hover:bg-[#8b3a1f] hover:border-[#8b3a1f] active:bg-[#7a3219] active:border-[#7a3219] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
             >
               BOOK YOUR STAY
             </Button>
           </Link>
           <Link to="/rejuvenation" className="w-full sm:w-auto">
             <Button 
-              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
+              className="[font-family:'Poppins',Helvetica] bg-[#ab4b28] border-2 border-[#ab4b28] text-white hover:bg-[#8b3a1f] hover:border-[#8b3a1f] active:bg-[#7a3219] active:border-[#7a3219] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
             >
               EXPLORE THERAPIES
             </Button>
           </Link>
           <Link to="/calendar" className="w-full sm:w-auto">
             <Button 
-              className="[font-family:'Poppins',Helvetica] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
+              className="[font-family:'Poppins',Helvetica] bg-[#ab4b28] border-2 border-[#ab4b28] text-white hover:bg-[#8b3a1f] hover:border-[#8b3a1f] active:bg-[#7a3219] active:border-[#7a3219] px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 w-full sm:w-auto"
             >
               EXPLORE EVENTS
             </Button>
@@ -497,7 +497,7 @@ export const Mehr = (): JSX.Element => {
           <div className="flex justify-center">
             <Link to="/book-your-stay">
             <Button
-                className="w-[369px] h-11 rounded-[60px] bg-white border-2 border-[#ab4b28] text-[#ab4b28] hover:bg-[#ab4b28] hover:text-white active:bg-[#8b3a1f] active:border-[#8b3a1f] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100"
+                className="w-[369px] h-11 rounded-[60px] bg-[#ab4b28] border-2 border-[#ab4b28] text-white hover:bg-[#8b3a1f] hover:border-[#8b3a1f] active:bg-[#7a3219] active:border-[#7a3219] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100"
             >
                 <span className="[font-family:'Poppins',Helvetica] font-bold text-base text-center tracking-[0] leading-5">
                 PLAN YOUR RETREAT WITH US

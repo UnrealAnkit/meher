@@ -23,7 +23,17 @@ const galleryImages: GalleryImage[] = [
 
 export const GalleryPage = (): JSX.Element => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Auto-advance slideshow every 3 seconds on mobile
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % galleryImages.length);
+    }, 3000);
+    
+    return () => clearInterval(timer);
+  }, [galleryImages.length]);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -120,59 +130,99 @@ export const GalleryPage = (): JSX.Element => {
 
       {/* Gallery Content Section */}
       <div className="flex flex-col gap-4 md:gap-8 py-8 md:py-16 px-4 md:px-0">
-        {/* First Row */}
-        <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
-          {galleryImages.slice(0, 3).map((image, index) => (
-            <div
-              key={index}
-              ref={(el) => (imageRefs.current[index] = el)}
-              className="opacity-0 flex justify-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
-              onClick={() => handleImageClick(image)}
-            >
-              <img 
-                src={image.src} 
-                alt={image.alt} 
-                className="w-full max-w-full h-auto object-contain rounded-lg shadow-md"
-                loading="lazy"
+        {/* Mobile Slideshow */}
+        <div className="md:hidden relative w-full h-[400px] rounded-2xl overflow-hidden mb-6">
+          <div className="relative w-full h-full">
+            {galleryImages.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-1000 ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
+                onClick={() => handleImageClick(image)}
+              >
+                <img 
+                  src={image.src} 
+                  alt={image.alt} 
+                  className="w-full h-full object-cover cursor-pointer"
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Slide indicators */}
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+            {galleryImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentSlide 
+                    ? 'bg-white w-6' 
+                    : 'bg-white/50'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
               />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        {/* Second Row */}
-        <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
-          {galleryImages.slice(3, 7).map((image, index) => (
-            <div
-              key={index + 3}
-              ref={(el) => (imageRefs.current[index + 3] = el)}
-              className="opacity-0 flex justify-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
-              onClick={() => handleImageClick(image)}
-            >
-              <img 
-                src={image.src} 
-                alt={image.alt} 
-                className="w-full max-w-full h-auto object-contain rounded-lg shadow-md"
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
-        {/* Third Row */}
-        <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
-          {galleryImages.slice(7, 10).map((image, index) => (
-            <div
-              key={index + 7}
-              ref={(el) => (imageRefs.current[index + 7] = el)}
-              className="opacity-0 flex justify-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
-              onClick={() => handleImageClick(image)}
-            >
-              <img 
-                src={image.src} 
-                alt={image.alt} 
-                className="w-full max-w-full h-auto object-contain rounded-lg shadow-md"
-                loading="lazy"
-              />
-            </div>
-          ))}
+
+        {/* Desktop Grid Layout */}
+        <div className="hidden md:flex flex-col gap-4 md:gap-8">
+          {/* First Row */}
+          <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
+            {galleryImages.slice(0, 3).map((image, index) => (
+              <div
+                key={index}
+                ref={(el) => (imageRefs.current[index] = el)}
+                className="opacity-0 flex justify-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                onClick={() => handleImageClick(image)}
+              >
+                <img 
+                  src={image.src} 
+                  alt={image.alt} 
+                  className="w-full max-w-full h-auto object-contain rounded-lg shadow-md"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+          {/* Second Row */}
+          <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
+            {galleryImages.slice(3, 7).map((image, index) => (
+              <div
+                key={index + 3}
+                ref={(el) => (imageRefs.current[index + 3] = el)}
+                className="opacity-0 flex justify-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                onClick={() => handleImageClick(image)}
+              >
+                <img 
+                  src={image.src} 
+                  alt={image.alt} 
+                  className="w-full max-w-full h-auto object-contain rounded-lg shadow-md"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+          {/* Third Row */}
+          <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
+            {galleryImages.slice(7, 10).map((image, index) => (
+              <div
+                key={index + 7}
+                ref={(el) => (imageRefs.current[index + 7] = el)}
+                className="opacity-0 flex justify-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                onClick={() => handleImageClick(image)}
+              >
+                <img 
+                  src={image.src} 
+                  alt={image.alt} 
+                  className="w-full max-w-full h-auto object-contain rounded-lg shadow-md"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

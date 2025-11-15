@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -190,12 +191,14 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate })
         <h3 className="text-[#24312e] text-sm sm:text-base md:text-lg font-medium mb-2 sm:mb-3 [font-family:'Poppins',Helvetica]">
           Host your Retreat at the MEHR
         </h3>
-        <Button
-          variant="outline"
-          className="w-full bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#ab4b28] hover:text-white transition-colors [font-family:'Poppins',Helvetica] text-xs sm:text-sm py-2 touch-manipulation"
-        >
-          HOST YOUR EVENT
-        </Button>
+        <Link to="/contact">
+          <Button
+            variant="outline"
+            className="w-full bg-white text-[#ab4b28] border-[#ab4b28] hover:bg-[#ab4b28] hover:text-white transition-colors [font-family:'Poppins',Helvetica] text-xs sm:text-sm py-2 touch-manipulation"
+          >
+            HOST YOUR EVENT
+          </Button>
+        </Link>
       </div>
     </div>
   );

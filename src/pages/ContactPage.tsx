@@ -13,11 +13,53 @@ export const ContactPage: React.FC = () => {
     city: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('https://formspree.io/f/mzzyrlkw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          mobile: formData.mobile,
+          city: formData.city,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          mobile: '',
+          city: '',
+          message: '',
+        });
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+        // Reset error message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      // Reset error message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -141,10 +183,21 @@ export const ContactPage: React.FC = () => {
               />
               <Button
                 type="submit"
-                className="w-full bg-white text-[#A0522D] hover:bg-gray-50 h-12 rounded-[10px] text-base font-medium mt-4"
+                disabled={isSubmitting}
+                className="w-full bg-white text-[#A0522D] hover:bg-gray-50 h-12 rounded-[10px] text-base font-medium mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send
+                {isSubmitting ? 'Sending...' : 'Send'}
               </Button>
+              {submitStatus === 'success' && (
+                <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-[10px] text-center [font-family:'Poppins']">
+                  Thank you! Your message has been sent successfully.
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-[10px] text-center [font-family:'Poppins']">
+                  Sorry, there was an error sending your message. Please try again.
+                </div>
+              )}
             </form>
           </div>
         </div>

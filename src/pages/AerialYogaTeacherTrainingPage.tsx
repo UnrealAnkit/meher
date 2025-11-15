@@ -109,32 +109,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Meet the Instructor Section */}
-            <div className="mt-12 lg:mt-16">
-              {/* Image and Text Side by Side */}
-              <div className="flex flex-col sm:flex-row sm:items-start gap-6 lg:gap-8">
-                {/* Profile Image */}
-                <div className="flex-shrink-0">
-                  <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] lg:w-[240px] lg:h-[240px] rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-200">
-                    {/* Placeholder for Yoko's image - can be updated with actual image URL */}
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                      <span className="text-gray-400 text-sm">Yoko</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Text Content */}
-                <div className="flex-1 sm:pt-0">
-                  <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[24px] sm:text-[28px] lg:text-[32px] mb-4 lg:mb-5">
-                    Yoko - Aerial Yoga, Yin Yoga & Restorative Yoga Expert
-                  </h3>
-                  <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                    Practicing Yoga since 1998 and teaching since 2014, Yoko's approach blends traditional yogic philosophy with modern movement techniques, offering a practice that is both rooted in ancient wisdom and attuned to the needs of contemporary bodies and minds.
-                  </p>
-                </div>
-              </div>
-            </div>
-
             {/* Customised Retreat Experience */}
             <div className="mt-12 lg:mt-16">
               <h2 className="[font-family:'Poppins'] font-semibold text-[#A0522D] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
