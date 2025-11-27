@@ -74,6 +74,11 @@ Deno.serve(async (req) => {
       customer_phone: bookingData.customer_phone,
       status: bookingData.status || 'pending',
       notes: bookingData.notes || null,
+      // Room booking fields (optional - only for stay bookings)
+      room_type: bookingData.room_type || null,
+      check_in: bookingData.check_in || null,
+      check_out: bookingData.check_out || null,
+      check_out_time: bookingData.check_out_time || null,
     };
 
     // Handle payment_id - only include if it's a non-empty string

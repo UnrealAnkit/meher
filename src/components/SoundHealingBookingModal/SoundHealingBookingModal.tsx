@@ -480,3 +480,5 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
   );
 };
 
+
+

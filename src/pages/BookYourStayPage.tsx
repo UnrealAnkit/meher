@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar, X } from "lucide-react";
 import { CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL } from "../lib/supabase";
 import { RAZORPAY_KEY_ID } from "../config/razorpay";
+import { 
+  checkRoomAvailability, 
+  ROOM_TYPES, 
+  type RoomType,
+  formatBookingDate 
+} from "../utils/roomAvailability";
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
@@ -37,9 +43,12 @@ export const BookYourStayPage = (): JSX.Element => {
   const [checkOut, setCheckOut] = useState("2025-09-30");
   const [adults, setAdults] = useState("1");
   const [promoCode, setPromoCode] = useState("");
+  const [roomType, setRoomType] = useState<RoomType | "">("");
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [availabilityMessage, setAvailabilityMessage] = useState({ type: '', text: '' });
   const [customerData, setCustomerData] = useState({
     name: '',
     email: '',
@@ -56,12 +65,56 @@ export const BookYourStayPage = (): JSX.Element => {
     return diffDays > 0 ? diffDays : 1;
   };
 
-  // Price per night (in rupees)
-  const pricePerNight = 3420;
+  // Get price per night based on selected room type
+  const pricePerNight = roomType ? ROOM_TYPES[roomType].price : 3420;
   const nights = calculateNights();
   const totalAmount = pricePerNight * nights * parseInt(adults);
 
-  const handleBookNow = () => {
+  // Check room availability when dates or room type changes
+  useEffect(() => {
+    const checkAvailability = async () => {
+      if (!roomType || !checkIn || !checkOut) {
+        setAvailabilityMessage({ type: '', text: '' });
+        return;
+      }
+
+      if (new Date(checkOut) <= new Date(checkIn)) {
+        setAvailabilityMessage({ type: '', text: '' });
+        return;
+      }
+
+      setCheckingAvailability(true);
+      try {
+        const result = await checkRoomAvailability(roomType, checkIn, checkOut, '15:00:00');
+        
+        if (!result.isAvailable) {
+          setAvailabilityMessage({
+            type: 'error',
+            text: result.message || `Sorry, this room is booked until ${result.bookedUntil ? formatBookingDate(result.bookedUntil, result.bookedUntilTime) : 'the selected date'}. Please book after this date.`
+          });
+        } else {
+          setAvailabilityMessage({
+            type: 'success',
+            text: 'Room is available for the selected dates'
+          });
+        }
+      } catch (error) {
+        console.error('Error checking availability:', error);
+        setAvailabilityMessage({
+          type: 'warning',
+          text: 'Unable to verify availability. Please try again.'
+        });
+      } finally {
+        setCheckingAvailability(false);
+      }
+    };
+
+    // Debounce the check
+    const timeoutId = setTimeout(checkAvailability, 500);
+    return () => clearTimeout(timeoutId);
+  }, [roomType, checkIn, checkOut]);
+
+  const handleBookNow = async () => {
     // Validate dates
     if (!checkIn || !checkOut) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
@@ -73,11 +126,51 @@ export const BookYourStayPage = (): JSX.Element => {
       return;
     }
 
-    // Show customer info modal
-    setShowCustomerModal(true);
+    // Validate room type
+    if (!roomType) {
+      setMessage({ type: 'error', text: 'Please select a room type' });
+      return;
+    }
+
+    // Check availability one more time before showing modal
+    setCheckingAvailability(true);
+    try {
+      const result = await checkRoomAvailability(roomType, checkIn, checkOut, '15:00:00');
+      
+      if (!result.isAvailable) {
+        setMessage({
+          type: 'error',
+          text: result.message || `Sorry, this room is booked until ${result.bookedUntil ? formatBookingDate(result.bookedUntil, result.bookedUntilTime) : 'the selected date'}. Please book after this date.`
+        });
+        setCheckingAvailability(false);
+        return;
+      }
+
+      // Room is available, show customer info modal
+      setShowCustomerModal(true);
+    } catch (error) {
+      console.error('Error checking availability:', error);
+      setMessage({
+        type: 'error',
+        text: 'Unable to verify availability. Please try again.'
+      });
+    } finally {
+      setCheckingAvailability(false);
+    }
   };
 
   const handlePayment = async () => {
+    // Validate dates first
+    if (!checkIn || !checkOut) {
+      setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
+      return;
+    }
+
+    if (new Date(checkOut) <= new Date(checkIn)) {
+      setMessage({ type: 'error', text: 'Check-out date must be after check-in date' });
+      return;
+    }
+
     // Validate customer data
     if (!customerData.name || !customerData.email || !customerData.phone) {
       setMessage({ type: 'error', text: 'Please fill in all customer details' });
@@ -262,7 +355,11 @@ export const BookYourStayPage = (): JSX.Element => {
               customer_email: customerData.email,
               customer_phone: customerData.phone,
               status: 'confirmed',
-              notes: `Check-in: ${checkIn}, Check-out: ${checkOut}, Nights: ${nights}, Adults: ${adults}${promoCode ? `, Promo Code: ${promoCode}` : ''}`,
+              room_type: roomType,
+              check_in: checkIn,
+              check_out: checkOut,
+              check_out_time: '15:00:00',
+              notes: `Room Type: ${ROOM_TYPES[roomType as RoomType].name}, Check-in: ${checkIn}, Check-out: ${checkOut}, Nights: ${nights}, Adults: ${adults}${promoCode ? `, Promo Code: ${promoCode}` : ''}`,
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
             };
@@ -470,6 +567,37 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </div>
 
+            {/* Room Type */}
+            <div className="flex-1 w-full lg:w-auto min-w-[180px]">
+              <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
+                Room Type *
+              </label>
+              <div className="relative">
+                <select
+                  value={roomType}
+                  onChange={(e) => setRoomType(e.target.value as RoomType)}
+                  className="w-full px-3 py-3 pr-9 bg-white rounded-lg text-[#24312e] text-sm [font-family:'Poppins',Helvetica] focus:outline-none focus:ring-2 focus:ring-[#ab4b28] appearance-none"
+                  required
+                >
+                  <option value="">Select Room Type</option>
+                  <option value="earth-and-clay">Earth & Clay - ₹3,200/night</option>
+                  <option value="bloom-and-herbs">Bloom and Herbs - ₹3,200/night</option>
+                  <option value="stone-and-fog">Stone and Fog - ₹2,500/night</option>
+                  <option value="golden-grasslands">Golden Grasslands - ₹3,000/night</option>
+                  <option value="forest-bathing">Forest Bathing - ₹3,200/night</option>
+                  <option value="water-and-sky">Water and Sky - ₹2,500/night</option>
+                </select>
+                <svg
+                  className="absolute right-2.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+
             {/* Promo Code */}
             <div className="flex-1 w-full lg:w-auto min-w-[140px]">
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
@@ -487,14 +615,27 @@ export const BookYourStayPage = (): JSX.Element => {
             {/* Price and Book Now Button */}
             <div className="flex flex-col items-start lg:items-end gap-2 w-full lg:w-auto lg:min-w-[180px]">
               <div className="text-white text-xs sm:text-sm [font-family:'Poppins',Helvetica]">
-                {totalAmount > 0 ? `₹${totalAmount.toLocaleString('en-IN')} (${nights} night${nights > 1 ? 's' : ''})` : 'From 3420 Rs/Night'}
+                {totalAmount > 0 && roomType ? `₹${totalAmount.toLocaleString('en-IN')} (${nights} night${nights > 1 ? 's' : ''})` : roomType ? `₹${pricePerNight.toLocaleString('en-IN')}/night` : 'Select room type'}
               </div>
+              {availabilityMessage.text && (
+                <div
+                  className={`text-xs sm:text-sm px-2 py-1 rounded ${
+                    availabilityMessage.type === 'error'
+                      ? 'bg-red-100 text-red-700 border border-red-300'
+                      : availabilityMessage.type === 'success'
+                      ? 'bg-green-100 text-green-700 border border-green-300'
+                      : 'bg-yellow-100 text-yellow-700 border border-yellow-300'
+                  } [font-family:'Poppins',Helvetica] max-w-full text-center`}
+                >
+                  {availabilityMessage.text}
+                </div>
+              )}
               <button
                 onClick={handleBookNow}
-                disabled={submitting}
+                disabled={submitting || checkingAvailability || !roomType || availabilityMessage.type === 'error'}
                 className="w-full lg:w-auto px-6 lg:px-8 py-2.5 lg:py-3 bg-[#ab4b28] hover:bg-[#8b3a1f] disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg text-sm lg:text-base font-semibold [font-family:'Poppins',Helvetica] transition-colors duration-200"
               >
-                {submitting ? 'Processing...' : 'Book Now'}
+                {checkingAvailability ? 'Checking...' : submitting ? 'Processing...' : 'Book Now'}
               </button>
             </div>
           </div>
@@ -750,6 +891,26 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
 
               <div className="bg-[#f9f5f0] p-4 rounded-lg">
+                {roomType && (
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Room Type:</span>
+                    <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                      {ROOM_TYPES[roomType as RoomType].name}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Check-in:</span>
+                  <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    {checkIn ? new Date(checkIn).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Not selected'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Check-out:</span>
+                  <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    {checkOut ? new Date(checkOut).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + ' at 3:00 PM' : 'Not selected'}
+                  </span>
+                </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Nights:</span>
                   <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">{nights}</span>
@@ -764,13 +925,24 @@ export const BookYourStayPage = (): JSX.Element => {
                 </div>
               </div>
 
-              <button
-                onClick={handlePayment}
-                disabled={submitting || !customerData.name || !customerData.email || !customerData.phone}
-                className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold [font-family:'Poppins',Helvetica] transition-colors duration-200"
-              >
-                {submitting ? 'Processing...' : 'Proceed to Payment'}
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setShowCustomerModal(false);
+                    setMessage({ type: '', text: '' });
+                  }}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-[#24312e] py-3 rounded-lg font-semibold [font-family:'Poppins',Helvetica] transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handlePayment}
+                  disabled={submitting || !customerData.name || !customerData.email || !customerData.phone || !checkIn || !checkOut || !roomType || availabilityMessage.type === 'error'}
+                  className="flex-1 bg-[#ab4b28] hover:bg-[#8b3a1f] disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold [font-family:'Poppins',Helvetica] transition-colors duration-200"
+                >
+                  {submitting ? 'Processing...' : 'Proceed to Payment'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
