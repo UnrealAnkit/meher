@@ -34,6 +34,7 @@ import { AdminEventsPage } from "./pages/admin/AdminEventsPage";
 import { AdminClassesPage } from "./pages/admin/AdminClassesPage";
 import { AdminUsersPage } from "./pages/admin/AdminUsersPage";
 import { AdminBookingsPage } from "./pages/admin/AdminBookingsPage";
+import { AdminRoomBookingsPage } from "./pages/admin/AdminRoomBookingsPage";
 import { AdminBlogsPage } from "./pages/admin/AdminBlogsPage";
 import { supabase } from "./lib/supabase";
 
@@ -202,6 +203,22 @@ function App() {
                 }}
               >
                 <AdminBookingsPage />
+              </AdminLayout>
+            </AdminWrapper>
+          }
+        />
+        <Route
+          path="/admin/room-bookings"
+          element={
+            <AdminWrapper>
+              <AdminLayout
+                onLogout={async () => {
+                  await supabase.auth.signOut();
+                  setShowAdmin(false);
+                  window.location.href = "/";
+                }}
+              >
+                <AdminRoomBookingsPage />
               </AdminLayout>
             </AdminWrapper>
           }

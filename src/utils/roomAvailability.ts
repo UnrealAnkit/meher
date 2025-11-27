@@ -93,13 +93,15 @@ export async function checkRoomAvailability(
     });
 
     if (error) {
-      console.error('Error checking room availability:', error);
+      console.error('Error checking room availability (RPC):', error);
+      console.log('Falling back to manual availability check...');
       // Fallback: check manually if function doesn't exist
       return await checkRoomAvailabilityManual(roomType, checkIn, checkOut, checkOutTime);
     }
 
     if (data && data.length > 0) {
       const result = data[0];
+      console.log('Room availability result:', result);
       return {
         isAvailable: result.is_available,
         bookedUntil: result.booked_until || undefined,
@@ -109,6 +111,7 @@ export async function checkRoomAvailability(
     }
 
     // Default to available if no data returned
+    console.log('No availability data returned, defaulting to available');
     return {
       isAvailable: true,
       message: 'Room is available',
@@ -140,7 +143,7 @@ async function checkRoomAvailabilityManual(
     // Query for conflicting bookings
     const { data: bookings, error } = await supabase
       .from('bookings')
-      .select('check_out, check_out_time, status')
+      .select('check_in, check_out, check_out_time, status')
       .eq('room_type', roomType)
       .in('status', ['confirmed', 'pending'])
       .order('check_out', { ascending: false })
@@ -155,16 +158,26 @@ async function checkRoomAvailabilityManual(
     }
 
     if (!bookings || bookings.length === 0) {
+      console.log('No bookings found for room type:', roomType);
       return {
         isAvailable: true,
         message: 'Room is available',
       };
     }
 
+    console.log(`Found ${bookings.length} booking(s) for room type: ${roomType}`);
+    console.log('Checking dates:', { checkIn, checkOut, checkOutTime });
+
     // Check for conflicts
     for (const booking of bookings) {
-      if (!booking.check_out) continue;
+      console.log('Checking booking:', { 
+        check_in: booking.check_in, 
+        check_out: booking.check_out, 
+        check_out_time: booking.check_out_time 
+      });
+      if (!booking.check_in || !booking.check_out) continue;
 
+      const bookingCheckIn = new Date(booking.check_in);
       const bookingCheckOut = new Date(booking.check_out);
       const bookingCheckOutTime = booking.check_out_time 
         ? booking.check_out_time.split(':').map(Number)
@@ -173,19 +186,28 @@ async function checkRoomAvailabilityManual(
       const bookingCheckOutDateTime = new Date(bookingCheckOut);
       bookingCheckOutDateTime.setHours(bookingCheckOutTime[0], bookingCheckOutTime[1], 0, 0);
 
-      // Check if dates overlap
+      // Check if dates overlap: booking dates overlap with requested dates
+      // Two date ranges overlap if: booking.check_in < requested.check_out AND booking.check_out >= requested.check_in
       const datesOverlap = 
-        bookingCheckOut >= checkInDate && 
-        new Date(booking.check_in || bookingCheckOut) <= checkOutDate;
+        bookingCheckIn < checkOutDate && 
+        bookingCheckOut >= checkInDate;
 
       // Check if check-out times conflict on the same date
-      const sameCheckOutDate = bookingCheckOut.toDateString() === checkOutDate.toDateString();
+      // If someone checks out on the same day as check-in, check the time
+      const sameCheckOutDate = bookingCheckOut.toDateString() === checkInDate.toDateString();
       const timeConflict = sameCheckOutDate && bookingCheckOutDateTime > checkOutDateTime;
 
       if (datesOverlap || timeConflict) {
         const bookedUntil = booking.check_out;
         const bookedUntilTime = booking.check_out_time || '15:00:00';
         const timeStr = bookedUntilTime.substring(0, 5); // Format as HH:MM
+
+        console.log('❌ Room conflict detected!', {
+          datesOverlap,
+          timeConflict,
+          bookedUntil,
+          bookedUntilTime
+        });
 
         return {
           isAvailable: false,
@@ -197,6 +219,7 @@ async function checkRoomAvailabilityManual(
     }
 
     // No conflicts found
+    console.log('✅ No conflicts found - room is available');
     return {
       isAvailable: true,
       message: 'Room is available',

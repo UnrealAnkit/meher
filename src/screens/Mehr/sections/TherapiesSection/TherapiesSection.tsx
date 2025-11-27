@@ -60,12 +60,23 @@ const TherapiesSection: React.FC = () => {
       const imageUrls = [
         '/Therapies-Programs.png',
         ...therapyData.map(therapy => therapy.activeImage)
-      ];
+      ].filter(url => url && url.trim() !== ''); // Filter out empty URLs
 
       const loadImage = (url: string): Promise<void> =>
         new Promise((resolve) => {
+          // Skip empty or invalid URLs
+          if (!url || url.trim() === '' || url === 'undefined' || url === 'null') {
+            console.warn('Skipping invalid image URL:', url);
+            resolve();
+            return;
+          }
+
           const img = new Image();
           img.onload = () => resolve();
+          img.onerror = () => {
+            console.warn('Failed to load image:', url);
+            resolve(); // Resolve anyway to not block other images
+          };
           img.src = url;
         });
 
