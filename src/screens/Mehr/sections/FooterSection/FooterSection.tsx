@@ -95,10 +95,10 @@ export const FooterSection = (): JSX.Element => {
                   Contact us at
                 </div>
                 <a 
-                  href="mailto:contact@ch2.world" 
+                  href="mailto:mehrraaha@gmail.com" 
                   className="[font-family:'Raleway',Helvetica] font-normal text-white/90 text-sm tracking-[0] leading-4 hover:text-white transition-colors underline"
                 >
-                  contact@ch2.world
+                  mehrraaha@gmail.com
                 </a>
               </div>
 

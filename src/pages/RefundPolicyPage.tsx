@@ -131,7 +131,7 @@ export const RefundPolicyPage = (): JSX.Element => {
                 Any disputes or refund concerns can be raised by:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4 text-lg leading-relaxed">
-                <li>Emailing <a href="mailto:hello@ch2.world" className="text-[#A0522D] hover:underline">hello@ch2.world</a></li>
+                <li>Emailing <a href="mailto:mehrraaha@gmail.com" className="text-[#A0522D] hover:underline">mehrraaha@gmail.com</a></li>
                 <li>Contacting the CH2 office at Koregaon Park, Pune</li>
               </ul>
               <p className="text-lg leading-relaxed mt-4">
@@ -150,7 +150,7 @@ export const RefundPolicyPage = (): JSX.Element => {
                   D4, Riverside Sultanat, Lane G, Koregaon Park, Pune, India
                 </p>
                 <p className="text-lg leading-relaxed mb-2">
-                  Email: <a href="mailto:contact@ch2.world" className="text-[#A0522D] hover:underline">contact@ch2.world</a>
+                  Email: <a href="mailto:mehrraaha@gmail.com" className="text-[#A0522D] hover:underline">mehrraaha@gmail.com</a>
                 </p>
                 <p className="text-lg leading-relaxed mb-2">
                   Phone: <a href="tel:9112008008" className="text-[#A0522D] hover:underline">9112008008</a>
