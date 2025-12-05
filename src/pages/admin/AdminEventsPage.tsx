@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { CalendarEvent } from '../../lib/supabase';
-import { Plus, Edit2, Trash2, AlertCircle, Check } from 'lucide-react';
+import { Plus, Edit2, Trash2, AlertCircle, Check, Link as LinkIcon } from 'lucide-react';
 
 export const AdminEventsPage: React.FC = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -15,6 +15,8 @@ export const AdminEventsPage: React.FC = () => {
     price: '',
     duration: '',
     event_date: '',
+    start_date: '',
+    end_date: '',
     timeSlots: '',
     image_url: '',
     expanded_description: '',
@@ -135,6 +137,8 @@ export const AdminEventsPage: React.FC = () => {
         price: formData.price,
         duration: formData.duration,
         event_date: formData.event_date,
+        start_date: formData.start_date || formData.event_date,
+        end_date: formData.end_date || formData.event_date,
         time_slots: formData.timeSlots.split(',').map(slot => slot.trim()),
         image_url: imageUrl,
         expanded_description: formData.expanded_description,
@@ -194,6 +198,8 @@ export const AdminEventsPage: React.FC = () => {
       price: event.price,
       duration: event.duration,
       event_date: event.event_date,
+      start_date: event.start_date || event.event_date,
+      end_date: event.end_date || event.event_date,
       timeSlots: event.time_slots.join(', '),
       image_url: event.image_url,
       expanded_description: event.expanded_description,
@@ -210,6 +216,8 @@ export const AdminEventsPage: React.FC = () => {
       price: '',
       duration: '',
       event_date: '',
+      start_date: '',
+      end_date: '',
       timeSlots: '',
       image_url: '',
       expanded_description: '',
@@ -223,6 +231,17 @@ export const AdminEventsPage: React.FC = () => {
   const showNotification = (type: string, text: string) => {
     setMessage({ type, text });
     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+  };
+
+  const copyShareableLink = (eventId: string) => {
+    const baseUrl = window.location.origin;
+    const shareableLink = `${baseUrl}/calendar?event=${eventId}`;
+    
+    navigator.clipboard.writeText(shareableLink).then(() => {
+      showNotification('success', 'Link copied to clipboard!');
+    }).catch(() => {
+      showNotification('error', 'Failed to copy link');
+    });
   };
 
   return (
@@ -336,13 +355,39 @@ export const AdminEventsPage: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
-                  Event Date *
+                  Event Date * (Display Date)
                 </label>
                 <input
                   type="date"
                   required
                   value={formData.event_date}
                   onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Start Date *
+                </label>
+                <input
+                  type="date"
+                  required
+                  value={formData.start_date}
+                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  End Date *
+                </label>
+                <input
+                  type="date"
+                  required
+                  value={formData.end_date}
+                  onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
                 />
               </div>
@@ -465,6 +510,9 @@ export const AdminEventsPage: React.FC = () => {
                     Tag
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
+                    Link
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">
                     Actions
                   </th>
                 </tr>
@@ -493,6 +541,16 @@ export const AdminEventsPage: React.FC = () => {
                       <span className="inline-block bg-[#ab4b28] text-white px-3 py-1 rounded text-xs font-semibold [font-family:'Poppins',Helvetica] uppercase">
                         {event.tag}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => copyShareableLink(event.id)}
+                        className="flex items-center gap-1 p-2 text-[#ab4b28] hover:bg-[#f9d2a3] rounded-lg transition-colors group"
+                        title="Copy shareable link"
+                      >
+                        <LinkIcon className="w-4 h-4" />
+                        <span className="text-xs font-medium [font-family:'Poppins',Helvetica]">Copy</span>
+                      </button>
                     </td>
                     <td className="px-6 py-4 flex gap-2">
                       <button

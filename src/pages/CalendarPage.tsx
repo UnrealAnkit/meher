@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar } from "../components/Calendar/Calendar";
@@ -6,9 +7,13 @@ import { EventCard } from "../components/EventCard";
 import { supabase, CalendarEvent } from "../lib/supabase";
 
 export const CalendarPage = (): JSX.Element => {
+  const [searchParams] = useSearchParams();
+  const eventIdFromUrl = searchParams.get('event');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // Current system date
   const [supabaseEvents, setSupabaseEvents] = useState<any[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(false);
+  const [highlightedEventId, setHighlightedEventId] = useState<string | null>(null);
+  const eventRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   // Sample event data - November 1st, 2025
   const novemberFirstDate = new Date(2025, 10, 1); // November 1st, 2025
@@ -165,6 +170,43 @@ export const CalendarPage = (): JSX.Element => {
     }
   }, []);
 
+  // Load specific event from URL parameter on mount
+  useEffect(() => {
+    const loadEventFromUrl = async () => {
+      if (!eventIdFromUrl) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('calendar_events')
+          .select('*')
+          .eq('id', eventIdFromUrl)
+          .single();
+
+        if (error || !data) {
+          console.error('Error fetching event from URL:', error);
+          return;
+        }
+
+        // Set the calendar date to the event's date
+        const eventDate = new Date(data.event_date);
+        setSelectedDate(eventDate);
+        setHighlightedEventId(eventIdFromUrl);
+        
+        // Scroll to the event after a short delay to ensure it's rendered
+        setTimeout(() => {
+          const eventElement = eventRefs.current[eventIdFromUrl];
+          if (eventElement) {
+            eventElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 500);
+      } catch (err) {
+        console.error('Error loading event from URL:', err);
+      }
+    };
+
+    loadEventFromUrl();
+  }, [eventIdFromUrl]);
+
   // Fetch events when component mounts or when selected date changes
   useEffect(() => {
     // Always fetch events from Supabase for the selected date
@@ -255,19 +297,35 @@ export const CalendarPage = (): JSX.Element => {
               {loadingEvents ? (
                 <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base">Loading events...</p>
               ) : events.length > 0 ? (
-                events.map((event, index) => (
-                  <EventCard
-                    key={index}
-                    title={event.title}
-                    description={event.description}
-                    tag={event.tag}
-                    dateTime={event.dateTime}
-                    image={event.image}
-                    expandedDescription={event.expandedDescription}
-                    eventDate={event.eventDate}
-                    eventId={(event as any).id || undefined}
-                  />
-                ))
+                events.map((event, index) => {
+                  const eventId = (event as any).id;
+                  const isHighlighted = eventId && highlightedEventId === eventId;
+                  
+                  return (
+                    <div
+                      key={index}
+                      ref={(el) => {
+                        if (eventId) {
+                          eventRefs.current[eventId] = el;
+                        }
+                      }}
+                      className={`transition-all duration-300 ${
+                        isHighlighted ? 'ring-4 ring-[#ab4b28] ring-opacity-50 rounded-lg' : ''
+                      }`}
+                    >
+                      <EventCard
+                        title={event.title}
+                        description={event.description}
+                        tag={event.tag}
+                        dateTime={event.dateTime}
+                        image={event.image}
+                        expandedDescription={event.expandedDescription}
+                        eventDate={event.eventDate}
+                        eventId={eventId || undefined}
+                      />
+                    </div>
+                  );
+                })
               ) : (
                 <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base">No events scheduled.</p>
               )}
