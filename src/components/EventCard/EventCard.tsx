@@ -195,13 +195,13 @@ export const EventCard: React.FC<EventCardProps> = ({
             )}
           </div>
 
-          {/* Book This Experience Button - only show when NOT expanded */}
+          {/* Book Now Button - only show when NOT expanded */}
           {!isExpanded && (
             <button 
               onClick={handleBookNow}
-              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors mt-1 sm:mt-2 touch-manipulation whitespace-nowrap"
+              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors mt-1 sm:mt-2 touch-manipulation"
             >
-              BOOK THIS EXPERIENCE
+              BOOK NOW
             </button>
           )}
 
