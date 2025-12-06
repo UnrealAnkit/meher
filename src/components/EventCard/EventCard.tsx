@@ -136,7 +136,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 
           <div className="flex-1 min-h-0 min-w-0">
             {/* Title */}
-            <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm sm:text-lg mb-1 sm:mb-2 leading-tight pr-8 sm:pr-12 line-clamp-2">
+            <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm sm:text-lg mb-1 sm:mb-2 leading-tight pr-8 sm:pr-12 truncate">
               {title}
             </h3>
 
@@ -151,7 +151,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
 
             {/* Facilitator */}
-            <p className={`[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3 ${isExpanded ? '' : 'line-clamp-2'}`}>
+            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3 truncate">
               <span className="font-semibold">Facilitator:</span> {description.replace('Facilitator:', '').trim()}
             </p>
 
@@ -167,7 +167,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 
             {/* Description - shown when expanded */}
             {isExpanded && expandedDescription && (
-              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn whitespace-pre-line">
+              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn">
                 {expandedDescription}
               </p>
             )}
@@ -195,13 +195,13 @@ export const EventCard: React.FC<EventCardProps> = ({
             )}
           </div>
 
-          {/* Book Now Button - only show when NOT expanded */}
+          {/* Book This Experience Button - only show when NOT expanded */}
           {!isExpanded && (
             <button 
               onClick={handleBookNow}
-              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors mt-1 sm:mt-2 touch-manipulation"
+              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors mt-1 sm:mt-2 touch-manipulation whitespace-nowrap"
             >
-              BOOK NOW
+              BOOK THIS EXPERIENCE
             </button>
           )}
 

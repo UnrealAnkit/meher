@@ -18,8 +18,6 @@ export interface CalendarEvent {
   price: string;
   duration: string;
   event_date: string;
-  start_date: string;
-  end_date: string;
   time_slots: string[];
   image_url: string;
   expanded_description: string;
