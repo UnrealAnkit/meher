@@ -41,6 +41,8 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 }) => {
   const navigate = useNavigate();
   const [occupancyType, setOccupancyType] = useState<'double' | 'single'>('double');
+  const [checkInDate, setCheckInDate] = useState('');
+  const [checkOutDate, setCheckOutDate] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -72,6 +74,19 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     setSubmitting(true);
     setMessage({ type: '', text: '' });
 
+    // Validate dates
+    if (!checkInDate || !checkOutDate) {
+      setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
+      setSubmitting(false);
+      return;
+    }
+
+    if (new Date(checkOutDate) <= new Date(checkInDate)) {
+      setMessage({ type: 'error', text: 'Check-out date must be after check-in date' });
+      setSubmitting(false);
+      return;
+    }
+
     try {
       // Format price string with occupancy info
       const priceString = `₹${selectedTotal.toLocaleString('en-IN')} (${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy)`;
@@ -82,14 +97,14 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         {
           event_id: null, // No event_id for package bookings
           event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
-          event_date: new Date().toISOString().split('T')[0], // Today's date
+          event_date: checkInDate, // Use check-in date
           selected_slot: selectedSlot,
           price: priceString,
           customer_name: formData.name,
           customer_email: formData.email,
           customer_phone: formData.phoneNumber,
           status: 'pending',
-          notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}`,
+          notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}, Check-in: ${checkInDate}, Check-out: ${checkOutDate}`,
         },
       ]);
 
@@ -101,6 +116,8 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       setTimeout(() => {
         setFormData({ name: '', email: '', phoneNumber: '' });
         setOccupancyType('double');
+        setCheckInDate('');
+        setCheckOutDate('');
         setSubmitting(false);
         onClose();
       }, 2000);
@@ -115,6 +132,17 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     // Validate form fields
     if (!formData.name || !formData.email || !formData.phoneNumber) {
       setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
+      return;
+    }
+
+    // Validate dates
+    if (!checkInDate || !checkOutDate) {
+      setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
+      return;
+    }
+
+    if (new Date(checkOutDate) <= new Date(checkInDate)) {
+      setMessage({ type: 'error', text: 'Check-out date must be after check-in date' });
       return;
     }
 
@@ -329,14 +357,14 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             const bookingData = {
               event_id: null,
               event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
-              event_date: new Date().toISOString().split('T')[0],
+              event_date: checkInDate || new Date().toISOString().split('T')[0],
               selected_slot: selectedSlot,
               price: priceString,
               customer_name: formData.name,
               customer_email: formData.email,
               customer_phone: formData.phoneNumber,
               status: 'confirmed', // Payment successful, so confirmed
-              notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}. Signature Verified: Yes`,
+              notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}, Check-in: ${checkInDate}, Check-out: ${checkOutDate}. Signature Verified: Yes`,
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
             };
@@ -687,6 +715,36 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               required
               className="w-full px-3 py-2.5 rounded-lg bg-gray-100 border-2 border-transparent focus:bg-gray-50 focus:border-[#A0522D] focus:outline-none [font-family:'Poppins',Helvetica] text-sm text-[#1E1E1E] transition-all"
               placeholder="Enter your mobile number"
+            />
+          </div>
+
+          {/* Check-in Date Field */}
+          <div>
+            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
+              CHECK-IN DATE
+            </label>
+            <input
+              type="date"
+              value={checkInDate}
+              onChange={(e) => setCheckInDate(e.target.value)}
+              required
+              min={new Date().toISOString().split('T')[0]}
+              className="w-full px-3 py-2.5 rounded-lg bg-gray-100 border-2 border-transparent focus:bg-gray-50 focus:border-[#A0522D] focus:outline-none [font-family:'Poppins',Helvetica] text-sm text-[#1E1E1E] transition-all"
+            />
+          </div>
+
+          {/* Check-out Date Field */}
+          <div>
+            <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
+              CHECK-OUT DATE
+            </label>
+            <input
+              type="date"
+              value={checkOutDate}
+              onChange={(e) => setCheckOutDate(e.target.value)}
+              required
+              min={checkInDate || new Date().toISOString().split('T')[0]}
+              className="w-full px-3 py-2.5 rounded-lg bg-gray-100 border-2 border-transparent focus:bg-gray-50 focus:border-[#A0522D] focus:outline-none [font-family:'Poppins',Helvetica] text-sm text-[#1E1E1E] transition-all"
             />
           </div>
           </div>

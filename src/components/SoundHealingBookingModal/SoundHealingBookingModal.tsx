@@ -40,6 +40,8 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
   onClose,
 }) => {
   const navigate = useNavigate();
+  const [checkInDate, setCheckInDate] = useState('');
+  const [checkOutDate, setCheckOutDate] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,6 +69,19 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
     setSubmitting(true);
     setMessage({ type: '', text: '' });
 
+    // Validate dates
+    if (!checkInDate || !checkOutDate) {
+      setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
+      setSubmitting(false);
+      return;
+    }
+
+    if (new Date(checkOutDate) <= new Date(checkInDate)) {
+      setMessage({ type: 'error', text: 'Check-out date must be after check-in date' });
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
       const programTitle = 'Sound Healing Training Workshop (3 Levels) - Level 1: Sounds for Self';
@@ -76,14 +91,14 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
         {
           event_id: null,
           event_title: programTitle,
-          event_date: '2026-01-03',
+          event_date: checkInDate,
           selected_slot: 'Level 1: Sounds for Self',
           price: priceString,
           customer_name: formData.name,
           customer_email: formData.email,
           customer_phone: formData.phoneNumber,
           status: 'pending',
-          notes: `Subtotal: ₹${programFee.toLocaleString('en-IN')}, GST (18%): ₹${Math.round(gstAmount).toLocaleString('en-IN')}, Total: ₹${Math.round(totalWithGST).toLocaleString('en-IN')}`,
+          notes: `Check-in: ${checkInDate}, Check-out: ${checkOutDate}, Subtotal: ₹${programFee.toLocaleString('en-IN')}, GST (18%): ₹${Math.round(gstAmount).toLocaleString('en-IN')}, Total: ₹${Math.round(totalWithGST).toLocaleString('en-IN')}`,
         },
       ]);
 
@@ -94,6 +109,8 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
       // Reset form and close modal after 2 seconds
       setTimeout(() => {
         setFormData({ name: '', email: '', phoneNumber: '' });
+        setCheckInDate('');
+        setCheckOutDate('');
         setSubmitting(false);
         onClose();
       }, 2000);
@@ -108,6 +125,17 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
     // Validate form fields
     if (!formData.name || !formData.email || !formData.phoneNumber) {
       setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
+      return;
+    }
+
+    // Validate dates
+    if (!checkInDate || !checkOutDate) {
+      setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
+      return;
+    }
+
+    if (new Date(checkOutDate) <= new Date(checkInDate)) {
+      setMessage({ type: 'error', text: 'Check-out date must be after check-in date' });
       return;
     }
 
@@ -451,6 +479,34 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
                 onChange={handleChange}
                 required
                 placeholder="Enter Your Mobile Number"
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg border-2 border-transparent focus:border-[#A0522D] focus:outline-none [font-family:'Poppins']"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[#1E1E1E] text-sm font-medium mb-2 [font-family:'Poppins']">
+                Check-in Date
+              </label>
+              <input
+                type="date"
+                value={checkInDate}
+                onChange={(e) => setCheckInDate(e.target.value)}
+                required
+                min={new Date().toISOString().split('T')[0]}
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg border-2 border-transparent focus:border-[#A0522D] focus:outline-none [font-family:'Poppins']"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[#1E1E1E] text-sm font-medium mb-2 [font-family:'Poppins']">
+                Check-out Date
+              </label>
+              <input
+                type="date"
+                value={checkOutDate}
+                onChange={(e) => setCheckOutDate(e.target.value)}
+                required
+                min={checkInDate || new Date().toISOString().split('T')[0]}
                 className="w-full px-4 py-3 bg-gray-100 rounded-lg border-2 border-transparent focus:border-[#A0522D] focus:outline-none [font-family:'Poppins']"
               />
             </div>
