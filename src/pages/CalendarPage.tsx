@@ -137,6 +137,29 @@ export const CalendarPage = (): JSX.Element => {
         // Format dateTime string: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM, 11:00 AM"
         const dateTimeString = `${event.price} | ${event.duration} | Pick a slot: ${timeSlotsFormatted}`;
         
+        // Parse expanded_description - handle both JSON and plain text formats
+        let expandedDescription = event.expanded_description || '';
+        if (expandedDescription) {
+          try {
+            const parsed = JSON.parse(expandedDescription);
+            // Format structured description nicely
+            const parts = [];
+            if (parsed.objective) {
+              parts.push(`Objective- ${parsed.objective}`);
+            }
+            if (parsed.targetAudience) {
+              parts.push(`Who is this for? ${parsed.targetAudience}`);
+            }
+            if (parsed.detailedDescription) {
+              parts.push(parsed.detailedDescription);
+            }
+            expandedDescription = parts.join('\n\n');
+          } catch (e) {
+            // If not JSON, use as-is (backward compatibility)
+            expandedDescription = event.expanded_description;
+          }
+        }
+        
         return {
           id: event.id,
           title: event.title,
@@ -144,7 +167,7 @@ export const CalendarPage = (): JSX.Element => {
           tag: event.tag,
           dateTime: dateTimeString,
           image: event.image_url || '/rectangle-1.png',
-          expandedDescription: event.expanded_description || '',
+          expandedDescription: expandedDescription,
           eventDate: new Date(event.event_date),
           timeSlots: event.time_slots // Keep time slots for sorting
         };

@@ -78,10 +78,10 @@ export const EventCard: React.FC<EventCardProps> = ({
   return (
     <div 
       className={`bg-white rounded-lg shadow-sm border border-gray-100 mb-4 flex flex-col overflow-hidden transition-all duration-500 ease-in-out w-full ${
-        isExpanded ? 'h-auto' : 'h-auto sm:h-[280px]'
+        isExpanded ? 'h-auto' : 'h-auto'
       }`}
     >
-      <div className="flex flex-row w-full">
+      <div className="flex flex-row w-full min-h-[200px] sm:min-h-[280px]">
         {/* Left Section - Image and Pick a slot */}
         <div className={`w-32 sm:w-48 flex-shrink-0 flex flex-col ${isExpanded ? '' : ''}`}>
           {/* Image */}
@@ -119,7 +119,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         </div>
         
         {/* Right Section - Event Details */}
-        <div className="flex-1 flex flex-col p-2 sm:p-4 relative min-h-0 min-w-0">
+        <div className="flex-1 flex flex-col p-2 sm:p-4 relative min-h-0 min-w-0 overflow-hidden">
           {/* Arrow Button - Top Right */}
           <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10">
             <button 
@@ -134,7 +134,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             </button>
           </div>
 
-          <div className="flex-1 min-h-0 min-w-0">
+          <div className="flex-1 min-h-0 min-w-0 overflow-y-auto">
             {/* Title */}
             <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm sm:text-lg mb-1 sm:mb-2 leading-tight pr-8 sm:pr-12 truncate">
               {title}
@@ -151,7 +151,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
 
             {/* Facilitator */}
-            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3 truncate">
+            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3">
               <span className="font-semibold">Facilitator:</span> {description.replace('Facilitator:', '').trim()}
             </p>
 
@@ -167,9 +167,13 @@ export const EventCard: React.FC<EventCardProps> = ({
 
             {/* Description - shown when expanded */}
             {isExpanded && expandedDescription && (
-              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn">
-                {expandedDescription}
-              </p>
+              <div className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn whitespace-pre-line">
+                {expandedDescription.split('\n\n').map((paragraph, index) => (
+                  <p key={index} className={index > 0 ? 'mt-3' : ''}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             )}
 
             {/* Pick a slot - only show when NOT expanded */}
@@ -197,22 +201,26 @@ export const EventCard: React.FC<EventCardProps> = ({
 
           {/* Book This Experience Button - only show when NOT expanded */}
           {!isExpanded && (
-            <button 
-              onClick={handleBookNow}
-              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors mt-1 sm:mt-2 touch-manipulation whitespace-nowrap"
-            >
-              BOOK THIS EXPERIENCE
-            </button>
+            <div className="mt-auto pt-2">
+              <button 
+                onClick={handleBookNow}
+                className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors touch-manipulation"
+              >
+                BOOK THIS EXPERIENCE
+              </button>
+            </div>
           )}
 
           {/* Book Now Button - only show when expanded */}
           {isExpanded && (
-            <button 
-              onClick={handleBookNow}
-              className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors mt-1 sm:mt-2 animate-fadeIn touch-manipulation"
-            >
-              BOOK NOW
-            </button>
+            <div className="mt-auto pt-2">
+              <button 
+                onClick={handleBookNow}
+                className="w-full bg-[#ab4b28] hover:bg-[#8b3a1f] active:bg-[#8b3a1f] text-white py-2 sm:py-3 rounded-full [font-family:'Poppins',Helvetica] text-xs sm:text-base font-semibold uppercase transition-colors animate-fadeIn touch-manipulation"
+              >
+                BOOK NOW
+              </button>
+            </div>
           )}
         </div>
       </div>

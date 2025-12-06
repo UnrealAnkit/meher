@@ -18,6 +18,8 @@ export const AdminEventsPage: React.FC = () => {
     timeSlots: '',
     image_url: '',
     expanded_description: '',
+    objective: '',
+    targetAudience: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -128,6 +130,14 @@ export const AdminEventsPage: React.FC = () => {
         imageUrl = await uploadImage(imageFile);
       }
 
+      // Combine objective and targetAudience into expanded_description for backward compatibility
+      // Format: JSON structure that can be parsed later
+      const structuredDescription = {
+        objective: formData.objective,
+        targetAudience: formData.targetAudience,
+        detailedDescription: formData.expanded_description,
+      };
+      
       const eventData = {
         title: formData.title,
         description: formData.description,
@@ -137,7 +147,7 @@ export const AdminEventsPage: React.FC = () => {
         event_date: formData.event_date,
         time_slots: formData.timeSlots.split(',').map(slot => slot.trim()),
         image_url: imageUrl,
-        expanded_description: formData.expanded_description,
+        expanded_description: JSON.stringify(structuredDescription),
       };
 
       if (editingEvent) {
@@ -187,6 +197,24 @@ export const AdminEventsPage: React.FC = () => {
 
   const handleEdit = (event: CalendarEvent) => {
     setEditingEvent(event);
+    
+    // Parse expanded_description if it's JSON, otherwise use as-is
+    let objective = '';
+    let targetAudience = '';
+    let detailedDescription = event.expanded_description || '';
+    
+    if (event.expanded_description) {
+      try {
+        const parsed = JSON.parse(event.expanded_description);
+        if (parsed.objective) objective = parsed.objective;
+        if (parsed.targetAudience) targetAudience = parsed.targetAudience;
+        if (parsed.detailedDescription) detailedDescription = parsed.detailedDescription;
+      } catch (e) {
+        // If not JSON, treat as legacy format - keep as detailedDescription
+        detailedDescription = event.expanded_description;
+      }
+    }
+    
     setFormData({
       title: event.title,
       description: event.description,
@@ -196,7 +224,9 @@ export const AdminEventsPage: React.FC = () => {
       event_date: event.event_date,
       timeSlots: event.time_slots.join(', '),
       image_url: event.image_url,
-      expanded_description: event.expanded_description,
+      expanded_description: detailedDescription,
+      objective: objective,
+      targetAudience: targetAudience,
     });
     setImagePreview(event.image_url);
     setShowForm(true);
@@ -213,6 +243,8 @@ export const AdminEventsPage: React.FC = () => {
       timeSlots: '',
       image_url: '',
       expanded_description: '',
+      objective: '',
+      targetAudience: '',
     });
     setImageFile(null);
     setImagePreview('');
@@ -351,13 +383,12 @@ export const AdminEventsPage: React.FC = () => {
                 <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                   Facilitator Description *
                 </label>
-                <input
-                  type="text"
+                <textarea
                   required
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
-                  placeholder="e.g., Facilitator: Yoga Master"
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica] h-24"
+                  placeholder="e.g., Facilitator: The retreat is conducted by our team of experts which comprises of Yoga experts (Hatha, Yin, Rope & Belt Therapy), Breathwork experts, sound healing experts and emotional wellness experts."
                 />
               </div>
 
@@ -372,6 +403,30 @@ export const AdminEventsPage: React.FC = () => {
                   onChange={(e) => setFormData({ ...formData, timeSlots: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
                   placeholder="e.g., 10:00 AM, 11:00 AM, 2:00 PM"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Objective-
+                </label>
+                <textarea
+                  value={formData.objective}
+                  onChange={(e) => setFormData({ ...formData, objective: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica] h-24"
+                  placeholder="To offer a structured yet gentle container for nervous system reset and emotional healing."
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                  Who is this for?
+                </label>
+                <textarea
+                  value={formData.targetAudience}
+                  onChange={(e) => setFormData({ ...formData, targetAudience: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica] h-24"
+                  placeholder="Professionals, caregivers, creatives, couples, anyone feeling burnt-out or overwhelmed."
                 />
               </div>
 
