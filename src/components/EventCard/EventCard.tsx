@@ -167,7 +167,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 
             {/* Description - shown when expanded */}
             {isExpanded && expandedDescription && (
-              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn">
+              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn whitespace-pre-line">
                 {expandedDescription}
               </p>
             )}

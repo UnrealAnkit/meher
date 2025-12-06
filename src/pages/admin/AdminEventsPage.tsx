@@ -427,8 +427,9 @@ export const AdminEventsPage: React.FC = () => {
                 <textarea
                   value={formData.expanded_description}
                   onChange={(e) => setFormData({ ...formData, expanded_description: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica] h-32"
-                  placeholder="Provide additional details about the event..."
+                  className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica] resize-y"
+                  placeholder="Format with line breaks for better display. Example:&#10;&#10;Objective - To give people a deep rejuvenation & reset. Who is this for? Professionals, couples, seekers, healing travellers.&#10;&#10;Description - Weekend of Serenity at MEHR is a curated 2-day journey into rest and renewal. Guests stay at the healing estate..."
+                  rows={8}
                 />
               </div>
 
