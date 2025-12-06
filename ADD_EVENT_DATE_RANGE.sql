@@ -42,3 +42,4 @@ ON calendar_events(start_date, end_date);
 -- 2. Query events by date range
 -- 3. The event_date field is kept for backward compatibility
 
+

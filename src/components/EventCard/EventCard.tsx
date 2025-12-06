@@ -136,7 +136,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 
           <div className="flex-1 min-h-0 min-w-0">
             {/* Title */}
-            <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm sm:text-lg mb-1 sm:mb-2 leading-tight pr-8 sm:pr-12 truncate">
+            <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm sm:text-lg mb-1 sm:mb-2 leading-tight pr-8 sm:pr-12 line-clamp-2">
               {title}
             </h3>
 
@@ -151,7 +151,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
 
             {/* Facilitator */}
-            <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3 truncate">
+            <p className={`[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3 ${isExpanded ? '' : 'line-clamp-2'}`}>
               <span className="font-semibold">Facilitator:</span> {description.replace('Facilitator:', '').trim()}
             </p>
 
