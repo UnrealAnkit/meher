@@ -110,6 +110,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
         price: formData.price,
         duration: formData.duration,
         event_date: formData.event_date,
+        start_date: formData.event_date, // Map event_date to start_date for database constraint
+        end_date: formData.event_date, // Map event_date to end_date for database constraint
         time_slots: formData.timeSlots.split(',').map(slot => slot.trim()),
         image_url: imageUrl,
         expanded_description: JSON.stringify(structuredDescription),
