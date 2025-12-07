@@ -19,6 +19,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
     price: '',
     duration: '',
     event_date: '',
+    start_date: '',
+    end_date: '',
     timeSlots: '',
     image_url: '',
     expanded_description: '',
@@ -110,8 +112,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
         price: formData.price,
         duration: formData.duration,
         event_date: formData.event_date,
-        start_date: formData.event_date, // Map event_date to start_date for database constraint
-        end_date: formData.event_date, // Map event_date to end_date for database constraint
+        start_date: formData.start_date || formData.event_date,
+        end_date: formData.end_date || formData.event_date,
         time_slots: formData.timeSlots.split(',').map(slot => slot.trim()),
         image_url: imageUrl,
         expanded_description: JSON.stringify(structuredDescription),
@@ -189,6 +191,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
       price: event.price,
       duration: event.duration,
       event_date: event.event_date,
+      start_date: (event as any).start_date || event.event_date,
+      end_date: (event as any).end_date || event.event_date,
       timeSlots: event.time_slots.join(', '),
       image_url: event.image_url,
       expanded_description: detailedDescription,
@@ -207,6 +211,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
       price: '',
       duration: '',
       event_date: '',
+      start_date: '',
+      end_date: '',
       timeSlots: '',
       image_url: '',
       expanded_description: '',
@@ -369,6 +375,35 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                     required
                     value={formData.event_date}
                     onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  />
+                </div>
+
+                {/* Start Date */}
+                <div>
+                  <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                    Start Date *
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={formData.start_date}
+                    onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
+                  />
+                </div>
+
+                {/* End Date */}
+                <div>
+                  <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
+                    End Date *
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={formData.end_date}
+                    onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                    min={formData.start_date || new Date().toISOString().split('T')[0]}
                     className="w-full px-4 py-2 rounded-lg border-2 border-[#f9d2a3] focus:border-[#ab4b28] focus:outline-none [font-family:'Poppins',Helvetica]"
                   />
                 </div>
