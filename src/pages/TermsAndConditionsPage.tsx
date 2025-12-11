@@ -26,7 +26,7 @@ export const TermsAndConditionsPage = (): JSX.Element => {
 
             <section>
               <p className="text-lg leading-relaxed mb-4">
-                Welcome to MEHER ("we," "our," or "us"). These Terms and Conditions ("Terms") govern your use of our website <a href="https://mehr.world" target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline">https:
+                Welcome to MEHER ("we," "our," or "us"). These Terms and Conditions ("Terms") govern your use of our website <a href="https://mehr.world" target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline">https://mehr.world</a> (the "Site").
               </p>
               <p className="text-lg leading-relaxed">
                 By using this Site, booking an experience, or making a payment, you agree to these Terms. If you do not agree, please do not use the Site or our services.

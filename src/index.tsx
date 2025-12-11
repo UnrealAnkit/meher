@@ -1,6 +1,6 @@
 import { StrictMode, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Mehr } from "./screens/Mehr";
 import { AboutPage } from "./pages/AboutPage";
 import { ProgramsPage } from "./pages/ProgramsPage";
@@ -79,11 +79,22 @@ const AdminWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
+
+  return null;
+};
+
 function App() {
   const [showAdmin, setShowAdmin] = useState(false);
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Mehr />} />
         <Route path="/about" element={<AboutPage />} />

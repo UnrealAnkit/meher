@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
+import { ScrollAnimation } from "../components/ScrollAnimation";
 
 type TabType = 'approach' | 'why' | 'reasons' | 'mission';
 
@@ -31,19 +32,22 @@ export const AboutPage = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="bg-white py-8 sm:py-12 lg:py-16 w-full">
-        <div className="w-full lg:max-w-[1200px] lg:mx-auto px-4 sm:px-6 lg:px-4">
-          <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[16px] sm:text-[18px] lg:text-[22px] font-light leading-[26px] sm:leading-[32px] lg:leading-[38px] text-center w-full lg:max-w-[1100px] lg:mx-auto">
-            Stress is a natural part of life, and while escaping it isn't the solution, taking time to pause, reflect, and reset truly helps. MEHR offers a quick reset space within the city — a peaceful breather without needing to travel far. It's ideal for both short rejuvenating retreats and long-term stays for deep healing. Patients with chronic ailments can heal under expert care through 50+ holistic therapies and a supportive community, making recovery fulfilling. MEHR also hosts 2–7 night retreats focused on body, mind, and soul wellness, along with AYUSH-backed training programs in Yoga, Aerial Yoga, Sound Healing, and Guided Meditation.
-          </p>
+      <ScrollAnimation animationType="fade-in">
+        <div className="bg-white py-8 sm:py-12 lg:py-16 w-full">
+          <div className="w-full lg:max-w-[1200px] lg:mx-auto px-4 sm:px-6 lg:px-4">
+            <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[16px] sm:text-[18px] lg:text-[22px] font-light leading-[26px] sm:leading-[32px] lg:leading-[38px] text-center w-full lg:max-w-[1100px] lg:mx-auto">
+              Stress is a natural part of life, and while escaping it isn't the solution, taking time to pause, reflect, and reset truly helps. MEHR offers a quick reset space within the city — a peaceful breather without needing to travel far. It's ideal for both short rejuvenating retreats and long-term stays for deep healing. Patients with chronic ailments can heal under expert care through 50+ holistic therapies and a supportive community, making recovery fulfilling. MEHR also hosts 2–7 night retreats focused on body, mind, and soul wellness, along with AYUSH-backed training programs in Yoga, Aerial Yoga, Sound Healing, and Guided Meditation.
+            </p>
+          </div>
         </div>
-      </div>
+      </ScrollAnimation>
 
-      <div className="bg-white py-8 sm:py-12 lg:py-16 w-full overflow-x-hidden">
-        <div className="w-full lg:max-w-[1200px] lg:mx-auto px-4 sm:px-6 lg:px-4 overflow-x-hidden">
-          
-          <div>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:flex lg:flex-row gap-2 sm:gap-3 lg:gap-8 mb-4 lg:overflow-visible">
+      <ScrollAnimation animationType="fade-in" delay={100}>
+        <div className="bg-white py-8 sm:py-12 lg:py-16 w-full overflow-x-hidden">
+          <div className="w-full lg:max-w-[1200px] lg:mx-auto px-4 sm:px-6 lg:px-4 overflow-x-hidden">
+            
+            <div>
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:flex lg:flex-row gap-2 sm:gap-3 lg:gap-8 mb-4 lg:overflow-visible">
               <button 
                 onClick={() => setActiveTab('approach')}
                 className={`px-2 sm:px-4 lg:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 ease-in-out transform text-center w-full ${activeTab === 'approach' ? 'bg-[#A0522D] text-white scale-105' : 'text-[#1E1E1E] bg-gray-50 hover:bg-gray-100'}`}
@@ -68,12 +72,12 @@ export const AboutPage = (): JSX.Element => {
               >
                 <span className="[font-family:'Poppins'] font-normal text-xs sm:text-sm lg:text-lg">Mission & Vision</span>
               </button>
+              </div>
+              
+              <div className="w-full h-[1px] bg-black mb-8 sm:mb-12 lg:mb-16"></div>
             </div>
-            
-            <div className="w-full h-[1px] bg-black mb-8 sm:mb-12 lg:mb-16"></div>
-          </div>
 
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
             
             <div className="w-full lg:w-1/3">
               <h2 key={activeTab} className="text-[#A0522D] [font-family:'Poppins'] text-[32px] sm:text-[40px] lg:text-[48px] font-semibold leading-tight transition-all duration-500 ease-in-out animate-fadeIn">
@@ -152,7 +156,8 @@ export const AboutPage = (): JSX.Element => {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </ScrollAnimation>
 
       <FooterSection />
     </div>

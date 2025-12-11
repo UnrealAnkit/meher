@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
+import { ScrollAnimation } from "../../../../components/ScrollAnimation";
 
 const therapyCategories = [
   { label: "Medical Consultations" },
@@ -37,6 +38,7 @@ export const ServicesSection = (): JSX.Element => {
       <section className="w-full px-4 sm:px-6 md:px-8 lg:px-4">
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-[35px] lg:gap-[47px] w-full flex-wrap">
           {cardsData.map((card, index) => (
+            <ScrollAnimation key={index} animationType="fade-in" delay={index * 100}>
             <Card
               key={index}
               className="w-full max-w-[565px] h-auto min-h-[500px] sm:min-h-[600px] md:h-[650px] lg:h-[702px] bg-white rounded-[12px] sm:rounded-[13px] md:rounded-[15px] shadow-[0px_0px_4px_#00000040] overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer"
@@ -73,6 +75,7 @@ export const ServicesSection = (): JSX.Element => {
                 </div>
               </CardContent>
             </Card>
+            </ScrollAnimation>
           ))}
         </div>
       </section>

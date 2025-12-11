@@ -1,6 +1,7 @@
 import React from "react";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
+import { ScrollAnimation } from "../components/ScrollAnimation";
 
 export const ProgramsPage = (): JSX.Element => {
   return (
@@ -8,12 +9,13 @@ export const ProgramsPage = (): JSX.Element => {
       <NavbarSection />
       
       <main className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="[font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-5xl mb-8">
-            Our Programs
-          </h1>
-          
-          <div className="bg-white rounded-[18px] shadow-[0px_4px_3.3px_#00000040] p-12">
+        <ScrollAnimation animationType="fade-in">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="[font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-5xl mb-8">
+              Our Programs
+            </h1>
+            
+            <div className="bg-white rounded-[18px] shadow-[0px_4px_3.3px_#00000040] p-12">
             <div className="mb-8">
               <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-3xl mb-6">
                 Coming Soon
@@ -51,7 +53,8 @@ export const ProgramsPage = (): JSX.Element => {
               </p>
             </div>
           </div>
-        </div>
+          </div>
+        </ScrollAnimation>
       </main>
       
       <FooterSection />
