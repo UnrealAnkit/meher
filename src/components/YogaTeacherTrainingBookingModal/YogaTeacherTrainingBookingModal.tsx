@@ -4,10 +4,8 @@ import { X, ArrowLeft } from 'lucide-react';
 import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL } from '../../lib/supabase';
 import { RAZORPAY_KEY_ID } from '../../config/razorpay';
 
-// Supabase anon key for Edge Function authentication
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
-// Load Razorpay script dynamically
 const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (window.Razorpay) {
@@ -23,7 +21,6 @@ const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Declare Razorpay type
 declare global {
   interface Window {
     Razorpay: any;
@@ -33,13 +30,13 @@ declare global {
 interface YogaTeacherTrainingBookingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  programType?: 'yoga' | 'aerial'; // 'yoga' for Yoga Teacher Training, 'aerial' for Aerial Yoga
+  programType?: 'yoga' | 'aerial'; 
 }
 
 export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookingModalProps> = ({
   isOpen,
   onClose,
-  programType = 'yoga', // Default to yoga teacher training
+  programType = 'yoga', 
 }) => {
   const navigate = useNavigate();
   const [bookingType, setBookingType] = useState<'with' | 'without'>('with');
@@ -53,7 +50,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Pricing breakdown - Different for Yoga vs Aerial Yoga
   const isAerial = programType === 'aerial';
   const programFee = isAerial ? 68000 : 82000;
   const foodAccommodation = isAerial ? 58000 : 68000;
@@ -61,7 +57,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
   const totalWithout = programFee;
 
   const selectedTotal = bookingType === 'with' ? totalWith : totalWithout;
-  const gstRate = 0.18; // 18% GST
+  const gstRate = 0.18; 
   const gstAmount = selectedTotal * gstRate;
   const totalWithGST = selectedTotal + gstAmount;
 
@@ -78,7 +74,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
     setSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    // Validate dates
     if (!checkInDate || !checkOutDate) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       setSubmitting(false);
@@ -96,8 +91,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
       const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
       
       const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
-      
-      // Save booking to Supabase
+
       const { error } = await supabase.from('bookings').insert([
         {
           event_id: null,
@@ -116,8 +110,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
       if (error) throw error;
 
       setMessage({ type: 'success', text: 'Booking submitted successfully! We will contact you soon.' });
-      
-      // Reset form and close modal after 2 seconds
+
       setTimeout(() => {
         setFormData({ name: '', email: '', phoneNumber: '' });
         setBookingType('with');
@@ -134,13 +127,12 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
   };
 
   const handlePayNow = async () => {
-    // Validate form fields
+    
     if (!formData.name || !formData.email || !formData.phoneNumber) {
       setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
       return;
     }
 
-    // Validate dates
     if (!checkInDate || !checkOutDate) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       return;
@@ -155,7 +147,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
     setMessage({ type: '', text: '' });
 
     try {
-      // Load Razorpay script
+      
       const razorpayLoaded = await loadRazorpayScript();
       if (!razorpayLoaded) {
         setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
@@ -163,7 +155,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
         return;
       }
 
-      // Convert amount to paise (GST already calculated above)
       const amountInPaise = Math.round(totalWithGST * 100);
 
       if (amountInPaise <= 0) {
@@ -172,7 +163,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
         return;
       }
 
-      // Step 1: Create Razorpay order
       const orderResponse = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
@@ -200,7 +190,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
         return;
       }
 
-      // Step 2: Format phone number
       const formatPhoneNumber = (phone: string): string => {
         const digits = phone.replace(/\D/g, '');
         if (digits.length === 10) {
@@ -213,7 +202,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
-      // Step 3: Initialize Razorpay checkout
       const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
       const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
       const description = `${programTitle} - ${bookingTypeText}`;
@@ -245,7 +233,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               return;
             }
 
-            // Step 4: Verify payment signature
             const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
               method: "POST",
               headers: { 
@@ -280,7 +267,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               return;
             }
 
-            // Step 5: Save booking to database
             const bookingTypeText = bookingType === 'with' ? 'With Food And Accommodation' : 'Without Food And Accommodation';
             const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
             const programTitle = isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program';
@@ -315,7 +301,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               throw new Error(`Database error: ${errorMessage}`);
             }
 
-            // Redirect to payment success page
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -390,7 +375,7 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        {/* Header */}
+        
         <div className="bg-[#A0522D] text-white px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-4">
             <button
@@ -409,9 +394,8 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6">
-          {/* Program Details */}
+          
           <div className="bg-[#FFF8F0] rounded-lg p-6 mb-6">
             <h3 className="text-[#A0522D] text-2xl font-bold mb-2">
               {isAerial ? 'Aerial Yoga Teacher Training Program' : 'Yoga Teacher Training Certificate Program'}
@@ -420,7 +404,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               {isAerial ? 'Aerial Yoga Training Course' : '200 Hundred Hour Course'}
             </p>
 
-            {/* Select Type */}
             <div className="mb-6">
               <label className="block text-[#1E1E1E] text-sm font-medium mb-3">
                 Select Type
@@ -453,7 +436,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               </div>
             </div>
 
-            {/* Fees Breakdown */}
             <div className="border-t border-gray-300 pt-4 space-y-2">
               <div className="flex justify-between text-[#1E1E1E]">
                 <span>{isAerial ? 'Aerial Yoga Teacher Training Program Fee' : 'Yoga Teacher Training Certificate Program Fee'}</span>
@@ -475,14 +457,12 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               </div>
             </div>
 
-            {/* Total Price */}
             <div className="border-t-2 border-[#A0522D] mt-4 pt-4 flex justify-between items-center">
               <span className="text-[#A0522D] font-bold text-lg">TOTAL PRICE (Including GST)</span>
               <span className="text-[#A0522D] font-bold text-2xl">₹{Math.round(totalWithGST).toLocaleString('en-IN')}</span>
             </div>
           </div>
 
-          {/* Message */}
           {message.text && (
             <div
               className={`mb-4 p-3 rounded-lg ${
@@ -495,7 +475,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
             </div>
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-[#1E1E1E] text-sm font-medium mb-2 [font-family:'Poppins']">
@@ -570,7 +549,6 @@ export const YogaTeacherTrainingBookingModal: React.FC<YogaTeacherTrainingBookin
               />
             </div>
 
-            {/* Buttons */}
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"

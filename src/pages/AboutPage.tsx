@@ -10,10 +10,8 @@ export const AboutPage = (): JSX.Element => {
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <NavbarSection />
 
-      {/* Spacer */}
       <div className="h-0 lg:h-16"></div>
 
-      {/* Hero Section */}
       <div className="w-full lg:max-w-[1440px] lg:mx-auto">
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 bg-[#FFDAB9] flex items-center justify-center lg:justify-start px-4 sm:px-6 lg:pl-16 pt-0 pb-8 lg:py-0">
@@ -33,7 +31,6 @@ export const AboutPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Text Content Section */}
       <div className="bg-white py-8 sm:py-12 lg:py-16 w-full">
         <div className="w-full lg:max-w-[1200px] lg:mx-auto px-4 sm:px-6 lg:px-4">
           <p className="[font-family:'Poppins'] text-[#1E1E1E] text-[16px] sm:text-[18px] lg:text-[22px] font-light leading-[26px] sm:leading-[32px] lg:leading-[38px] text-center w-full lg:max-w-[1100px] lg:mx-auto">
@@ -42,10 +39,9 @@ export const AboutPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Tabbed Content Section */}
       <div className="bg-white py-8 sm:py-12 lg:py-16 w-full overflow-x-hidden">
         <div className="w-full lg:max-w-[1200px] lg:mx-auto px-4 sm:px-6 lg:px-4 overflow-x-hidden">
-          {/* Navigation Tabs */}
+          
           <div>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:flex lg:flex-row gap-2 sm:gap-3 lg:gap-8 mb-4 lg:overflow-visible">
               <button 
@@ -73,13 +69,12 @@ export const AboutPage = (): JSX.Element => {
                 <span className="[font-family:'Poppins'] font-normal text-xs sm:text-sm lg:text-lg">Mission & Vision</span>
               </button>
             </div>
-            {/* Horizontal Line */}
+            
             <div className="w-full h-[1px] bg-black mb-8 sm:mb-12 lg:mb-16"></div>
           </div>
 
-          {/* Content */}
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-            {/* Left Column - Title */}
+            
             <div className="w-full lg:w-1/3">
               <h2 key={activeTab} className="text-[#A0522D] [font-family:'Poppins'] text-[32px] sm:text-[40px] lg:text-[48px] font-semibold leading-tight transition-all duration-500 ease-in-out animate-fadeIn">
                 {activeTab === 'approach' && <span className="animate-slideIn">OUR<br />APPROACH</span>}
@@ -89,7 +84,6 @@ export const AboutPage = (): JSX.Element => {
               </h2>
             </div>
 
-            {/* Right Column - Content */}
             <div className="w-full lg:w-2/3">
               {activeTab === 'approach' && (
                 <div key="approach" className="space-y-6 sm:space-y-8 animate-fadeInSlide">

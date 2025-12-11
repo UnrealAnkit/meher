@@ -21,12 +21,12 @@
     <link href="tailwind.css" rel="stylesheet" />
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-      // Prevent zoom on double tap and pinch gestures
+      
       (function() {
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function(event) {
           const now = Date.now();
-          // Only prevent if double-tap and not on an interactive element
+          
           const target = event.target;
           const isInteractive = target.tagName === 'BUTTON' || 
                                target.tagName === 'A' || 
@@ -42,7 +42,6 @@
           lastTouchEnd = now;
         }, { passive: false });
 
-        // Prevent pinch zoom
         document.addEventListener('gesturestart', function(e) {
           e.preventDefault();
         }, { passive: false });

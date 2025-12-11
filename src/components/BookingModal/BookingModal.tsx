@@ -4,10 +4,8 @@ import { X, ArrowLeft, Calendar, Clock, IndianRupee } from 'lucide-react';
 import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL } from '../../lib/supabase';
 import { RAZORPAY_KEY_ID } from '../../config/razorpay';
 
-// Supabase anon key for Edge Function authentication
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
-// Load Razorpay script dynamically
 const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (window.Razorpay) {
@@ -23,7 +21,6 @@ const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Declare Razorpay type
 declare global {
   interface Window {
     Razorpay: any;
@@ -58,7 +55,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Extract numeric price from price string (e.g., "Rs 500.00" -> 500)
   const extractPrice = (priceStr: string): number => {
     const match = priceStr.match(/[\d,]+\.?\d*/);
     if (match) {
@@ -83,7 +79,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setMessage({ type: '', text: '' });
 
     try {
-      // Save booking to Supabase
+      
       const bookingData = {
         event_id: eventId || null,
         event_title: eventTitle,
@@ -96,12 +92,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         status: 'pending',
       };
 
-      // Try direct insert first (will work if RLS policies are correct)
       const { error: directInsertError } = await supabase.from('bookings').insert([bookingData]);
 
       let error = directInsertError;
 
-      // If RLS error, try using the RPC function as fallback
       if (directInsertError && (directInsertError.code === '42501' || directInsertError.message?.includes('row-level security'))) {
         console.warn('Direct insert failed due to RLS, trying RPC function fallback...');
         
@@ -124,8 +118,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       if (error) throw error;
 
       setMessage({ type: 'success', text: 'Booking submitted successfully! We will contact you soon.' });
-      
-      // Reset form and close modal after 2 seconds
+
       setTimeout(() => {
         setFormData({ name: '', email: '', phoneNumber: '' });
         setSubmitting(false);
@@ -139,7 +132,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   const handlePayNow = async () => {
-    // Validate form fields
+    
     if (!formData.name || !formData.email || !formData.phoneNumber) {
       setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
       return;
@@ -154,7 +147,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setMessage({ type: '', text: '' });
 
     try {
-      // Load Razorpay script
+      
       const razorpayLoaded = await loadRazorpayScript();
       if (!razorpayLoaded) {
         setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
@@ -162,10 +155,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         return;
       }
 
-      // Convert amount to paise
       const amountInPaise = Math.round(amount * 100);
 
-      // Step 1: Create Razorpay order
       const orderResponse = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
@@ -193,7 +184,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         return;
       }
 
-      // Step 2: Format phone number
       const formatPhoneNumber = (phone: string): string => {
         const digits = phone.replace(/\D/g, '');
         if (digits.length === 10) {
@@ -206,7 +196,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
-      // Step 3: Initialize Razorpay checkout
       const options = {
         key: RAZORPAY_KEY_ID,
         amount: order.amount,
@@ -234,7 +223,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               return;
             }
 
-            // Step 4: Verify payment signature
             const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
               method: "POST",
               headers: { 
@@ -269,7 +257,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               return;
             }
 
-            // Step 5: Save booking to database
             const bookingData = {
               event_id: eventId || null,
               event_title: eventTitle,
@@ -301,7 +288,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               throw new Error(`Database error: ${errorMessage}`);
             }
 
-            // Redirect to payment success page
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -374,7 +360,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto p-4">
       <div className="bg-white rounded-lg w-full max-w-md my-8 shadow-2xl relative">
-        {/* Header */}
+        
         <div className="bg-[#ab4b28] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10">
           <button
             onClick={onClose}
@@ -394,12 +380,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           </button>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-gray-300"></div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[calc(90vh-80px)] overflow-y-auto">
-          {/* Message */}
+          
           {message.text && (
             <div
               className={`p-4 rounded-lg ${
@@ -412,9 +396,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
           )}
 
-          {/* Event Info */}
           <div className="bg-gradient-to-br from-[#f9f5f0] to-[#f9d2a3] p-5 rounded-xl border-2 border-[#ab4b28]/20 shadow-sm">
-            {/* Event Title */}
+            
             <div className="mb-4 pb-4 border-b border-[#ab4b28]/30">
               <h3 className="[font-family:'Poppins',Helvetica] text-xl font-bold text-[#24312e] mb-1">
                 {eventTitle}
@@ -424,9 +407,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </p>
             </div>
 
-            {/* Details Grid */}
             <div className="space-y-3">
-              {/* Date */}
+              
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 p-1.5 bg-[#ab4b28]/10 rounded-lg">
                   <Calendar className="w-4 h-4 text-[#ab4b28]" />
@@ -441,7 +423,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </div>
               </div>
 
-              {/* Time Slot */}
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 p-1.5 bg-[#ab4b28]/10 rounded-lg">
                   <Clock className="w-4 h-4 text-[#ab4b28]" />
@@ -456,7 +437,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </div>
               </div>
 
-              {/* Price - Highlighted */}
               <div className="flex items-start gap-3 pt-2 border-t border-[#ab4b28]/20">
                 <div className="mt-0.5 p-1.5 bg-[#ab4b28]/20 rounded-lg">
                   <IndianRupee className="w-4 h-4 text-[#ab4b28]" />
@@ -473,7 +453,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
           </div>
 
-          {/* Name Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm mb-2 uppercase">
               NAME
@@ -489,7 +468,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             />
           </div>
 
-          {/* Email Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm mb-2 uppercase">
               EMAIL
@@ -505,7 +483,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             />
           </div>
 
-          {/* Mobile Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm mb-2 uppercase">
               MOBILE
@@ -521,7 +498,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex gap-3">
             <button
               type="submit"

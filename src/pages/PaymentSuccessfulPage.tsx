@@ -6,8 +6,7 @@ import { CheckCircle, FileText, ArrowLeft } from "lucide-react";
 
 export const PaymentSuccessfulPage = (): JSX.Element => {
   const [searchParams] = useSearchParams();
-  
-  // Get payment details from URL parameters
+
   const paymentId = searchParams.get('payment_id') || 'N/A';
   const orderId = searchParams.get('order_id') || 'N/A';
   const eventName = searchParams.get('event_name') || 'Booking';
@@ -17,8 +16,7 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
   const total = searchParams.get('total') || amount;
   const customerName = searchParams.get('customer_name') || '';
   const paymentMethod = searchParams.get('payment_method') || 'Online Payment';
-  
-  // Format date and time
+
   const now = new Date();
   const formattedDate = now.toLocaleDateString('en-GB', { 
     day: '2-digit', 
@@ -33,15 +31,14 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-2xl bg-[#FFDAB9] rounded-lg p-6 sm:p-8 lg:p-12 relative">
-          {/* Go Back Link */}
+          
           <Link 
             to="/"
             className="inline-flex items-center gap-2 text-[#ab4b28] hover:text-[#8b3a1f] mb-6 [font-family:'Poppins',Helvetica] font-medium transition-colors"
@@ -50,12 +47,10 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
             GO BACK
           </Link>
 
-          {/* Success Icon */}
           <div className="flex justify-center mb-6">
             <CheckCircle className="w-20 h-20 sm:w-24 sm:h-24 text-green-500" strokeWidth={2} />
           </div>
 
-          {/* Success Message */}
           <div className="text-center mb-8">
             <h1 className="text-[#ab4b28] font-bold text-2xl sm:text-3xl lg:text-4xl mb-3 [font-family:'Poppins',Helvetica] uppercase">
               PAYMENT SUCCESSFUL
@@ -65,7 +60,6 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
             </p>
           </div>
 
-          {/* Transaction ID Box */}
           <div className="bg-[#f9d2a3] border-2 border-[#ab4b28] rounded-lg p-4 mb-6 flex items-center gap-3">
             <FileText className="w-6 h-6 text-[#ab4b28] flex-shrink-0" />
             <span className="text-[#ab4b28] font-semibold [font-family:'Poppins',Helvetica]">
@@ -73,7 +67,6 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
             </span>
           </div>
 
-          {/* Payment Details */}
           <div className="space-y-4 mb-6">
             <div className="border-b border-[#ab4b28]/20 pb-4">
               <div className="flex justify-between items-center mb-2">
@@ -109,7 +102,6 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
               )}
             </div>
 
-            {/* Amount Details */}
             <div className="pt-2">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-[#ab4b28] [font-family:'Poppins',Helvetica] font-medium">Amount:</span>
@@ -126,7 +118,6 @@ export const PaymentSuccessfulPage = (): JSX.Element => {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <Link
               to="/"

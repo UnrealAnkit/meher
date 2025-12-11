@@ -1,4 +1,4 @@
-// Utility functions for checking room availability
+
 import { supabase } from '../lib/supabase';
 
 export type RoomType = 
@@ -69,14 +69,6 @@ export const ROOM_TYPES: Record<RoomType, RoomInfo> = {
   },
 };
 
-/**
- * Check if a room is available for the given dates
- * @param roomType - The type of room to check
- * @param checkIn - Check-in date (YYYY-MM-DD)
- * @param checkOut - Check-out date (YYYY-MM-DD)
- * @param checkOutTime - Check-out time (HH:MM format, default: 15:00)
- * @returns Promise with availability result
- */
 export async function checkRoomAvailability(
   roomType: RoomType,
   checkIn: string,
@@ -84,7 +76,7 @@ export async function checkRoomAvailability(
   checkOutTime: string = '15:00:00'
 ): Promise<RoomAvailabilityResult> {
   try {
-    // Call the Supabase function to check availability
+    
     const { data, error } = await supabase.rpc('check_room_availability', {
       p_room_type: roomType,
       p_check_in: checkIn,
@@ -95,7 +87,7 @@ export async function checkRoomAvailability(
     if (error) {
       console.error('Error checking room availability (RPC):', error);
       console.log('Falling back to manual availability check...');
-      // Fallback: check manually if function doesn't exist
+      
       return await checkRoomAvailabilityManual(roomType, checkIn, checkOut, checkOutTime);
     }
 
@@ -110,7 +102,6 @@ export async function checkRoomAvailability(
       };
     }
 
-    // Default to available if no data returned
     console.log('No availability data returned, defaulting to available');
     return {
       isAvailable: true,
@@ -118,14 +109,11 @@ export async function checkRoomAvailability(
     };
   } catch (error) {
     console.error('Error in checkRoomAvailability:', error);
-    // Fallback to manual check
+    
     return await checkRoomAvailabilityManual(roomType, checkIn, checkOut, checkOutTime);
   }
 }
 
-/**
- * Manual availability check using direct query (fallback method)
- */
 async function checkRoomAvailabilityManual(
   roomType: RoomType,
   checkIn: string,
@@ -133,14 +121,13 @@ async function checkRoomAvailabilityManual(
   checkOutTime: string = '15:00:00'
 ): Promise<RoomAvailabilityResult> {
   try {
-    // Convert dates to Date objects for comparison
+    
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
     const [hours, minutes] = checkOutTime.split(':').map(Number);
     const checkOutDateTime = new Date(checkOutDate);
     checkOutDateTime.setHours(hours, minutes, 0, 0);
 
-    // Query for conflicting bookings
     const { data: bookings, error } = await supabase
       .from('bookings')
       .select('check_in, check_out, check_out_time, status')
@@ -152,7 +139,7 @@ async function checkRoomAvailabilityManual(
     if (error) {
       console.error('Error fetching bookings:', error);
       return {
-        isAvailable: true, // Default to available on error
+        isAvailable: true, 
         message: 'Unable to verify availability. Please try again.',
       };
     }
@@ -168,7 +155,6 @@ async function checkRoomAvailabilityManual(
     console.log(`Found ${bookings.length} booking(s) for room type: ${roomType}`);
     console.log('Checking dates:', { checkIn, checkOut, checkOutTime });
 
-    // Check for conflicts
     for (const booking of bookings) {
       console.log('Checking booking:', { 
         check_in: booking.check_in, 
@@ -186,21 +172,17 @@ async function checkRoomAvailabilityManual(
       const bookingCheckOutDateTime = new Date(bookingCheckOut);
       bookingCheckOutDateTime.setHours(bookingCheckOutTime[0], bookingCheckOutTime[1], 0, 0);
 
-      // Check if dates overlap: booking dates overlap with requested dates
-      // Two date ranges overlap if: booking.check_in < requested.check_out AND booking.check_out >= requested.check_in
       const datesOverlap = 
         bookingCheckIn < checkOutDate && 
         bookingCheckOut >= checkInDate;
 
-      // Check if check-out times conflict on the same date
-      // If someone checks out on the same day as check-in, check the time
       const sameCheckOutDate = bookingCheckOut.toDateString() === checkInDate.toDateString();
       const timeConflict = sameCheckOutDate && bookingCheckOutDateTime > checkOutDateTime;
 
       if (datesOverlap || timeConflict) {
         const bookedUntil = booking.check_out;
         const bookedUntilTime = booking.check_out_time || '15:00:00';
-        const timeStr = bookedUntilTime.substring(0, 5); // Format as HH:MM
+        const timeStr = bookedUntilTime.substring(0, 5); 
 
         console.log('❌ Room conflict detected!', {
           datesOverlap,
@@ -218,7 +200,6 @@ async function checkRoomAvailabilityManual(
       }
     }
 
-    // No conflicts found
     console.log('✅ No conflicts found - room is available');
     return {
       isAvailable: true,
@@ -227,15 +208,12 @@ async function checkRoomAvailabilityManual(
   } catch (error) {
     console.error('Error in manual availability check:', error);
     return {
-      isAvailable: true, // Default to available on error
+      isAvailable: true, 
       message: 'Unable to verify availability. Please try again.',
     };
   }
 }
 
-/**
- * Get all bookings for a specific room type
- */
 export async function getRoomBookings(roomType: RoomType) {
   try {
     const { data, error } = await supabase
@@ -258,9 +236,6 @@ export async function getRoomBookings(roomType: RoomType) {
   }
 }
 
-/**
- * Format date and time for display
- */
 export function formatBookingDate(date: string, time?: string): string {
   const dateObj = new Date(date);
   const formattedDate = dateObj.toLocaleDateString('en-US', {

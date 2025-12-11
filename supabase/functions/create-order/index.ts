@@ -1,9 +1,9 @@
-/// <reference path="./deno.d.ts" />
+
 
 import Razorpay from "npm:razorpay";
 
 Deno.serve(async (req: Request): Promise<Response> => {
-  // ✅ Handle preflight (CORS) - Must return 200 status
+  
   if (req.method === "OPTIONS") {
     return new Response("ok", {
       status: 200,
@@ -26,9 +26,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // ⚠️ CRITICAL: RAZORPAY_KEY_ID here MUST match the key used in frontend checkout
-    // Error "The id provided does not exist" occurs when keys don't match
-    // Ensure Supabase env var RAZORPAY_KEY_ID matches src/config/razorpay.ts RAZORPAY_KEY_ID
     const keyId = Deno.env.get("RAZORPAY_KEY_ID");
     const keySecret = Deno.env.get("RAZORPAY_KEY_SECRET");
 
@@ -39,8 +36,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // ✅ Server-side Razorpay API call (prevents CORS errors)
-    // Orders API is called server-side, not from client browser
     const razorpay = new Razorpay({
       key_id: keyId,
       key_secret: keySecret

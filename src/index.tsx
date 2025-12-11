@@ -109,13 +109,11 @@ function App() {
         <Route path="/payment/failed" element={<PaymentFailedPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        
-        {/* Policy Pages */}
+
         <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
         <Route path="/refund-policy" element={<RefundPolicyPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-        
-        {/* Admin Routes */}
+
         <Route
           path="/admin/login"
           element={
@@ -239,8 +237,7 @@ function App() {
             </AdminWrapper>
           }
         />
-        
-        {/* 404 Not Found - Catch all unmatched routes */}
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

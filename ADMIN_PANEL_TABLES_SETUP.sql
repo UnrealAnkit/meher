@@ -37,7 +37,6 @@ CREATE POLICY "Allow authenticated users to delete classes"
 CREATE INDEX IF NOT EXISTS idx_classes_created_at ON classes (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_classes_instructor ON classes (instructor);
 
-
 CREATE TABLE IF NOT EXISTS users (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email VARCHAR(255) NOT NULL UNIQUE,
@@ -72,9 +71,6 @@ CREATE POLICY "Allow authenticated users to delete users"
 CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
 CREATE INDEX IF NOT EXISTS idx_users_role ON users (role);
 
--- ============================================
--- 3. BOOKINGS TABLE
--- ============================================
 CREATE TABLE IF NOT EXISTS bookings (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -119,9 +115,6 @@ CREATE INDEX IF NOT EXISTS idx_bookings_class_id ON bookings (class_id);
 CREATE INDEX IF NOT EXISTS idx_bookings_date ON bookings (booking_date DESC);
 CREATE INDEX IF NOT EXISTS idx_bookings_status ON bookings (status);
 
--- ============================================
--- 4. BLOGS TABLE
--- ============================================
 CREATE TABLE IF NOT EXISTS blogs (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -161,16 +154,12 @@ CREATE INDEX IF NOT EXISTS idx_blogs_slug ON blogs (slug);
 CREATE INDEX IF NOT EXISTS idx_blogs_published ON blogs (published, published_at DESC);
 CREATE INDEX IF NOT EXISTS idx_blogs_created_at ON blogs (created_at DESC);
 
--- ============================================
--- 5. STORAGE BUCKETS
--- ============================================
 INSERT INTO storage.buckets (id, name, public)
 VALUES 
   ('class-images', 'class-images', true),
   ('blog-images', 'blog-images', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Storage policies for class-images
 DROP POLICY IF EXISTS "Allow authenticated users to upload class images" ON storage.objects;
 DROP POLICY IF EXISTS "Allow public to read class images" ON storage.objects;
 DROP POLICY IF EXISTS "Allow authenticated users to delete class images" ON storage.objects;
@@ -188,7 +177,6 @@ CREATE POLICY "Allow authenticated users to delete class images"
     bucket_id = 'class-images' AND auth.role() = 'authenticated'
   );
 
--- Storage policies for blog-images
 DROP POLICY IF EXISTS "Allow authenticated users to upload blog images" ON storage.objects;
 DROP POLICY IF EXISTS "Allow public to read blog images" ON storage.objects;
 DROP POLICY IF EXISTS "Allow authenticated users to delete blog images" ON storage.objects;
@@ -205,17 +193,4 @@ CREATE POLICY "Allow authenticated users to delete blog images"
   ON storage.objects FOR DELETE USING (
     bucket_id = 'blog-images' AND auth.role() = 'authenticated'
   );
-
--- ============================================
--- VERIFICATION QUERIES
--- ============================================
--- Run these to verify tables were created:
-
--- SELECT table_name FROM information_schema.tables 
--- WHERE table_schema = 'public' AND table_name IN ('classes', 'users', 'bookings', 'blogs');
-
--- SELECT * FROM storage.buckets WHERE name IN ('class-images', 'blog-images');
-
-
-
 

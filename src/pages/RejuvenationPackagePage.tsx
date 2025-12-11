@@ -12,28 +12,27 @@ export const RejuvenationPackagePage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Main Content - Images Section */}
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-4 sm:pt-6 lg:pt-12">
-        {/* Images Grid - Responsive: 1 column on mobile, 3 columns on desktop */}
+        
         <div className="flex flex-col md:flex-row flex-nowrap w-full justify-center items-center gap-4 sm:gap-6 lg:gap-12 px-4 sm:px-6 lg:px-16">
-          {/* First Image - Larger */}
+          
           <div className="w-full md:w-[660px] flex-shrink-0 max-w-full h-auto md:h-[534px] flex items-center justify-center animate-fadeInSlide">
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
               <img src={image1} alt="Rejuvenation Package Image 1" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
-          {/* Second Image */}
+          
           <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
               <img src={image2} alt="Rejuvenation Package Image 2" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
-          {/* Third Image */}
+          
           <div className="w-full md:w-[300px] flex-shrink-0 max-w-full h-auto md:h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
               <img src={image3} alt="Rejuvenation Package Image 3" className="w-full h-auto md:h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
@@ -41,15 +40,13 @@ export const RejuvenationPackagePage = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Text Content Section */}
         <div className="w-full mt-12 px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
             <div className="text-left">
               <h2 className="[font-family:'Poppins'] font-normal text-[#A0522D] text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] leading-[32px] sm:leading-[38px] lg:leading-[44px] mb-4">
                 Rejuvenation Package: A 3-Day Journey To Reset Your Body,<br />
                 Reconnect With Your Mind, And Renew Your Spirit.
               </h2>
-              
-              {/* Pricing Table */}
+
               <div className="mt-8 lg:mt-12">
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-[600px] border-collapse [font-family:'Poppins']">
@@ -110,7 +107,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 </div>
               </div>
 
-              {/* MEHR Rejuvenation Retreat Description */}
               <div className="mt-12 lg:mt-16">
                 <h3 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[32px] leading-tight mb-6 lg:mb-8">
                   MEHR Rejuvenation Retreat
@@ -131,15 +127,13 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 </div>
               </div>
 
-              {/* Meet the Instructors Section */}
               <div className="mt-16 lg:mt-20">
                 <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-8 lg:mb-10">
                   Meet the Instructors
                 </h2>
-                
-                {/* Images and Text Side by Side */}
+
                 <div className="flex flex-col sm:flex-row sm:items-start gap-6 lg:gap-8">
-                  {/* Profile Images */}
+                  
                   <div className="flex items-center -space-x-4 sm:-space-x-6 lg:-space-x-8 flex-shrink-0">
                     <div className="relative z-30 w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[160px] lg:h-[160px] rounded-full overflow-hidden border-4 border-white shadow-lg">
                       <img
@@ -167,7 +161,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                     </div>
                   </div>
 
-                  {/* Text Content */}
                   <div className="flex-1 sm:pt-0">
                     <h3 className="[font-family:'Poppins'] font-semibold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
                       MEHR Wellness Team
@@ -179,7 +172,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 </div>
               </div>
 
-              {/* Highlights Section */}
               <div className="mt-16 lg:mt-20">
                 <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                   Highlights
@@ -212,14 +204,13 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 </ul>
               </div>
 
-              {/* Your-Day-to-Day Journey Section */}
               <div className="mt-16 lg:mt-20">
                 <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-8 lg:mb-10">
                   Your-Day-to-Day Journey
                 </h2>
                 
                 <div className="space-y-8 lg:space-y-10">
-                  {/* Day 1 */}
+                  
                   <div>
                     <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
                       Day 1 – Arrival & Gentle Reset
@@ -229,7 +220,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                     </p>
                   </div>
 
-                  {/* Day 2 */}
                   <div>
                     <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
                       Day 2 – Deep Cleanse, Creativity & Flow
@@ -239,7 +229,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                     </p>
                   </div>
 
-                  {/* Day 3 */}
                   <div>
                     <h3 className="[font-family:'Poppins'] font-bold text-[#A0522D] text-[20px] sm:text-[22px] lg:text-[24px] mb-4 lg:mb-5">
                       Day 3 – Integration & Renewal
@@ -251,7 +240,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 </div>
               </div>
 
-              {/* Facilities Section */}
               <div className="mt-16 lg:mt-20">
                 <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                   Facilities
@@ -282,14 +270,12 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                     Wi-Fi & mindful workspace
                   </li>
                 </ul>
-                
-                {/* Eco-inspired spaces description */}
+
                 <p className="mt-6 lg:mt-8 [font-family:'Poppins'] font-extralight text-[#666666] text-[24px] leading-[32px]">
                   Experience serene, eco-inspired spaces featuring terracotta walls, over 9,600 indoor plants, and expansive natural ventilation maintaining an air-quality index below 50. Each room is curated to enhance rest and reflection.
                 </p>
               </div>
 
-              {/* What's Included Section */}
               <div className="mt-16 lg:mt-20">
                 <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                   What's Included
@@ -313,7 +299,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 </ul>
               </div>
 
-              {/* Book This Experience Button */}
               <div className="mt-12 lg:mt-16 text-center">
                 <button
                   onClick={() => setShowBookingModal(true)}
@@ -328,7 +313,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
 
       <FooterSection />
 
-      {/* Rejuvenation Booking Modal */}
       <RejuvenationBookingModal
         isOpen={showBookingModal}
         onClose={() => setShowBookingModal(false)}

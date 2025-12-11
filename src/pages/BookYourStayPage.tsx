@@ -14,7 +14,6 @@ import {
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
-// Load Razorpay script dynamically
 const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (window.Razorpay) {
@@ -30,7 +29,6 @@ const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Declare Razorpay type
 declare global {
   interface Window {
     Razorpay: any;
@@ -55,7 +53,6 @@ export const BookYourStayPage = (): JSX.Element => {
     phone: '',
   });
 
-  // Calculate number of nights
   const calculateNights = () => {
     if (!checkIn || !checkOut) return 1;
     const checkInDate = new Date(checkIn);
@@ -65,12 +62,10 @@ export const BookYourStayPage = (): JSX.Element => {
     return diffDays > 0 ? diffDays : 1;
   };
 
-  // Get price per night based on selected room type
   const pricePerNight = roomType ? ROOM_TYPES[roomType].price : 3420;
   const nights = calculateNights();
   const totalAmount = pricePerNight * nights * parseInt(adults);
 
-  // Check room availability when dates or room type changes
   useEffect(() => {
     const checkAvailability = async () => {
       if (!roomType || !checkIn || !checkOut) {
@@ -109,13 +104,12 @@ export const BookYourStayPage = (): JSX.Element => {
       }
     };
 
-    // Debounce the check
     const timeoutId = setTimeout(checkAvailability, 500);
     return () => clearTimeout(timeoutId);
   }, [roomType, checkIn, checkOut]);
 
   const handleBookNow = async () => {
-    // Validate dates
+    
     if (!checkIn || !checkOut) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       return;
@@ -126,13 +120,11 @@ export const BookYourStayPage = (): JSX.Element => {
       return;
     }
 
-    // Validate room type
     if (!roomType) {
       setMessage({ type: 'error', text: 'Please select a room type' });
       return;
     }
 
-    // Check availability one more time before showing modal
     setCheckingAvailability(true);
     try {
       const result = await checkRoomAvailability(roomType, checkIn, checkOut, '15:00:00');
@@ -146,7 +138,6 @@ export const BookYourStayPage = (): JSX.Element => {
         return;
       }
 
-      // Room is available, show customer info modal
       setShowCustomerModal(true);
     } catch (error) {
       console.error('Error checking availability:', error);
@@ -160,7 +151,7 @@ export const BookYourStayPage = (): JSX.Element => {
   };
 
   const handlePayment = async () => {
-    // Validate dates first
+    
     if (!checkIn || !checkOut) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       return;
@@ -171,7 +162,6 @@ export const BookYourStayPage = (): JSX.Element => {
       return;
     }
 
-    // Validate customer data
     if (!customerData.name || !customerData.email || !customerData.phone) {
       setMessage({ type: 'error', text: 'Please fill in all customer details' });
       return;
@@ -181,7 +171,7 @@ export const BookYourStayPage = (): JSX.Element => {
     setMessage({ type: '', text: '' });
 
     try {
-      // Load Razorpay script
+      
       const razorpayLoaded = await loadRazorpayScript();
       if (!razorpayLoaded) {
         setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
@@ -189,7 +179,6 @@ export const BookYourStayPage = (): JSX.Element => {
         return;
       }
 
-      // Convert amount to paise
       const amountInPaise = Math.round(totalAmount * 100);
 
       if (amountInPaise <= 0) {
@@ -198,7 +187,6 @@ export const BookYourStayPage = (): JSX.Element => {
         return;
       }
 
-      // Step 1: Create Razorpay order
       const orderResponse = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
@@ -226,7 +214,6 @@ export const BookYourStayPage = (): JSX.Element => {
         return;
       }
 
-      // Step 2: Format phone number
       const formatPhoneNumber = (phone: string): string => {
         const digits = phone.replace(/\D/g, '');
         if (digits.length === 10) {
@@ -239,7 +226,6 @@ export const BookYourStayPage = (): JSX.Element => {
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
-      // Step 3: Initialize Razorpay checkout
       const description = `Stay Booking - ${nights} night(s) for ${adults} adult(s)`;
       
       const options = {
@@ -289,7 +275,6 @@ export const BookYourStayPage = (): JSX.Element => {
               return;
             }
 
-            // Step 4: Verify payment signature
             const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
               method: "POST",
               headers: { 
@@ -344,7 +329,6 @@ export const BookYourStayPage = (): JSX.Element => {
               return;
             }
 
-            // Step 5: Save booking to database
             const bookingData = {
               event_id: null,
               event_title: 'MEHR Stay Booking',
@@ -380,7 +364,6 @@ export const BookYourStayPage = (): JSX.Element => {
               throw new Error(`Database error: ${errorMessage}`);
             }
 
-            // Redirect to payment success page with all details
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -433,7 +416,7 @@ export const BookYourStayPage = (): JSX.Element => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
       razorpay.on('payment.failed', function (response: any) {
-        // Redirect to payment failed page
+        
         const failedParams = new URLSearchParams({
           order_id: order.id || 'N/A',
           payment_id: response.razorpay_payment_id || 'N/A',
@@ -474,15 +457,13 @@ export const BookYourStayPage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Spacer */}
       <div className="h-0 lg:h-16"></div>
 
-      {/* Hero Section */}
       <div className="w-full lg:max-w-[1440px] lg:mx-auto">
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 bg-[#FFDAB9] flex items-center justify-center lg:justify-start px-4 sm:px-6 lg:pl-16 pt-8 sm:pt-12 lg:pt-0 pb-8 lg:py-0">
@@ -502,11 +483,10 @@ export const BookYourStayPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Booking Form Section - Dark Transparent */}
       <div className="w-full flex justify-center -mt-8 lg:-mt-12 relative z-10 px-4 sm:px-6">
         <div className="w-full max-w-[1000px] bg-black/70 backdrop-blur-sm rounded-lg p-5 sm:p-6 lg:p-7">
           <div className="flex flex-col lg:flex-row items-start lg:items-end gap-3 lg:gap-4">
-            {/* Check In */}
+            
             <div className="flex-1 w-full lg:w-auto min-w-[140px]">
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
                 Check In
@@ -522,7 +502,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Check Out */}
             <div className="flex-1 w-full lg:w-auto min-w-[140px]">
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
                 Check Out
@@ -539,7 +518,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Adults */}
             <div className="flex-1 w-full lg:w-auto min-w-[100px]">
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
                 Adults
@@ -567,7 +545,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Room Type */}
             <div className="flex-1 w-full lg:w-auto min-w-[180px]">
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
                 Room Type *
@@ -598,7 +575,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Promo Code */}
             <div className="flex-1 w-full lg:w-auto min-w-[140px]">
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
                 Promo Code
@@ -612,7 +588,6 @@ export const BookYourStayPage = (): JSX.Element => {
               />
             </div>
 
-            {/* Price and Book Now Button */}
             <div className="flex flex-col items-start lg:items-end gap-2 w-full lg:w-auto lg:min-w-[180px]">
               <div className="text-white text-xs sm:text-sm [font-family:'Poppins',Helvetica]">
                 {totalAmount > 0 && roomType ? `₹${totalAmount.toLocaleString('en-IN')} (${nights} night${nights > 1 ? 's' : ''})` : roomType ? `₹${pricePerNight.toLocaleString('en-IN')}/night` : 'Select room type'}
@@ -642,9 +617,8 @@ export const BookYourStayPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-8 lg:pt-16">
-        {/* Accommodation Options Section */}
+        
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
           <h2 className="text-left [font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-[24px] sm:text-[32px] lg:text-[40px] tracking-[0] leading-tight mb-6 lg:mb-8">
             OUR ACCOMMODATION OPTIONS
@@ -654,14 +628,13 @@ export const BookYourStayPage = (): JSX.Element => {
           </p>
         </div>
 
-        {/* Accommodation Option - Classic Room */}
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
           <h2 className="text-left [font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-[24px] sm:text-[32px] lg:text-[40px] mb-8">
             Classic Room
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
-            {/* Classic Room: Earth & Clay */}
+            
             <Link to="/book-stay/earth-and-clay" className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
@@ -686,14 +659,13 @@ export const BookYourStayPage = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Deluxe Room Section */}
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16">
           <h2 className="text-left [font-family:'Poppins',Helvetica] font-bold text-[#ab4b28] text-[24px] sm:text-[32px] lg:text-[40px] mb-8">
             Deluxe Room
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
-            {/* Room 1: Bloom and Herbs */}
+            
             <Link to="/book-stay/bloom-and-herbs" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
@@ -716,7 +688,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </Link>
 
-            {/* Room 2: Stone and Fog */}
             <Link to="/book-stay/stone-and-fog" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
@@ -739,7 +710,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </Link>
 
-            {/* Room 3: Golden Grasslands */}
             <Link to="/book-stay/golden-grasslands" className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
@@ -763,12 +733,10 @@ export const BookYourStayPage = (): JSX.Element => {
             </Link>
           </div>
 
-          {/* Horizontal line below rooms */}
           <div className="w-full mt-8 lg:mt-12" style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}></div>
 
-          {/* Next Row: Forest Bathing and Water and Sky */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mt-8 lg:mt-12">
-            {/* Room 4: Forest Bathing */}
+            
             <Link to="/book-stay/forest-bathing" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
@@ -791,7 +759,6 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </Link>
 
-            {/* Room 5: Water and Sky */}
             <Link to="/book-stay/water-and-sky" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
@@ -817,7 +784,6 @@ export const BookYourStayPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Customer Info Modal */}
       {showCustomerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg w-full max-w-md mx-4 p-6 relative">

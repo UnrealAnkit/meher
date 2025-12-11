@@ -4,10 +4,8 @@ import { X, ArrowLeft } from 'lucide-react';
 import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL } from '../../lib/supabase';
 import { RAZORPAY_KEY_ID } from '../../config/razorpay';
 
-// Supabase anon key for Edge Function authentication
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
-// Load Razorpay script dynamically
 const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (window.Razorpay) {
@@ -23,7 +21,6 @@ const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Declare Razorpay type
 declare global {
   interface Window {
     Razorpay: any;
@@ -51,12 +48,11 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Pricing breakdown
   const retreatFee = 16250;
-  const stayDouble = 5000; // ₹2,500 per night x 2
-  const staySingle = 7000; // ₹3,500 per night x 2
-  const totalDouble = retreatFee + stayDouble; // ₹21,250
-  const totalSingle = retreatFee + staySingle; // ₹23,250
+  const stayDouble = 5000; 
+  const staySingle = 7000; 
+  const totalDouble = retreatFee + stayDouble; 
+  const totalSingle = retreatFee + staySingle; 
 
   const selectedTotal = occupancyType === 'double' ? totalDouble : totalSingle;
   const selectedStay = occupancyType === 'double' ? stayDouble : staySingle;
@@ -74,7 +70,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     setSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    // Validate dates
     if (!checkInDate || !checkOutDate) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       setSubmitting(false);
@@ -88,16 +83,15 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     }
 
     try {
-      // Format price string with occupancy info
+      
       const priceString = `₹${selectedTotal.toLocaleString('en-IN')} (${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy)`;
       const selectedSlot = `${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy - 3 Days / 2 Nights`;
-      
-      // Save booking to Supabase
+
       const { error } = await supabase.from('bookings').insert([
         {
-          event_id: null, // No event_id for package bookings
+          event_id: null, 
           event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
-          event_date: checkInDate, // Use check-in date
+          event_date: checkInDate, 
           selected_slot: selectedSlot,
           price: priceString,
           customer_name: formData.name,
@@ -111,8 +105,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
       if (error) throw error;
 
       setMessage({ type: 'success', text: 'Booking submitted successfully! We will contact you soon.' });
-      
-      // Reset form and close modal after 2 seconds
+
       setTimeout(() => {
         setFormData({ name: '', email: '', phoneNumber: '' });
         setOccupancyType('double');
@@ -129,13 +122,12 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
   };
 
   const handlePayNow = async () => {
-    // Validate form fields
+    
     if (!formData.name || !formData.email || !formData.phoneNumber) {
       setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
       return;
     }
 
-    // Validate dates
     if (!checkInDate || !checkOutDate) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       return;
@@ -150,7 +142,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
     setMessage({ type: '', text: '' });
 
     try {
-      // Load Razorpay script
+      
       const razorpayLoaded = await loadRazorpayScript();
       if (!razorpayLoaded) {
         setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
@@ -158,30 +150,25 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         return;
       }
 
-      // Validate amount before sending
       if (!selectedTotal || selectedTotal <= 0 || isNaN(selectedTotal)) {
         setMessage({ type: 'error', text: 'Invalid amount. Please select a valid package.' });
         setSubmitting(false);
         return;
       }
 
-      // Convert amount to paise (multiply by 100)
       const amountInPaise = Math.round(selectedTotal * 100);
 
-      // Validate converted amount
       if (amountInPaise <= 0 || !isFinite(amountInPaise) || !Number.isInteger(amountInPaise)) {
         setMessage({ type: 'error', text: 'Invalid amount. Please try again.' });
         setSubmitting(false);
         return;
       }
 
-      // Prepare request body - ensure it's always valid
       const requestBody = {
-        amount: amountInPaise, // Amount in paise (integer)
+        amount: amountInPaise, 
         currency: "INR"
       };
 
-      // Double-check the body is valid before stringifying
       if (!requestBody.amount || typeof requestBody.amount !== 'number' || requestBody.amount <= 0) {
         console.error('Invalid request body prepared:', requestBody);
         setMessage({ type: 'error', text: 'Invalid payment amount. Please contact support.' });
@@ -189,7 +176,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         return;
       }
 
-      // Log request body for debugging (remove in production if sensitive)
       console.log('Creating Razorpay order with:', {
         amount: requestBody.amount,
         currency: requestBody.currency,
@@ -197,19 +183,15 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         isInteger: Number.isInteger(requestBody.amount)
       });
 
-      // Step 1: Create order from Supabase function (SERVER-SIDE)
-      // ✅ CORS Safe: Orders API is called server-side via Edge Function, not from client
-      // This prevents "Blocked by CORS policy" errors
       const response = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
           "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify(requestBody), // Ensure body is always JSON.stringified
+        body: JSON.stringify(requestBody), 
       });
 
-      // Check if response is OK
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
         if (response.status === 401) {
@@ -223,14 +205,12 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
       const order = await response.json();
 
-      // Validate order response
       if (!order.id) {
         setMessage({ type: 'error', text: 'Failed to create Razorpay order. Please try again.' });
         setSubmitting(false);
         return;
       }
 
-      // Validate that order was created successfully with proper structure
       if (!order.amount || !order.currency) {
         console.error('Invalid order response:', order);
         setMessage({ type: 'error', text: 'Invalid order response from server. Please contact support.' });
@@ -238,16 +218,13 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         return;
       }
 
-      // Step 2: Format booking details for saving after payment
       const priceString = `₹${selectedTotal.toLocaleString('en-IN')} (${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy)`;
       const selectedSlot = `${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy - 3 Days / 2 Nights`;
 
-      // Step 3: Initialize Razorpay with enhanced options (following Razorpay best practices)
-      // Format phone number with country code for better conversion rates
       const formatPhoneNumber = (phone: string): string => {
-        // Remove all non-digit characters
+        
         const digits = phone.replace(/\D/g, '');
-        // If number doesn't start with country code, assume +91 (India)
+        
         if (digits.length === 10) {
           return `+91${digits}`;
         } else if (digits.length > 10 && !digits.startsWith('91')) {
@@ -258,23 +235,19 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
-      // ✅ Key ID is imported from config to ensure consistency
-      // ⚠️ CRITICAL: This MUST match RAZORPAY_KEY_ID in Supabase Edge Function
-      // Error "The id provided does not exist" occurs when keys don't match
-
       const description = `3-Day Rejuvenation Retreat - ${occupancyType === 'double' ? 'Double' : 'Single'} Occupancy`;
 
       const options = {
-        key: RAZORPAY_KEY_ID, // Razorpay Key ID (mandatory) - MUST match server-side key
-        amount: order.amount, // Integer in smallest currency subunit (mandatory) - already in paise
-        currency: order.currency || "INR", // Currency code (mandatory)
-        name: "MEHR Rejuvenation Retreat", // Business name (mandatory)
-        description: description, // Transaction description (optional)
-        image: window.location.origin + "/image-5-1.png", // Business logo (optional)
-        order_id: order.id, // Order ID from server (mandatory)
+        key: RAZORPAY_KEY_ID, 
+        amount: order.amount, 
+        currency: order.currency || "INR", 
+        name: "MEHR Rejuvenation Retreat", 
+        description: description, 
+        image: window.location.origin + "/image-5-1.png", 
+        order_id: order.id, 
         handler: async function (response: any) {
           try {
-            // Check if payment failed (Razorpay may pass error in response)
+            
             if (response.error) {
               console.error('Payment failed in handler:', response.error);
               setMessage({ 
@@ -285,7 +258,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               return;
             }
 
-            // Validate payment response structure for successful payments
             if (!response.razorpay_payment_id || !response.razorpay_order_id || !response.razorpay_signature) {
               console.error('Invalid payment response:', response);
               setMessage({ 
@@ -303,8 +275,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               signature: response.razorpay_signature ? response.razorpay_signature.substring(0, 20) + '...' : 'MISSING'
             });
 
-            // ✅ STEP 1.5: Verify Payment Signature (MANDATORY SECURITY STEP)
-            // This confirms the payment response authenticity and prevents fraud
             const verificationPayload = {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -339,8 +309,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             }
 
             const verifyResult = await verifyResponse.json();
-            
-            // Check for success field (new format) or verified field (old format) for compatibility
+
             if (!verifyResult.success && !verifyResult.verified) {
               console.error('Payment signature is invalid:', verifyResult);
               setMessage({ 
@@ -353,7 +322,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
             console.log('Payment signature verified successfully');
 
-            // ✅ STEP 1.6: Payment verified - Now save booking to Supabase
             const bookingData = {
               event_id: null,
               event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
@@ -363,7 +331,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               customer_name: formData.name,
               customer_email: formData.email,
               customer_phone: formData.phoneNumber,
-              status: 'confirmed', // Payment successful, so confirmed
+              status: 'confirmed', 
               notes: `Occupancy Type: ${occupancyType === 'double' ? 'Double' : 'Single'}, Check-in: ${checkInDate}, Check-out: ${checkOutDate}. Signature Verified: Yes`,
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -371,8 +339,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
 
             console.log('Saving booking to Supabase:', bookingData);
 
-            // Use Edge Function to create booking (bypasses RLS using service_role)
-            // This is the most reliable permanent solution
             const CREATE_BOOKING_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-booking";
             
             const bookingResponse = await fetch(CREATE_BOOKING_FUNCTION_URL, {
@@ -403,7 +369,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               throw new Error('Booking was inserted but no data was returned. Please check admin panel.');
             }
 
-            // Redirect to payment success page with all details
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -420,14 +385,12 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             navigate(`/payment/success?${successParams.toString()}`);
           } catch (err) {
             console.error('Error saving booking after payment:', err);
-            
-            // Get detailed error message
+
             let errorMessage = 'Payment successful but failed to save booking.';
             if (err instanceof Error) {
               errorMessage = err.message;
             }
-            
-            // Store payment details for manual recovery
+
             const paymentInfo = {
               payment_id: response?.razorpay_payment_id || 'N/A',
               order_id: response?.razorpay_order_id || 'N/A',
@@ -450,13 +413,13 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
           }
         },
         prefill: {
-          // Prefill customer details to boost conversions and minimize drop-offs
+          
           name: formData.name || undefined,
           email: formData.email || undefined,
-          contact: formData.phoneNumber ? formatPhoneNumber(formData.phoneNumber) : undefined, // Format: +(country code)(phone number)
+          contact: formData.phoneNumber ? formatPhoneNumber(formData.phoneNumber) : undefined, 
         },
         notes: {
-          // Additional payment information (max 15 key-value pairs, 256 chars each)
+          
           booking_type: 'rejuvenation_retreat',
           occupancy: occupancyType,
           package: '3_day_2_night',
@@ -465,11 +428,11 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
           order_value: selectedTotal.toString(),
         },
         theme: {
-          color: "#A0522D", // Match MEHR brand color
+          color: "#A0522D", 
         },
         modal: {
           ondismiss: function() {
-            // User closed the payment modal without completing payment
+            
             setSubmitting(false);
             setMessage({ 
               type: 'error', 
@@ -478,35 +441,21 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             console.log('Payment modal dismissed by user');
           }
         },
-        timeout: 900, // 15 minutes timeout (optional) - prevents checkout from staying open indefinitely
-        // Note: Some browsers may pause timers in power saver mode, so timeout may not be exact
-        // Note: Using handler function instead of callback_url
-        // Handler function: Customer stays on your page, better UX for modals
-        // Callback URL: Customer redirects to success/failure page (alternative approach)
-        // For this modal-based flow, handler function is preferred
+        timeout: 900, 
+
       };
 
       const rzp = new window.Razorpay(options);
-      
-      // Enhanced error handling for Razorpay checkout
-      // Note: payment.failed event is handled automatically by Razorpay and will trigger handler with error
-      // We also handle errors in the catch block and modal.ondismiss
 
-      // Log checkout opening with key verification
       console.log('Opening Razorpay checkout:', {
         order_id: order.id,
         amount: order.amount,
         currency: order.currency,
-        key_id: RAZORPAY_KEY_ID.substring(0, 8) + '...' // Log partial key for debugging
+        key_id: RAZORPAY_KEY_ID.substring(0, 8) + '...' 
       });
 
-      // ⚠️ Error Prevention:
-      // 1. "The id provided does not exist" - Prevented by using same key_id in server (Edge Function) and client (checkout)
-      // 2. "Blocked by CORS policy" - Prevented by making Orders API calls server-side only (via Edge Function)
-
       rzp.open();
-      
-      // Handle payment failed event
+
       rzp.on('payment.failed', function (response: any) {
         const failedParams = new URLSearchParams({
           transaction_no: order.id || 'N/A',
@@ -521,13 +470,11 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
         navigate(`/payment/failed?${failedParams.toString()}`);
         setSubmitting(false);
       });
-      
-      // Don't set submitting to false here - let the handler do it
+
     } catch (err) {
       console.error('Error during payment setup:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      
-      // Redirect to failed page for critical errors
+
       const failedParams = new URLSearchParams({
         transaction_no: 'N/A',
         error: errorMessage,
@@ -548,7 +495,7 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto p-4">
       <div className="bg-white rounded-lg w-full max-w-md my-4 sm:my-8 shadow-2xl relative flex flex-col max-h-[95vh]">
-        {/* Header - Sticky */}
+        
         <div className="bg-[#A0522D] px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-10 rounded-t-lg flex-shrink-0">
           <button
             onClick={onClose}
@@ -568,13 +515,11 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
           </button>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-gray-300 flex-shrink-0"></div>
 
-        {/* Scrollable Form Content */}
         <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
           <div className="p-4 sm:p-5 space-y-3 sm:space-y-4 overflow-y-auto flex-1">
-          {/* Message */}
+          
           {message.text && (
             <div
               className={`p-3 rounded-lg ${
@@ -587,7 +532,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             </div>
           )}
 
-          {/* Package Info */}
           <div className="bg-gradient-to-br from-[#FFF8F0] to-[#FFDAB9] p-4 rounded-xl border-2 border-[#A0522D]/20 shadow-sm">
             <div className="mb-3 pb-3 border-b border-[#A0522D]/30">
               <h3 className="[font-family:'Poppins',Helvetica] text-lg font-bold text-[#A0522D] mb-0.5">
@@ -598,7 +542,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               </p>
             </div>
 
-            {/* Occupancy Selection */}
             <div className="mb-3">
               <label className="block [font-family:'Poppins',Helvetica] text-xs font-semibold text-[#A0522D] mb-1.5 uppercase">
                 Select Occupancy Type
@@ -631,7 +574,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
               </div>
             </div>
 
-            {/* Pricing Breakdown */}
             <div className="space-y-2 pt-2 border-t border-[#A0522D]/20">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col">
@@ -670,7 +612,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             </div>
           </div>
 
-          {/* Name Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               NAME
@@ -686,7 +627,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             />
           </div>
 
-          {/* Email Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               EMAIL
@@ -702,7 +642,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             />
           </div>
 
-          {/* Mobile Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               MOBILE
@@ -718,7 +657,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             />
           </div>
 
-          {/* Check-in Date Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               CHECK-IN DATE
@@ -733,7 +671,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
             />
           </div>
 
-          {/* Check-out Date Field */}
           <div>
             <label className="block [font-family:'Poppins',Helvetica] font-bold text-[#1E1E1E] text-xs mb-1.5 uppercase">
               CHECK-OUT DATE
@@ -749,7 +686,6 @@ export const RejuvenationBookingModal: React.FC<RejuvenationBookingModalProps> =
           </div>
           </div>
 
-          {/* Sticky Footer with Buttons */}
           <div className="border-t border-gray-200 bg-white p-4 sm:p-5 flex-shrink-0 rounded-b-lg">
             <div className="flex gap-2.5 sm:gap-3">
               <button

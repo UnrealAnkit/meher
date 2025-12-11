@@ -41,7 +41,7 @@ export const AdminUsersPage: React.FC = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      // Fetch all bookings
+      
       const { data: bookings, error } = await supabase
         .from('bookings')
         .select('*')
@@ -49,7 +49,6 @@ export const AdminUsersPage: React.FC = () => {
 
       if (error) throw error;
 
-      // Group bookings by customer email
       const userMap = new Map<string, UserWithBookings>();
 
       (bookings || []).forEach((booking: Booking) => {
@@ -71,7 +70,6 @@ export const AdminUsersPage: React.FC = () => {
         user.bookings.push(booking);
         user.total_bookings += 1;
 
-        // Update first and last booking dates
         if (new Date(booking.created_at) < new Date(user.first_booking_date)) {
           user.first_booking_date = booking.created_at;
         }
@@ -80,7 +78,6 @@ export const AdminUsersPage: React.FC = () => {
         }
       });
 
-      // Convert map to array and sort by last booking date
       const usersArray = Array.from(userMap.values()).sort((a, b) => 
         new Date(b.last_booking_date).getTime() - new Date(a.last_booking_date).getTime()
       );
@@ -235,11 +232,10 @@ export const AdminUsersPage: React.FC = () => {
         )}
       </div>
 
-      {/* User Booking Details Modal */}
       {viewingUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
+            
             <div className="bg-[#ab4b28] px-6 py-4 flex items-center justify-between sticky top-0">
               <h2 className="text-2xl font-bold text-white [font-family:'Poppins',Helvetica]">
                 {viewingUser.customer_name}'s Bookings
@@ -252,9 +248,8 @@ export const AdminUsersPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Modal Content */}
             <div className="p-6">
-              {/* Customer Info */}
+              
               <div className="bg-[#f9f5f0] p-4 rounded-lg mb-6">
                 <h3 className="text-lg font-semibold text-[#24312e] mb-3 [font-family:'Poppins',Helvetica]">
                   Customer Information
@@ -291,7 +286,6 @@ export const AdminUsersPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Bookings List */}
               <div>
                 <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
                   All Bookings ({viewingUser.bookings.length})
@@ -344,7 +338,6 @@ export const AdminUsersPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Close Button */}
               <div className="flex justify-end mt-6 pt-4 border-t border-gray-300">
                 <button
                   onClick={() => setViewingUser(null)}

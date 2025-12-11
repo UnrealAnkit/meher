@@ -39,7 +39,7 @@ export const NavbarSection = (): JSX.Element => {
   return (
     <nav className="w-full bg-[#ab4b28]">
       <div className="max-w-[1440px] mx-auto h-24 flex items-center justify-between px-4 lg:px-[149px]">
-        {/* Logo */}
+        
         <div className="flex-shrink-0 flex items-center">
           <Link to="/" className="block hover:opacity-80 transition-opacity">
             <img
@@ -50,7 +50,6 @@ export const NavbarSection = (): JSX.Element => {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-[31px]">
           {navItems.map((item, index) => (
             <div key={index} className="relative">
@@ -71,8 +70,7 @@ export const NavbarSection = (): JSX.Element => {
                       className={`transition-transform duration-200 ${isDesktopDropdownOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
-                  
-                  {/* Dropdown Menu */}
+
                   <div 
                     className={`absolute top-full left-0 mt-2 w-56 bg-[#ab4b28] border border-white/20 rounded-lg shadow-xl z-50 transition-all duration-300 ease-out ${
                       isDesktopDropdownOpen 
@@ -112,7 +110,6 @@ export const NavbarSection = (): JSX.Element => {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="lg:hidden text-white p-2"
           onClick={toggleMobileMenu}
@@ -121,7 +118,6 @@ export const NavbarSection = (): JSX.Element => {
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="absolute top-24 left-0 right-0 bg-[#ab4b28] shadow-lg lg:hidden z-50">
             <div className="flex flex-col divide-y divide-white/30">

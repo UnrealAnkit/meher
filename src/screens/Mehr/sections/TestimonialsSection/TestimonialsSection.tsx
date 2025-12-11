@@ -13,7 +13,6 @@ export const TestimonialsSection = (): JSX.Element => {
     { src: "https://meher.b-cdn.net/ice%20bath.png", alt: "Ice Bath" },
   ];
 
-  // Auto-advance slideshow every 3 seconds on mobile
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
@@ -29,7 +28,6 @@ export const TestimonialsSection = (): JSX.Element => {
           MOMENTS OF HEALING
         </h2>
 
-        {/* Mobile Slideshow */}
         <div className="md:hidden relative w-full h-[400px] rounded-2xl overflow-hidden mb-6">
           <div className="relative w-full h-full">
             {images.map((image, index) => (
@@ -47,8 +45,7 @@ export const TestimonialsSection = (): JSX.Element => {
               </div>
             ))}
           </div>
-          
-          {/* Slide indicators */}
+
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
             {images.map((_, index) => (
               <button
@@ -65,9 +62,8 @@ export const TestimonialsSection = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Desktop Grid Layout */}
         <div className="hidden md:grid grid-cols-1 md:grid-cols-12 gap-4">
-          {/* First column - Image 1 (303x303) and Image 5 */}
+          
           <div className="col-span-1 md:col-span-3 space-y-4">
             <div className="w-full md:w-[303px] h-[250px] sm:h-[280px] md:h-[303px] rounded-2xl overflow-hidden mx-auto md:mx-0">
               <img 
@@ -85,7 +81,6 @@ export const TestimonialsSection = (): JSX.Element => {
             </div>
           </div>
 
-          {/* Middle column - Image 2 (636.3x636.3) */}
           <div className="col-span-1 md:col-span-6 order-3 md:order-2">
             <div className="w-full md:w-[620px] h-[300px] sm:h-[400px] md:h-[636.3px] rounded-2xl overflow-hidden mx-auto md:mx-0">
               <img 
@@ -96,7 +91,6 @@ export const TestimonialsSection = (): JSX.Element => {
             </div>
           </div>
 
-          {/* Last column - Image 3 (303x303) and Image 4 */}
           <div className="col-span-1 md:col-span-3 space-y-4 order-2 md:order-3">
             <div className="w-full md:w-[303px] h-[250px] sm:h-[280px] md:h-[303px] rounded-2xl overflow-hidden mx-auto md:mx-0">
               <img 
@@ -114,7 +108,6 @@ export const TestimonialsSection = (): JSX.Element => {
             </div>
           </div>
 
-          {/* Bottom row - Image 6 (303x303) and Image 7 (636.3x303) */}
           <div className="col-span-1 md:col-span-12 flex flex-col md:flex-row gap-4 mt-4 md:-mt-[300px] md:pl-[320px] order-4">
             <div className="w-full md:w-[420px] h-[250px] sm:h-[280px] md:h-[303px] rounded-2xl overflow-hidden">
               <img 

@@ -1,8 +1,8 @@
-// supabase/functions/verify-payment/index.ts
+
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 
 serve(async (req) => {
-  // Get origin from request and allow both production and development
+  
   const origin = req.headers.get("origin") || "";
   const allowedOrigins = [
     "https://mehr.world",
@@ -10,11 +10,9 @@ serve(async (req) => {
     "http://localhost:5174",
     "http://localhost:3000"
   ];
-  
-  // Determine which origin to use (allow localhost for development)
+
   const allowedOrigin = allowedOrigins.includes(origin) ? origin : "https://mehr.world";
 
-  // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
     return new Response(null, {
       headers: {
@@ -31,7 +29,6 @@ serve(async (req) => {
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = body;
 
-    // 🔒 Ensure all fields exist and are not empty
     const missingFields: string[] = [];
     if (!razorpay_order_id || (typeof razorpay_order_id === "string" && razorpay_order_id.trim() === "")) {
       missingFields.push("razorpay_order_id");
@@ -69,7 +66,6 @@ serve(async (req) => {
       });
     }
 
-    // ✅ Step 1: Verify signature using Deno Web Crypto API
     const key_secret = Deno.env.get("RAZORPAY_KEY_SECRET");
     
     if (!key_secret) {
@@ -85,7 +81,6 @@ serve(async (req) => {
       });
     }
 
-    // Use Web Crypto API for HMAC SHA256 (Deno-compatible)
     const message = `${razorpay_order_id}|${razorpay_payment_id}`;
     const keyData = new TextEncoder().encode(key_secret);
     const cryptoKey = await crypto.subtle.importKey(
@@ -101,8 +96,7 @@ serve(async (req) => {
       cryptoKey,
       new TextEncoder().encode(message)
     );
-    
-    // Convert to hex string
+
     const expectedSignature = Array.from(new Uint8Array(signatureBuffer))
       .map(b => b.toString(16).padStart(2, "0"))
       .join("");
@@ -128,9 +122,6 @@ serve(async (req) => {
         status: 400,
       });
     }
-
-    // ✅ Step 2: Store in Supabase table (optional)
-    // You can later insert logic here to save payment info using Supabase client
 
     console.log("Payment verified successfully:", {
       order_id: razorpay_order_id,

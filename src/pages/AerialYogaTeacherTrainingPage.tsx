@@ -12,28 +12,27 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-0 sm:pt-0 lg:pt-12">
-        {/* Desktop Images Section - Show at top on desktop only */}
+        
         <div className="hidden lg:flex flex-row flex-nowrap w-full justify-center items-center gap-12 px-16">
-          {/* First Image - Larger */}
+          
           <div className="w-[660px] flex-shrink-0 h-[534px] flex items-center justify-center animate-fadeInSlide">
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
               <img src={image1} alt="Aerial Yoga Teacher Training Image 1" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
-          {/* Second Image */}
+          
           <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
               <img src={image2} alt="Aerial Yoga Teacher Training Image 2" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
             </div>
           </div>
-          {/* Third Image */}
+          
           <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
             <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
               <img src={image3} alt="Aerial Yoga Teacher Training Image 3" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
@@ -41,43 +40,38 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Text Content Section */}
         <div className="w-full mt-0 px-4 sm:px-6 lg:px-16 py-6 sm:py-8 lg:py-16">
           <div className="text-left">
             <h1 className="[font-family:'Poppins'] font-normal text-[#A0522D] text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] leading-tight mb-4">
               Aerial Yoga Teacher Training Program
             </h1>
-            
-            {/* Pricing Information */}
+
             <div className="mt-4 mb-8">
               <p className="[font-family:'Poppins'] font-normal text-[#ab4b28] text-[18px] sm:text-[20px] lg:text-[22px]">
                 From ₹ 68,000 (per person)
               </p>
             </div>
 
-            {/* Program Overview */}
             <div className="mt-8 lg:mt-12">
               <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
                 Over the course of the program, participants will experience the power of suspension-based movement — a practice that enhances body awareness, flexibility, and mental focus while encouraging deep relaxation and playful exploration.
               </p>
             </div>
 
-            {/* Program Certification */}
             <div className="mt-8 lg:mt-12">
               <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
                 The Yoga Teacher Training Program is a certified and accredited 200-hour course designed to transform you into a confident and knowledgeable yoga facilitator.
               </p>
             </div>
 
-            {/* Mobile/Tablet Images Section - Show above "What makes MEHR unique" */}
             <div className="lg:hidden mt-8">
-              {/* One large image on top */}
+              
               <div className="w-full mb-4">
                 <div className="w-full overflow-hidden rounded-xl shadow-lg">
                   <img src={image1} alt="Aerial Yoga Teacher Training Image 1" className="w-full h-auto object-cover" loading="lazy" />
                 </div>
               </div>
-              {/* Two images side by side below */}
+              
               <div className="flex gap-4">
                 <div className="flex-1 overflow-hidden rounded-xl shadow-lg">
                   <img src={image2} alt="Aerial Yoga Teacher Training Image 2" className="w-full h-auto object-cover" loading="lazy" />
@@ -88,7 +82,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* What makes MEHR unique */}
             <div className="mt-6 lg:mt-16">
               <h2 className="[font-family:'Poppins'] font-semibold text-[#1E1E1E] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                 What makes MEHR unique
@@ -109,7 +102,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Customised Retreat Experience */}
             <div className="mt-12 lg:mt-16">
               <h2 className="[font-family:'Poppins'] font-semibold text-[#A0522D] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                 Customised Retreat Experience
@@ -139,7 +131,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
               </p>
             </div>
 
-            {/* Fees BreakDown */}
             <div className="mt-12 lg:mt-16">
               <h2 className="[font-family:'Poppins'] font-semibold text-[#A0522D] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
                 Fees BreakDown
@@ -157,7 +148,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Book This Experience Button */}
             <div className="mt-12 lg:mt-16 text-center">
               <button
                 onClick={() => setShowBookingModal(true)}
@@ -172,7 +162,6 @@ export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
 
       <FooterSection />
 
-      {/* Yoga Teacher Training Booking Modal */}
       <YogaTeacherTrainingBookingModal
         isOpen={showBookingModal}
         onClose={() => setShowBookingModal(false)}

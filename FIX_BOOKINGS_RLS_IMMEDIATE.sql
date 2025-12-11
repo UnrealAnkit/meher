@@ -1,11 +1,5 @@
--- ============================================
--- IMMEDIATE FIX - Use this if the main script doesn't work
--- This creates a SECURITY DEFINER function that bypasses RLS
--- ============================================
--- Run this in: Supabase Dashboard → SQL Editor → New Query
--- ============================================
 
--- Step 1: Drop existing policies (clean slate)
+
 DO $$ 
 DECLARE
     r RECORD;
@@ -21,8 +15,6 @@ BEGIN
     END LOOP;
 END $$;
 
--- Step 2: Create a SECURITY DEFINER function that bypasses RLS
--- This function runs with elevated privileges, so it can insert regardless of RLS
 CREATE OR REPLACE FUNCTION public.insert_booking(
   p_event_id UUID DEFAULT NULL,
   p_event_title TEXT,
@@ -53,33 +45,27 @@ BEGIN
 END;
 $$;
 
--- Step 3: Grant execute permission to anon and public roles
 GRANT EXECUTE ON FUNCTION public.insert_booking TO anon;
 GRANT EXECUTE ON FUNCTION public.insert_booking TO public;
 GRANT EXECUTE ON FUNCTION public.insert_booking TO authenticated;
 
--- Step 3.5: Grant usage on schema (required for function execution)
 GRANT USAGE ON SCHEMA public TO anon;
 GRANT USAGE ON SCHEMA public TO public;
 
--- Step 4: Still create RLS policies for direct table access (in case needed)
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 
--- Allow anon to insert directly (backup approach)
 CREATE POLICY "Allow anon booking inserts" 
 ON bookings
 FOR INSERT
 TO anon
 WITH CHECK (true);
 
--- Allow public to insert directly (backup approach)
 CREATE POLICY "Allow public booking inserts" 
 ON bookings
 FOR INSERT
 TO public
 WITH CHECK (true);
 
--- Allow authenticated to read/update/delete
 CREATE POLICY "Allow authenticated to read bookings" 
 ON bookings
 FOR SELECT
@@ -99,7 +85,6 @@ FOR DELETE
 TO authenticated
 USING (true);
 
--- Step 5: Verify function was created
 SELECT 
     routine_name,
     routine_type,
@@ -107,31 +92,4 @@ SELECT
 FROM information_schema.routines
 WHERE routine_schema = 'public' 
 AND routine_name = 'insert_booking';
-
--- Expected: Should show insert_booking with security_type = 'DEFINER'
-
--- Step 6: Important - Refresh Supabase schema cache
--- Note: After creating the function, you may need to wait a few seconds
--- or refresh the Supabase API schema cache
--- The function should be available immediately, but if you get cache errors,
--- wait 10-30 seconds and try again
-
--- ============================================
--- HOW TO USE THE FUNCTION (Alternative approach)
--- ============================================
--- If you want to use the function instead of direct inserts,
--- update your frontend code to call:
---
--- const { data, error } = await supabase.rpc('insert_booking', {
---   p_event_id: null,
---   p_event_title: 'MEHR Rejuvenation Retreat - 3 Day Package',
---   p_event_date: '2025-11-02',
---   p_selected_slot: 'Double Occupancy - 3 Days / 2 Nights',
---   p_price: '₹21,250 (Double Occupancy)',
---   p_customer_name: 'Ankit Kumar',
---   p_customer_email: 'work.ankit2@gmail.com',
---   p_customer_phone: '09304075346',
---   p_status: 'confirmed',
---   p_notes: 'Payment ID: ...'
--- });
 

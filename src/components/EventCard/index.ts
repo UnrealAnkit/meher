@@ -1,3 +1,2 @@
 export { EventCard } from './EventCard';
 
-

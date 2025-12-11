@@ -45,17 +45,17 @@ export const ContactPage: React.FC = () => {
           city: '',
           message: '',
         });
-        // Reset success message after 5 seconds
+        
         setTimeout(() => setSubmitStatus('idle'), 5000);
       } else {
         setSubmitStatus('error');
-        // Reset error message after 5 seconds
+        
         setTimeout(() => setSubmitStatus('idle'), 5000);
       }
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
-      // Reset error message after 5 seconds
+      
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
       setIsSubmitting(false);
@@ -72,15 +72,13 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Spacer */}
       <div className="h-0 lg:h-16"></div>
 
-      {/* Hero Section */}
       <div className="w-full lg:max-w-[1440px] lg:mx-auto">
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 bg-[#FFDAB9] flex items-center justify-center lg:justify-start px-4 sm:px-6 lg:pl-16 pt-0 pb-8 lg:py-0">
@@ -100,10 +98,9 @@ export const ContactPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow bg-white w-full overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 py-8 sm:py-12 lg:py-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {/* Left Section - Contact Info */}
+          
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-black mb-4 leading-tight [font-family:'Poppins']">
@@ -135,7 +132,6 @@ export const ContactPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Section - Contact Form */}
           <div className="bg-[#A0522D] rounded-[15px] p-4 sm:p-6 lg:p-8 max-w-[800px] w-full mx-auto">
             <h3 className="text-white text-xl sm:text-2xl lg:text-4xl font-light mb-6 sm:mb-8 text-center [font-family:'Poppins'] leading-tight">
               REQUEST A EXPLORATION CALL

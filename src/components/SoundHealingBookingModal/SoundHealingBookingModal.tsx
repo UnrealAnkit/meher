@@ -4,10 +4,8 @@ import { X, ArrowLeft } from 'lucide-react';
 import { supabase, CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL } from '../../lib/supabase';
 import { RAZORPAY_KEY_ID } from '../../config/razorpay';
 
-// Supabase anon key for Edge Function authentication
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
-// Load Razorpay script dynamically
 const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (window.Razorpay) {
@@ -23,7 +21,6 @@ const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Declare Razorpay type
 declare global {
   interface Window {
     Razorpay: any;
@@ -50,9 +47,8 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Pricing - Sound Healing Level 1
   const programFee = 13000;
-  const gstRate = 0.18; // 18% GST
+  const gstRate = 0.18; 
   const gstAmount = programFee * gstRate;
   const totalWithGST = programFee + gstAmount;
 
@@ -69,7 +65,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
     setSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    // Validate dates
     if (!checkInDate || !checkOutDate) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       setSubmitting(false);
@@ -85,8 +80,7 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
     try {
       const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
       const programTitle = 'Sound Healing Training Workshop (3 Levels) - Level 1: Sounds for Self';
-      
-      // Save booking to Supabase
+
       const { error } = await supabase.from('bookings').insert([
         {
           event_id: null,
@@ -105,8 +99,7 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
       if (error) throw error;
 
       setMessage({ type: 'success', text: 'Booking submitted successfully! We will contact you soon.' });
-      
-      // Reset form and close modal after 2 seconds
+
       setTimeout(() => {
         setFormData({ name: '', email: '', phoneNumber: '' });
         setCheckInDate('');
@@ -122,13 +115,12 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
   };
 
   const handlePayNow = async () => {
-    // Validate form fields
+    
     if (!formData.name || !formData.email || !formData.phoneNumber) {
       setMessage({ type: 'error', text: 'Please fill in all fields before proceeding to payment.' });
       return;
     }
 
-    // Validate dates
     if (!checkInDate || !checkOutDate) {
       setMessage({ type: 'error', text: 'Please select check-in and check-out dates' });
       return;
@@ -143,7 +135,7 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
     setMessage({ type: '', text: '' });
 
     try {
-      // Load Razorpay script
+      
       const razorpayLoaded = await loadRazorpayScript();
       if (!razorpayLoaded) {
         setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
@@ -151,7 +143,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
         return;
       }
 
-      // Convert amount to paise (GST already calculated above)
       const amountInPaise = Math.round(totalWithGST * 100);
 
       if (amountInPaise <= 0) {
@@ -160,7 +151,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
         return;
       }
 
-      // Step 1: Create Razorpay order
       const orderResponse = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
@@ -188,7 +178,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
         return;
       }
 
-      // Step 2: Format phone number
       const formatPhoneNumber = (phone: string): string => {
         const digits = phone.replace(/\D/g, '');
         if (digits.length === 10) {
@@ -201,7 +190,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
-      // Step 3: Initialize Razorpay checkout
       const programTitle = 'Sound Healing Training Workshop (3 Levels) - Level 1: Sounds for Self';
       const description = `${programTitle} - Level 1: Sounds for Self`;
       
@@ -232,7 +220,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
               return;
             }
 
-            // Step 4: Verify payment signature
             const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
               method: "POST",
               headers: { 
@@ -267,7 +254,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
               return;
             }
 
-            // Step 5: Save booking to database
             const priceString = `₹${Math.round(totalWithGST).toLocaleString('en-IN')} (Including GST)`;
             const bookingData = {
               event_id: null,
@@ -300,7 +286,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
               throw new Error(`Database error: ${errorMessage}`);
             }
 
-            // Redirect to payment success page
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -374,7 +359,7 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        {/* Header */}
+        
         <div className="bg-[#A0522D] text-white px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-4">
             <button
@@ -393,9 +378,8 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6">
-          {/* Program Details */}
+          
           <div className="bg-[#FFF8F0] rounded-lg p-6 mb-6">
             <h3 className="text-[#A0522D] text-2xl font-bold mb-2">
               Sound Healing Training Workshop (3 Levels)
@@ -404,7 +388,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
               Level 1: Sounds for Self - 3rd & 4th January 2026
             </p>
 
-            {/* Fees Breakdown */}
             <div className="border-t border-gray-300 pt-4 space-y-2">
               <div className="flex justify-between text-[#1E1E1E]">
                 <span>Sound Healing Training Program Fee</span>
@@ -416,14 +399,12 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
               </div>
             </div>
 
-            {/* Total Price */}
             <div className="border-t-2 border-[#A0522D] mt-4 pt-4 flex justify-between items-center">
               <span className="text-[#A0522D] font-bold text-lg">TOTAL PRICE (Including GST)</span>
               <span className="text-[#A0522D] font-bold text-2xl">₹{Math.round(totalWithGST).toLocaleString('en-IN')}</span>
             </div>
           </div>
 
-          {/* Message */}
           {message.text && (
             <div
               className={`mb-4 p-3 rounded-lg ${
@@ -436,7 +417,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
             </div>
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-[#1E1E1E] text-sm font-medium mb-2 [font-family:'Poppins']">
@@ -511,7 +491,6 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
               />
             </div>
 
-            {/* Buttons */}
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
@@ -535,6 +514,4 @@ export const SoundHealingBookingModal: React.FC<SoundHealingBookingModalProps> =
     </div>
   );
 };
-
-
 

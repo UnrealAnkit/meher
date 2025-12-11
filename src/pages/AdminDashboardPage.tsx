@@ -97,8 +97,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
         imageUrl = await uploadImage(imageFile);
       }
 
-      // Combine objective and targetAudience into expanded_description for backward compatibility
-      // Format: JSON structure that can be parsed later
       const structuredDescription = {
         objective: formData.objective,
         targetAudience: formData.targetAudience,
@@ -166,8 +164,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
 
   const handleEdit = (event: CalendarEvent) => {
     setEditingEvent(event);
-    
-    // Parse expanded_description if it's JSON, otherwise use as-is
+
     let objective = '';
     let targetAudience = '';
     let detailedDescription = event.expanded_description || '';
@@ -179,7 +176,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
         if (parsed.targetAudience) targetAudience = parsed.targetAudience;
         if (parsed.detailedDescription) detailedDescription = parsed.detailedDescription;
       } catch (e) {
-        // If not JSON, treat as legacy format - keep as detailedDescription
+        
         detailedDescription = event.expanded_description;
       }
     }
@@ -237,7 +234,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
 
   return (
     <div className="min-h-screen bg-[#f9f5f0]">
-      {/* Header */}
+      
       <header className="bg-white border-b-2 border-[#f9d2a3] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-[#ab4b28] [font-family:'Poppins',Helvetica]">
@@ -253,9 +250,8 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Notification */}
+        
         {message.text && (
           <div
             className={`mb-6 p-4 rounded-lg flex items-center gap-3 animate-fadeIn ${
@@ -279,7 +275,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
           </div>
         )}
 
-        {/* Add Event Button */}
         <div className="mb-8">
           <button
             onClick={() => {
@@ -293,7 +288,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
           </button>
         </div>
 
-        {/* Form Section */}
         {showForm && (
           <div className="bg-white rounded-lg shadow-md p-8 mb-8 border-2 border-[#f9d2a3]">
             <h2 className="text-2xl font-bold text-[#24312e] mb-6 [font-family:'Poppins',Helvetica]">
@@ -302,7 +296,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Title */}
+                
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Event Title *
@@ -317,7 +311,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Tag */}
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Tag *
@@ -335,7 +328,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   </select>
                 </div>
 
-                {/* Price */}
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Price *
@@ -350,7 +342,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Duration */}
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Duration *
@@ -365,7 +356,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Event Date */}
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Event Date *
@@ -379,7 +369,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Start Date */}
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Start Date *
@@ -393,7 +382,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* End Date */}
                 <div>
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     End Date *
@@ -408,7 +396,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Facilitator Description */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Facilitator Description *
@@ -422,7 +409,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Time Slots */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Time Slots (comma-separated) *
@@ -437,7 +423,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Objective */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Objective-
@@ -450,7 +435,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Who is this for */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Who is this for?
@@ -463,7 +447,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Detailed Description */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Detailed Description
@@ -476,7 +459,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                   />
                 </div>
 
-                {/* Image Upload */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                     Event Image
@@ -506,7 +488,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
                 </div>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={submitting}
@@ -518,7 +499,6 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
           </div>
         )}
 
-        {/* Events List */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden border-2 border-[#f9d2a3]">
           <div className="px-6 py-4 bg-gradient-to-r from-[#f9d2a3] to-[#fce8d3]">
             <h2 className="text-xl font-bold text-[#24312e] [font-family:'Poppins',Helvetica]">

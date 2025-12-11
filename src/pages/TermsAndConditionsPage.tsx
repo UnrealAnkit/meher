@@ -5,15 +5,13 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 export const TermsAndConditionsPage = (): JSX.Element => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Spacer */}
       <div className="h-16"></div>
 
-      {/* Hero Section */}
       <div className="mx-auto w-full max-w-[1440px] px-4 py-4 sm:py-6 lg:py-8">
         <div className="flex items-center justify-start">
           <h1 className="text-[#A0522D] text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
@@ -22,22 +20,19 @@ export const TermsAndConditionsPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow bg-[#FFF3E4]">
         <div className="max-w-[1200px] mx-auto px-4 py-16">
           <div className="space-y-8 [font-family:'Poppins'] text-[#1E1E1E]">
-            
-            {/* Introduction */}
+
             <section>
               <p className="text-lg leading-relaxed mb-4">
-                Welcome to MEHER ("we," "our," or "us"). These Terms and Conditions ("Terms") govern your use of our website <a href="https://mehr.world" target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline">https://mehr.world</a> ("Site") and participation in our services, including wellness retreats, stays, therapies, programs, and trainings.
+                Welcome to MEHER ("we," "our," or "us"). These Terms and Conditions ("Terms") govern your use of our website <a href="https://mehr.world" target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline">https:
               </p>
               <p className="text-lg leading-relaxed">
                 By using this Site, booking an experience, or making a payment, you agree to these Terms. If you do not agree, please do not use the Site or our services.
               </p>
             </section>
 
-            {/* Section 1 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">1. Services Overview</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -54,7 +49,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 2 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">2. Booking and Payment</h2>
               <ul className="space-y-3 text-lg leading-relaxed">
@@ -73,7 +67,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 3 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">3. Cancellation and Refund Policy</h2>
               <ul className="space-y-3 text-lg leading-relaxed">
@@ -89,7 +82,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 4 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">4. Use of the Website</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -105,7 +97,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 5 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">5. Intellectual Property Rights</h2>
               <p className="text-lg leading-relaxed">
@@ -113,7 +104,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 6 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">6. Health and Safety Disclaimer</h2>
               <ul className="space-y-3 text-lg leading-relaxed">
@@ -132,7 +122,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 7 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">7. Limitation of Liability</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -147,7 +136,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 8 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">8. Third-Party Links and Services</h2>
               <p className="text-lg leading-relaxed">
@@ -155,7 +143,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 9 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">9. Modifications to Services or Terms</h2>
               <p className="text-lg leading-relaxed">
@@ -163,7 +150,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 10 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">10. Governing Law</h2>
               <p className="text-lg leading-relaxed">
@@ -171,7 +157,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 11 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">11. Contact Us</h2>
               <div className="bg-[#f9f5f0] p-6 rounded-lg">
@@ -184,7 +169,6 @@ export const TermsAndConditionsPage = (): JSX.Element => {
               </div>
             </section>
 
-            {/* Last Updated */}
             <div className="mt-12 pt-8 border-t border-gray-300">
               <p className="text-sm text-gray-600 italic">
                 Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -199,5 +183,4 @@ export const TermsAndConditionsPage = (): JSX.Element => {
     </div>
   );
 };
-
 

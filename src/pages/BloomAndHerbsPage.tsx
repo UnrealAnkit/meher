@@ -8,7 +8,6 @@ import { RAZORPAY_KEY_ID } from "../config/razorpay";
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplam1nYmtpemFzbmt4aXZvYnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NTEzODksImV4cCI6MjA3NzAyNzM4OX0.yoJE8kMx6Dn8db5RjtmBMeDc_BXsfUNnG_OTl4NMrhQ';
 
-// Load Razorpay script dynamically
 const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (window.Razorpay) {
@@ -24,7 +23,6 @@ const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Declare Razorpay type
 declare global {
   interface Window {
     Razorpay: any;
@@ -43,13 +41,12 @@ export const BloomAndHerbsPage = (): JSX.Element => {
   });
   const price = 3000;
 
-  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   async function handlePayment() {
-    // Validate customer data
+    
     if (!customerData.name || !customerData.email || !customerData.phone) {
       setMessage({ type: 'error', text: 'Please fill in all customer details' });
       return;
@@ -59,7 +56,7 @@ export const BloomAndHerbsPage = (): JSX.Element => {
     setMessage({ type: '', text: '' });
 
     try {
-      // Load Razorpay script
+      
       const razorpayLoaded = await loadRazorpayScript();
       if (!razorpayLoaded) {
         setMessage({ type: 'error', text: 'Failed to load payment gateway. Please refresh the page.' });
@@ -67,7 +64,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         return;
       }
 
-      // Convert amount to paise
       const amountInPaise = Math.round(price * 100);
 
       if (amountInPaise <= 0) {
@@ -76,7 +72,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         return;
       }
 
-      // Step 1: Create Razorpay order
       const orderResponse = await fetch(CREATE_ORDER_FUNCTION_URL, {
         method: "POST",
         headers: { 
@@ -104,7 +99,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         return;
       }
 
-      // Step 2: Format phone number
       const formatPhoneNumber = (phone: string): string => {
         const digits = phone.replace(/\D/g, '');
         if (digits.length === 10) {
@@ -117,7 +111,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
-      // Step 3: Initialize Razorpay checkout
       const description = `Bloom and Herbs Room Booking`;
       
       const options = {
@@ -167,7 +160,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
               return;
             }
 
-            // Step 4: Verify payment signature
             const verifyResponse = await fetch(VERIFY_PAYMENT_FUNCTION_URL, {
               method: "POST",
               headers: { 
@@ -222,7 +214,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
               return;
             }
 
-            // Step 5: Save booking to database
             const bookingData = {
               event_id: null,
               event_title: 'Bloom and Herbs Room Booking',
@@ -254,7 +245,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
               throw new Error(`Database error: ${errorMessage}`);
             }
 
-            // Redirect to payment success page
             const successParams = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
@@ -316,7 +306,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
     <div className="bg-white overflow-hidden w-full relative min-h-screen flex flex-col">
       <NavbarSection />
 
-      {/* Hero Video Section */}
       <section className="relative w-full bg-white">
         <video
           src="https://meher.b-cdn.net/Bloom%20%26%20Herbs.mp4"
@@ -328,15 +317,14 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         />
       </section>
 
-      {/* Description Section */}
       <section className="relative w-full flex justify-center py-8 sm:py-12 md:py-16 lg:py-20 bg-white px-4 sm:px-6 md:px-8">
         <div className="w-full max-w-7xl">
-          {/* Heading with Price Badge */}
+          
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 lg:mb-8">
             <h1 className="[font-family:'Poppins',Helvetica] font-normal text-[#ab4b28] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
               BLOOM AND HERBS
             </h1>
-            {/* Price Badge */}
+            
             <div className="flex-shrink-0">
               <div className="bg-[#f9d2a3] rounded-lg px-4 py-2 border-2 border-[#ab4b28] inline-block">
                 <div className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-lg sm:text-xl">
@@ -345,8 +333,7 @@ export const BloomAndHerbsPage = (): JSX.Element => {
               </div>
             </div>
           </div>
-          
-          {/* Description */}
+
           <div className="space-y-4 sm:space-y-6">
             <p className="[font-family:'Poppins',Helvetica] font-normal text-black text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed w-full">
               Soft, feminine, and profoundly therapeutic — a haven where the delicate scent of lavender dances with the grounding calm of sage.
@@ -358,17 +345,15 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         </div>
       </section>
 
-      {/* Gallery Section */}
       <section className="relative w-full py-8 sm:py-12 md:py-16 lg:py-20 bg-white px-4 sm:px-6 md:px-8">
         <div className="w-full max-w-7xl mx-auto">
-          {/* ROOM VIEW Subheading */}
+          
           <h2 className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-2xl sm:text-3xl md:text-4xl mb-6 lg:mb-8">
             ROOM VIEW
           </h2>
 
-          {/* Gallery Grid: Left column (1 large), Right column (1 top, 2 below) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:items-stretch">
-            {/* Left Column: Single large image */}
+            
             <div className="relative w-full h-full rounded-lg overflow-hidden">
               <img
                 src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(31).png"
@@ -378,9 +363,8 @@ export const BloomAndHerbsPage = (): JSX.Element => {
               />
             </div>
 
-            {/* Right Column: 1 image on top, 2 images below */}
             <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 h-full">
-              {/* Top image in right column */}
+              
               <div className="relative w-full flex-1 rounded-lg overflow-hidden">
                 <img
                   src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(32).png"
@@ -390,7 +374,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
                 />
               </div>
 
-              {/* Two images below */}
               <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 flex-1">
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
                   <img
@@ -414,7 +397,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         </div>
       </section>
 
-      {/* Pay Now Button Section */}
       <section className="relative w-full py-8 sm:py-12 bg-white px-4 sm:px-6 md:px-8">
         <div className="w-full max-w-7xl mx-auto flex justify-center">
           <button 
@@ -426,7 +408,6 @@ export const BloomAndHerbsPage = (): JSX.Element => {
         </div>
       </section>
 
-      {/* Customer Information Modal */}
       {showCustomerModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">

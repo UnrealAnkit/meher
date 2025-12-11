@@ -20,7 +20,6 @@ export const AdminDashboardOverview: React.FC = () => {
     try {
       setLoading(true);
 
-      // Fetch counts from all tables
       const [events, classes, bookingsResult, blogs] = await Promise.all([
         supabase.from('calendar_events').select('id', { count: 'exact', head: true }),
         supabase.from('classes').select('id', { count: 'exact', head: true }),
@@ -28,7 +27,6 @@ export const AdminDashboardOverview: React.FC = () => {
         supabase.from('blogs').select('id', { count: 'exact', head: true }),
       ]);
 
-      // Count unique users (customers who made bookings)
       const uniqueUsers = new Set(
         (bookingsResult.data || []).map((booking: any) => booking.customer_email)
       ).size;

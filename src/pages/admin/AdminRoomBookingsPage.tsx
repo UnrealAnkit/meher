@@ -585,7 +585,6 @@ export const AdminRoomBookingsPage: React.FC = () => {
         )}
       </div>
 
-      {/* Booking Details Modal */}
       {viewingBooking && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
@@ -686,7 +685,6 @@ export const AdminRoomBookingsPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Payment Information */}
               {(viewingBooking.payment_id || viewingBooking.order_id) && (
                 <div className="bg-[#f9f5f0] p-4 rounded-lg">
                   <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">

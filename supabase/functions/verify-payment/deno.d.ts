@@ -1,4 +1,4 @@
-/// <reference lib="deno.ns" />
+
 
 declare namespace Deno {
   export namespace core {
@@ -14,5 +14,4 @@ declare namespace Deno {
     export function set(key: string, value: string): void;
   }
 }
-
 

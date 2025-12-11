@@ -32,11 +32,10 @@ export const AdminEventsPage: React.FC = () => {
     fetchEvents();
   }, []);
 
-  // Helper function to convert time string to minutes for sorting (e.g., "10:00 AM" -> 600)
   const timeToMinutes = (timeStr: string): number => {
     const trimmed = timeStr.trim().toUpperCase();
     const match = trimmed.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/);
-    if (!match) return Infinity; // Invalid time format goes to end
+    if (!match) return Infinity; 
     
     let hours = parseInt(match[1], 10);
     const minutes = parseInt(match[2], 10);
@@ -48,7 +47,6 @@ export const AdminEventsPage: React.FC = () => {
     return hours * 60 + minutes;
   };
 
-  // Helper function to get earliest time slot from an event
   const getEarliestTime = (timeSlots: string[]): number => {
     if (!timeSlots || timeSlots.length === 0) return Infinity;
     const times = timeSlots.map(timeToMinutes);
@@ -61,23 +59,21 @@ export const AdminEventsPage: React.FC = () => {
       const { data, error } = await supabase
         .from('calendar_events')
         .select('*')
-        .order('event_date', { ascending: true }); // Sort by date first
+        .order('event_date', { ascending: true }); 
 
       if (error) throw error;
-      
-      // Sort events by date, then by earliest time slot within each date
+
       const sortedEvents = (data || []).sort((a, b) => {
-        // First sort by date
+        
         const dateA = new Date(a.event_date).getTime();
         const dateB = new Date(b.event_date).getTime();
         if (dateA !== dateB) {
-          return dateA - dateB; // Ascending date order
+          return dateA - dateB; 
         }
-        
-        // If same date, sort by earliest time slot
+
         const timeA = getEarliestTime(a.time_slots || []);
         const timeB = getEarliestTime(b.time_slots || []);
-        return timeA - timeB; // Ascending time order
+        return timeA - timeB; 
       });
       
       setEvents(sortedEvents);
@@ -132,8 +128,6 @@ export const AdminEventsPage: React.FC = () => {
         imageUrl = await uploadImage(imageFile);
       }
 
-      // Combine objective and targetAudience into expanded_description for backward compatibility
-      // Format: JSON structure that can be parsed later
       const structuredDescription = {
         objective: formData.objective,
         targetAudience: formData.targetAudience,
@@ -201,8 +195,7 @@ export const AdminEventsPage: React.FC = () => {
 
   const handleEdit = (event: CalendarEvent) => {
     setEditingEvent(event);
-    
-    // Parse expanded_description if it's JSON, otherwise use as-is
+
     let objective = '';
     let targetAudience = '';
     let detailedDescription = event.expanded_description || '';
@@ -214,7 +207,7 @@ export const AdminEventsPage: React.FC = () => {
         if (parsed.targetAudience) targetAudience = parsed.targetAudience;
         if (parsed.detailedDescription) detailedDescription = parsed.detailedDescription;
       } catch (e) {
-        // If not JSON, treat as legacy format - keep as detailedDescription
+        
         detailedDescription = event.expanded_description;
       }
     }
@@ -608,7 +601,4 @@ export const AdminEventsPage: React.FC = () => {
     </div>
   );
 };
-
-
-
 

@@ -496,11 +496,10 @@ export const AdminBookingsPage: React.FC = () => {
         )}
       </div>
 
-      {/* Booking Details Modal */}
       {viewingBooking && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
+            
             <div className="bg-[#ab4b28] px-6 py-4 flex items-center justify-between sticky top-0">
               <h2 className="text-2xl font-bold text-white [font-family:'Poppins',Helvetica]">
                 Booking Details
@@ -513,9 +512,8 @@ export const AdminBookingsPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Modal Content */}
             <div className="p-6 space-y-6">
-              {/* Event Information */}
+              
               <div className="bg-[#f9f5f0] p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
                   Event Information
@@ -560,7 +558,6 @@ export const AdminBookingsPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Customer Information */}
               <div className="bg-[#f9f5f0] p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
                   Customer Information
@@ -591,7 +588,6 @@ export const AdminBookingsPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Booking Status */}
               <div className="bg-[#f9f5f0] p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-[#24312e] mb-4 [font-family:'Poppins',Helvetica]">
                   Booking Status
@@ -652,7 +648,6 @@ export const AdminBookingsPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Notes */}
               {viewingBooking.notes && (
                 <div className="bg-[#f9f5f0] p-4 rounded-lg">
                   <h3 className="text-lg font-semibold text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
@@ -664,7 +659,6 @@ export const AdminBookingsPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Action Buttons */}
               <div className="flex gap-4 pt-4 border-t border-gray-300">
                 <button
                   onClick={() => {

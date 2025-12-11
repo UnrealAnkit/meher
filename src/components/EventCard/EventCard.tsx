@@ -27,8 +27,6 @@ export const EventCard: React.FC<EventCardProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<string>('');
   const [showBookingModal, setShowBookingModal] = useState(false);
 
-  // Parse dateTime string to extract price, duration, and time slots
-  // Format: "Rs 500.00 | 60 Minutes | Pick a slot: 10:00 AM, 11:00 AM"
   const parts = dateTime.split('|').map(part => part.trim());
   const price = parts[0] || '';
   const duration = parts[1] || '';
@@ -36,7 +34,6 @@ export const EventCard: React.FC<EventCardProps> = ({
   const timeSlotsStr = slotsText.replace('Pick a slot:', '').trim();
   const timeSlots = timeSlotsStr.split(',').map(slot => slot.trim()).filter(slot => slot);
 
-  // Determine category tag based on title
   const getCategoryTag = (title: string) => {
     if (title.includes('YOGA') && !title.includes('ANTENATAL')) return 'YOGA';
     if (title.includes('ANTENATAL')) return 'YOGA';
@@ -58,7 +55,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 
   const handleBookNow = () => {
     if (!selectedSlot && timeSlots.length > 0) {
-      // If no slot selected, select first one by default
+      
       setSelectedSlot(timeSlots[0]);
     }
     setShowBookingModal(true);
@@ -66,7 +63,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 
   const formatDateForBooking = (): string => {
     if (eventDate) {
-      // Format as YYYY-MM-DD
+      
       const year = eventDate.getFullYear();
       const month = String(eventDate.getMonth() + 1).padStart(2, '0');
       const day = String(eventDate.getDate()).padStart(2, '0');
@@ -82,9 +79,9 @@ export const EventCard: React.FC<EventCardProps> = ({
       }`}
     >
       <div className="flex flex-row w-full min-h-[200px] sm:min-h-[280px]">
-        {/* Left Section - Image and Pick a slot */}
+        
         <div className={`w-32 sm:w-48 flex-shrink-0 flex flex-col ${isExpanded ? '' : ''}`}>
-          {/* Image */}
+          
           <div className={`rounded-l-lg overflow-hidden transition-all duration-500 ${isExpanded ? 'h-[180px] sm:h-[180px]' : 'h-full sm:h-[280px] min-h-[200px]'}`}>
             <img
               src={image}
@@ -92,8 +89,7 @@ export const EventCard: React.FC<EventCardProps> = ({
               className="w-full h-full object-cover"
             />
           </div>
-          
-          {/* Pick a slot - shown when expanded, below image */}
+
           {isExpanded && (
             <div className="p-2 sm:p-4 pt-3 animate-fadeIn w-full">
               <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-xs sm:text-base font-semibold mb-2">
@@ -117,10 +113,9 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
           )}
         </div>
-        
-        {/* Right Section - Event Details */}
+
         <div className="flex-1 flex flex-col p-2 sm:p-4 relative min-h-0 min-w-0 overflow-hidden">
-          {/* Arrow Button - Top Right */}
+          
           <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10">
             <button 
               onClick={toggleExpand}
@@ -135,12 +130,11 @@ export const EventCard: React.FC<EventCardProps> = ({
           </div>
 
           <div className="flex-1 min-h-0 min-w-0 overflow-y-auto">
-            {/* Title */}
+            
             <h3 className="[font-family:'Poppins',Helvetica] font-bold text-[#24312e] text-sm sm:text-lg mb-1 sm:mb-2 leading-tight pr-8 sm:pr-12 truncate">
               {title}
             </h3>
 
-            {/* Tags */}
             <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2 flex-wrap">
               <span className="[font-family:'Poppins',Helvetica] bg-[#ab4b28] text-white px-1.5 sm:px-3 py-0.5 sm:py-1 rounded text-[9px] sm:text-xs font-medium uppercase">
                 {tag}
@@ -150,12 +144,10 @@ export const EventCard: React.FC<EventCardProps> = ({
               </span>
             </div>
 
-            {/* Facilitator */}
             <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-[10px] sm:text-sm mb-1 sm:mb-3">
               <span className="font-semibold">Facilitator:</span> {description.replace('Facilitator:', '').trim()}
             </p>
 
-            {/* Price and Duration in rounded boxes */}
             <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-3 flex-wrap">
               <span className="[font-family:'Poppins',Helvetica] border-2 border-[#ab4b28] text-[#24312e] px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-sm font-normal">
                 {price}
@@ -165,7 +157,6 @@ export const EventCard: React.FC<EventCardProps> = ({
               </span>
             </div>
 
-            {/* Description - shown when expanded */}
             {isExpanded && expandedDescription && (
               <div className="[font-family:'Poppins',Helvetica] text-[#24312e] text-base leading-relaxed mb-4 animate-fadeIn whitespace-pre-line">
                 {expandedDescription.split('\n\n').map((paragraph, index) => (
@@ -176,7 +167,6 @@ export const EventCard: React.FC<EventCardProps> = ({
               </div>
             )}
 
-            {/* Pick a slot - only show when NOT expanded */}
             {!isExpanded && (
               <div className="[font-family:'Poppins',Helvetica] text-[10px] sm:text-sm mb-1 sm:mb-2">
                 <span className="text-[#24312e] font-normal">Pick a slot: </span>
@@ -199,7 +189,6 @@ export const EventCard: React.FC<EventCardProps> = ({
             )}
           </div>
 
-          {/* Book This Experience Button - only show when NOT expanded */}
           {!isExpanded && (
             <div className="mt-auto pt-2">
               <button 
@@ -211,7 +200,6 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
           )}
 
-          {/* Book Now Button - only show when expanded */}
           {isExpanded && (
             <div className="mt-auto pt-2">
               <button 
@@ -225,7 +213,6 @@ export const EventCard: React.FC<EventCardProps> = ({
         </div>
       </div>
 
-      {/* Booking Modal */}
       <BookingModal
         isOpen={showBookingModal}
         onClose={() => {

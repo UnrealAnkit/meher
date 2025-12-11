@@ -1,25 +1,4 @@
-/**
- * Razorpay Configuration
- * 
- * ⚠️ CRITICAL: Ensure RAZORPAY_KEY_ID matches the key used in:
- * 1. Supabase Edge Function (create-order) environment variable: RAZORPAY_KEY_ID
- * 2. Frontend checkout initialization
- * 
- * Error Prevention:
- * - "The id provided does not exist" error occurs when keys don't match between
- *   order creation (server) and checkout (client)
- */
+
 
 export const RAZORPAY_KEY_ID = "rzp_live_RdBJHsKgb896uM";
-
-/**
- * Razorpay Live Key ID
- * 
- * This is used in:
- * - Supabase Edge Function (should match RAZORPAY_KEY_ID env var)
- * - Frontend checkout options
- * 
- * Production key from Razorpay Dashboard - approved and ready for live payments
- */
-
 

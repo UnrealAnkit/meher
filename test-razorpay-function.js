@@ -1,8 +1,4 @@
-/**
- * Test script for Razorpay Edge Function
- * 
- * Run this in your browser console or Node.js environment to test the function
- */
+
 
 async function testCreateOrder() {
   try {
@@ -18,7 +14,7 @@ async function testCreateOrder() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify({ amount: 50000 }), // ₹500 in paise
+        body: JSON.stringify({ amount: 50000 }), 
       }
     );
 
@@ -31,8 +27,7 @@ async function testCreateOrder() {
     const data = await res.json();
     console.log('✅ Success! Order created:');
     console.log(data);
-    
-    // Check for order ID
+
     if (data.id) {
       console.log(`\n🎉 Order ID: ${data.id}`);
       console.log(`💰 Amount: ₹${data.amount / 100}`);
@@ -55,17 +50,15 @@ async function testCreateOrder() {
   }
 }
 
-// Export for use in modules, or run directly
 if (typeof window !== 'undefined') {
-  // Browser environment - attach to window
+  
   window.testCreateOrder = testCreateOrder;
   console.log('Test function available. Run: testCreateOrder()');
 } else if (typeof module !== 'undefined') {
-  // Node.js environment
+  
   module.exports = testCreateOrder;
 }
 
-// Auto-run if in browser console
 if (typeof window !== 'undefined' && window.location.href.includes('localhost')) {
   console.log('Running test automatically...');
   testCreateOrder();

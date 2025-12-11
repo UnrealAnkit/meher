@@ -1,5 +1,2 @@
 export { BookingModal } from './BookingModal';
 
-
-
-

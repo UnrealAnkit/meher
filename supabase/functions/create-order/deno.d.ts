@@ -1,4 +1,4 @@
-/// <reference lib="deno.ns" />
+
 
 declare namespace Deno {
   export namespace core {
@@ -15,7 +15,6 @@ declare namespace Deno {
   }
 }
 
-// Type declaration for Razorpay npm import
 declare module "npm:razorpay" {
   interface RazorpayOptions {
     key_id: string;

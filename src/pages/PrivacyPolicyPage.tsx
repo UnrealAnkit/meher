@@ -5,15 +5,13 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 export const PrivacyPolicyPage = (): JSX.Element => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Spacer */}
       <div className="h-16"></div>
 
-      {/* Hero Section */}
       <div className="mx-auto w-full max-w-[1440px] px-4 py-8">
         <div className="flex items-center justify-start">
           <h1 className="text-[#A0522D] text-[64px] font-normal leading-tight [font-family:'Poppins']">
@@ -22,19 +20,16 @@ export const PrivacyPolicyPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow bg-[#FFF3E4]">
         <div className="max-w-[1200px] mx-auto px-4 py-16">
           <div className="space-y-8 [font-family:'Poppins'] text-[#1E1E1E]">
-            
-            {/* Effective Date */}
+
             <div className="mb-6">
               <p className="text-lg font-semibold text-[#A0522D]">
                 Effective Date: 1st November
               </p>
             </div>
 
-            {/* Introduction */}
             <section>
               <p className="text-lg leading-relaxed mb-4">
                 Welcome to MEHER ("we", "our", or "us"). This Privacy Policy describes how we collect, use, disclose, and protect your personal information when you visit or make a booking via our website <a href="https://mehr.world" target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline">mehr.world</a> ("Site") and engage with our services (including rooms for stay, therapeutic experiences, retreats, trainings, aerial-yoga teacher training, and related programs).
@@ -44,7 +39,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Information We Collect */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Information We Collect</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -60,7 +54,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* How We Use Your Information */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">How We Use Your Information</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -75,7 +68,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Payment Processing */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Payment Processing</h2>
               <p className="text-lg leading-relaxed">
@@ -83,7 +75,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Disclosure of Information */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Disclosure of Information</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -95,7 +86,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Data Retention */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Data Retention</h2>
               <p className="text-lg leading-relaxed">
@@ -103,7 +93,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Your Rights */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Your Rights</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -119,7 +108,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Security */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Security</h2>
               <p className="text-lg leading-relaxed">
@@ -127,7 +115,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Changes to This Privacy Policy */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Changes to This Privacy Policy</h2>
               <p className="text-lg leading-relaxed">
@@ -135,7 +122,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Contact Us */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">Contact Us</h2>
               <div className="bg-[#f9f5f0] p-6 rounded-lg">
@@ -148,7 +134,6 @@ export const PrivacyPolicyPage = (): JSX.Element => {
               </div>
             </section>
 
-            {/* Last Updated */}
             <div className="mt-12 pt-8 border-t border-gray-300">
               <p className="text-sm text-gray-600 italic">
                 Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -163,5 +148,4 @@ export const PrivacyPolicyPage = (): JSX.Element => {
     </div>
   );
 };
-
 

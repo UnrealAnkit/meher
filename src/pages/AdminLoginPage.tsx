@@ -39,16 +39,15 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f9d2a3] via-white to-[#fce8d3] flex items-center justify-center p-4">
-      {/* Background Pattern */}
+      
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#ab4b28] rounded-full mix-blend-multiply filter blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ab4b28] rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
 
-      {/* Login Card */}
       <div className="relative z-10 w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-          {/* Logo/Header */}
+          
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-[#ab4b28] mb-2 [font-family:'Poppins',Helvetica]">
               MEHER
@@ -58,7 +57,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
             </p>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
@@ -68,9 +66,8 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
             </div>
           )}
 
-          {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-6">
-            {/* Email Field */}
+            
             <div>
               <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                 Email Address
@@ -85,7 +82,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
               />
             </div>
 
-            {/* Password Field */}
             <div>
               <label className="block text-sm font-medium text-[#24312e] mb-2 [font-family:'Poppins',Helvetica]">
                 Password
@@ -113,7 +109,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
               </div>
             </div>
 
-            {/* Login Button */}
             <button
               type="submit"
               disabled={loading}
@@ -123,7 +118,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
             </button>
           </form>
 
-          {/* Footer Text */}
           <p className="text-center text-sm text-[#24312e] mt-6 [font-family:'Poppins',Helvetica]">
             Contact administrator for access credentials
           </p>
@@ -132,6 +126,4 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLoginSuccess }
     </div>
   );
 };
-
-
 

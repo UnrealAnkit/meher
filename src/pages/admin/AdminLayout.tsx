@@ -25,7 +25,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
 
   return (
     <div className="min-h-screen bg-[#f9f5f0] flex">
-      {/* Sidebar */}
+      
       <aside className="w-64 bg-white border-r-2 border-[#f9d2a3] shadow-sm flex-shrink-0 flex flex-col h-screen sticky top-0">
         <div className="p-6 border-b-2 border-[#f9d2a3]">
           <h1 className="text-2xl font-bold text-[#ab4b28] [font-family:'Poppins',Helvetica]">
@@ -68,7 +68,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto p-8">
           {children}

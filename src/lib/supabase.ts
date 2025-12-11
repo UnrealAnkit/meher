@@ -5,7 +5,6 @@ export const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Supabase Edge Function URLs for Razorpay integration
 export const CREATE_ORDER_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-order";
 export const VERIFY_PAYMENT_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/verify-payment";
 export const CREATE_BOOKING_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-booking";

@@ -33,7 +33,7 @@ const cardsData = [
 export const ServicesSection = (): JSX.Element => {
   return (
     <div className="w-full">
-      {/* Service Cards Section */}
+      
       <section className="w-full px-4 sm:px-6 md:px-8 lg:px-4">
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-[35px] lg:gap-[47px] w-full flex-wrap">
           {cardsData.map((card, index) => (

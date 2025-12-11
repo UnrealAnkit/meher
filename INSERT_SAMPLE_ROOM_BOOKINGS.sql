@@ -1,10 +1,5 @@
--- Sample SQL to insert bookings for all 6 room types until November 26, 2025 at 3 PM
--- Use this to test the availability system
 
--- First, delete any existing test bookings (optional - adjust as needed)
--- DELETE FROM bookings WHERE customer_email LIKE 'test%@example.com';
 
--- Insert sample bookings for all 6 room types
 INSERT INTO bookings (
   event_title,
   event_date,
@@ -111,7 +106,6 @@ INSERT INTO bookings (
     'Sample booking for testing - All rooms booked until Nov 26, 3 PM'
   );
 
--- Verify the bookings were inserted
 SELECT 
   room_type,
   customer_name,

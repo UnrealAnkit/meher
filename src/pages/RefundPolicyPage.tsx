@@ -5,15 +5,13 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 export const RefundPolicyPage = (): JSX.Element => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      
       <div className="w-full">
         <NavbarSection />
       </div>
 
-      {/* Spacer */}
       <div className="h-16"></div>
 
-      {/* Hero Section */}
       <div className="mx-auto w-full max-w-[1440px] px-4 py-4 sm:py-6 lg:py-8">
         <div className="flex items-center justify-start">
           <h1 className="text-[#A0522D] text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] font-normal leading-tight [font-family:'Poppins']">
@@ -22,12 +20,10 @@ export const RefundPolicyPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow bg-[#FFF3E4]">
         <div className="max-w-[1200px] mx-auto px-4 py-16">
           <div className="space-y-8 [font-family:'Poppins'] text-[#1E1E1E]">
-            
-            {/* Section 1 */}
+
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">1. Overview</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -38,7 +34,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 2 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">2. Program / Session Bookings</h2>
               <ul className="space-y-3 text-lg leading-relaxed">
@@ -47,7 +42,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 3 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">3. Cancellations by Participants</h2>
               
@@ -78,7 +72,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </div>
             </section>
 
-            {/* Section 4 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">4. Cancellations by CH2</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -93,7 +86,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 5 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">5. Refund Timelines</h2>
               <ul className="space-y-3 text-lg leading-relaxed">
@@ -102,7 +94,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 6 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">6. Non-Refundable Items</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -115,7 +106,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 7 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">7. Policy for Gift Vouchers / Credits</h2>
               <ul className="space-y-3 text-lg leading-relaxed">
@@ -124,7 +114,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </ul>
             </section>
 
-            {/* Section 8 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">8. Dispute Resolution</h2>
               <p className="text-lg leading-relaxed mb-4">
@@ -139,7 +128,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </p>
             </section>
 
-            {/* Section 9 */}
             <section>
               <h2 className="text-3xl font-semibold text-[#A0522D] mb-4">9. Contact Information</h2>
               <div className="bg-[#f9f5f0] p-6 rounded-lg">
@@ -161,7 +149,6 @@ export const RefundPolicyPage = (): JSX.Element => {
               </div>
             </section>
 
-            {/* Last Updated */}
             <div className="mt-12 pt-8 border-t border-gray-300">
               <p className="text-sm text-gray-600 italic">
                 Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -176,7 +163,4 @@ export const RefundPolicyPage = (): JSX.Element => {
     </div>
   );
 };
-
-
-
 

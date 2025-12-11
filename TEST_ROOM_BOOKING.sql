@@ -1,12 +1,9 @@
--- Quick test: Add a booking for "Bloom and Herbs" room until November 26, 2025 at 3 PM
--- This will allow you to test the "room not available" message
 
--- Delete any existing test booking for this room (optional)
+
 DELETE FROM bookings 
 WHERE room_type = 'bloom-and-herbs' 
 AND customer_email = 'test-bloom@example.com';
 
--- Insert test booking
 INSERT INTO bookings (
   event_title,
   event_date,
@@ -37,7 +34,6 @@ INSERT INTO bookings (
   'Test booking - Room booked until Nov 26, 2025 at 3 PM'
 );
 
--- Verify the booking was created
 SELECT 
   room_type,
   customer_name,

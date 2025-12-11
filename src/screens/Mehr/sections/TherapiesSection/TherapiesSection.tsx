@@ -54,17 +54,16 @@ const TherapiesSection: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
 
-  // Preload all images
   React.useEffect(() => {
     const preloadImages = async () => {
       const imageUrls = [
         '/Therapies-Programs.png',
         ...therapyData.map(therapy => therapy.activeImage)
-      ].filter(url => url && url.trim() !== ''); // Filter out empty URLs
+      ].filter(url => url && url.trim() !== ''); 
 
       const loadImage = (url: string): Promise<void> =>
         new Promise((resolve) => {
-          // Skip empty or invalid URLs
+          
           if (!url || url.trim() === '' || url === 'undefined' || url === 'null') {
             console.warn('Skipping invalid image URL:', url);
             resolve();
@@ -75,7 +74,7 @@ const TherapiesSection: React.FC = () => {
           img.onload = () => resolve();
           img.onerror = () => {
             console.warn('Failed to load image:', url);
-            resolve(); // Resolve anyway to not block other images
+            resolve(); 
           };
           img.src = url;
         });
@@ -95,11 +94,11 @@ const TherapiesSection: React.FC = () => {
         </h2>
         
         <div className="relative w-full h-[600px] sm:h-[650px] md:h-[480px] lg:h-[500px] overflow-hidden">
-           {/* Background Image Layer */}
+           
            <div className="absolute inset-0">
              {isLoaded && (
                <>
-                 {/* Default Image */}
+                 
                  <motion.div
                    className="absolute inset-0"
                    initial={false}
@@ -113,7 +112,6 @@ const TherapiesSection: React.FC = () => {
                    />
                  </motion.div>
 
-                 {/* Active Images */}
                  {therapyData.map((therapy) => (
                    <motion.div
                      key={therapy.id}
@@ -135,7 +133,6 @@ const TherapiesSection: React.FC = () => {
              <div className="absolute inset-0 bg-black bg-opacity-40" />
           </div>
 
-          {/* Interactive Sections */}
           <div className="relative h-full flex flex-col md:flex-row">
             {therapyData.map((therapy, index) => (
               <div
@@ -145,16 +142,15 @@ const TherapiesSection: React.FC = () => {
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => setHoveredCard(hoveredCard === therapy.id ? null : therapy.id)}
               >
-                {/* Vertical Divider - Hidden on mobile, shown on desktop */}
+                
                 {index > 0 && (
                   <div className="hidden md:block absolute left-0 top-0 w-[1px] h-full bg-white/30" />
                 )}
-                {/* Horizontal Divider - Shown on mobile, hidden on desktop */}
+                
                 {index > 0 && (
                   <div className="md:hidden absolute top-0 left-0 w-full h-[1px] bg-white/30" />
                 )}
 
-                {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-2 sm:p-3 md:p-4">
                   <motion.h3 
                     className="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-1 sm:mb-2 md:mb-4 relative z-10 px-1"
@@ -180,7 +176,6 @@ const TherapiesSection: React.FC = () => {
                     )}
                   </AnimatePresence>
 
-                  {/* Arrow */}
                   <motion.div
                     className="absolute bottom-2 sm:bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2"
                     initial={{ opacity: 0, y: 10 }}
@@ -208,7 +203,6 @@ const TherapiesSection: React.FC = () => {
                   </motion.div>
                 </div>
 
-                {/* Hover Effect */}
                 <motion.div
                   className="absolute inset-0 bg-black"
                   initial={{ opacity: 0 }}
@@ -223,7 +217,6 @@ const TherapiesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Explore Programs Button */}
         <div className="flex justify-center mt-8 sm:mt-10 md:mt-12">
           <Button
             onClick={() => navigate('/learning')}

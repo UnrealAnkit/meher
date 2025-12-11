@@ -26,7 +26,6 @@ export const GalleryPage = (): JSX.Element => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Auto-advance slideshow every 3 seconds on mobile
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % galleryImages.length);
@@ -97,7 +96,6 @@ export const GalleryPage = (): JSX.Element => {
     }
   }, [selectedImage]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       document.body.style.overflow = "unset";
@@ -108,7 +106,6 @@ export const GalleryPage = (): JSX.Element => {
     <div className="min-h-screen flex flex-col bg-white">
       <NavbarSection />
 
-      {/* Hero Section */}
       <div className="mx-auto w-full max-w-[1440px]">
         <div className="flex flex-col md:flex-row">
           <div className="flex-1 bg-[#FFDAB9] flex items-center justify-start pl-4 md:pl-16 pt-8 md:pt-0 pb-32 md:pb-24">
@@ -128,9 +125,8 @@ export const GalleryPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Gallery Content Section */}
       <div className="flex flex-col gap-4 md:gap-8 py-8 md:py-16 px-4 md:px-0">
-        {/* Mobile Slideshow */}
+        
         <div className="md:hidden relative w-full h-[400px] rounded-2xl overflow-hidden mb-6">
           <div className="relative w-full h-full">
             {galleryImages.map((image, index) => (
@@ -149,8 +145,7 @@ export const GalleryPage = (): JSX.Element => {
               </div>
             ))}
           </div>
-          
-          {/* Slide indicators */}
+
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
             {galleryImages.map((_, index) => (
               <button
@@ -167,9 +162,8 @@ export const GalleryPage = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Desktop Grid Layout */}
         <div className="hidden md:flex flex-col gap-4 md:gap-8">
-          {/* First Row */}
+          
           <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
             {galleryImages.slice(0, 3).map((image, index) => (
               <div
@@ -187,7 +181,7 @@ export const GalleryPage = (): JSX.Element => {
               </div>
             ))}
           </div>
-          {/* Second Row */}
+          
           <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
             {galleryImages.slice(3, 7).map((image, index) => (
               <div
@@ -205,7 +199,7 @@ export const GalleryPage = (): JSX.Element => {
               </div>
             ))}
           </div>
-          {/* Third Row */}
+          
           <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
             {galleryImages.slice(7, 10).map((image, index) => (
               <div
@@ -226,7 +220,6 @@ export const GalleryPage = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Image Popup Modal */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4 animate-fadeIn"
