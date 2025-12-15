@@ -31,3 +31,5 @@ export const useScrollAnimation = (options?: IntersectionObserverInit) => {
   return { ref, isVisible };
 };
 
+
+
