@@ -507,7 +507,7 @@ export const Mehr = (): JSX.Element => {
               <p className="[font-family:'Poppins',Helvetica] font-normal text-white text-base sm:text-lg md:text-xl lg:text-2xl drop-shadow-md mb-3 sm:mb-4 md:mb-6">
                 OCTOBER 2025
               </p>
-              <Link to="/book-your-stay">
+              <Link to="/about">
                 <Button className="[font-family:'Poppins',Helvetica] bg-white text-[#ab4b28] hover:bg-gray-100 active:bg-gray-200 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-100">
                   EXPLORE NOW
                 </Button>
