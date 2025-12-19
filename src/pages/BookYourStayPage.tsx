@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { Calendar, X } from "lucide-react";
-import { CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL } from "../lib/supabase";
+import { CREATE_ORDER_FUNCTION_URL, VERIFY_PAYMENT_FUNCTION_URL, CREATE_BOOKING_FUNCTION_URL, VALIDATE_PROMO_CODE_FUNCTION_URL } from "../lib/supabase";
 import { RAZORPAY_KEY_ID } from "../config/razorpay";
 import { 
   checkRoomAvailability, 
@@ -41,6 +41,15 @@ export const BookYourStayPage = (): JSX.Element => {
   const [checkOut, setCheckOut] = useState("2025-09-30");
   const [adults, setAdults] = useState("1");
   const [promoCode, setPromoCode] = useState("");
+  const [promoCodeData, setPromoCodeData] = useState<{
+    valid: boolean;
+    promo_code_id?: string;
+    discount_amount?: number;
+    original_amount?: number;
+    final_amount?: number;
+    error?: string;
+  } | null>(null);
+  const [validatingPromo, setValidatingPromo] = useState(false);
   const [roomType, setRoomType] = useState<RoomType | "">("");
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -64,7 +73,9 @@ export const BookYourStayPage = (): JSX.Element => {
 
   const pricePerNight = roomType ? ROOM_TYPES[roomType].price : 3420;
   const nights = calculateNights();
-  const totalAmount = pricePerNight * nights * parseInt(adults);
+  const baseAmount = pricePerNight * nights * parseInt(adults);
+  const discountAmount = promoCodeData?.valid ? (promoCodeData.discount_amount || 0) : 0;
+  const totalAmount = promoCodeData?.valid && promoCodeData.final_amount ? promoCodeData.final_amount : baseAmount;
 
   useEffect(() => {
     const checkAvailability = async () => {
@@ -107,6 +118,54 @@ export const BookYourStayPage = (): JSX.Element => {
     const timeoutId = setTimeout(checkAvailability, 500);
     return () => clearTimeout(timeoutId);
   }, [roomType, checkIn, checkOut]);
+
+  // Validate promo code when it changes
+  useEffect(() => {
+    const validatePromoCode = async () => {
+      if (!promoCode.trim()) {
+        setPromoCodeData(null);
+        return;
+      }
+
+      if (!roomType || baseAmount <= 0) {
+        setPromoCodeData({ valid: false, error: 'Please select room type first' });
+        return;
+      }
+
+      setValidatingPromo(true);
+      try {
+        const response = await fetch(VALIDATE_PROMO_CODE_FUNCTION_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            code: promoCode.trim(),
+            amount: baseAmount,
+          }),
+        });
+
+        const data = await response.json();
+        setPromoCodeData(data);
+
+        if (data.valid) {
+          setMessage({ type: 'success', text: `Promo code applied! You saved ₹${data.discount_amount.toFixed(2)}` });
+        } else {
+          setMessage({ type: 'error', text: data.error || 'Invalid promo code' });
+        }
+      } catch (error) {
+        console.error('Error validating promo code:', error);
+        setPromoCodeData({ valid: false, error: 'Failed to validate promo code' });
+        setMessage({ type: 'error', text: 'Failed to validate promo code' });
+      } finally {
+        setValidatingPromo(false);
+      }
+    };
+
+    const timeoutId = setTimeout(validatePromoCode, 800);
+    return () => clearTimeout(timeoutId);
+  }, [promoCode, baseAmount, roomType]);
 
   const handleBookNow = async () => {
     
@@ -179,9 +238,10 @@ export const BookYourStayPage = (): JSX.Element => {
         return;
       }
 
-      const amountInPaise = Math.round(totalAmount * 100);
+      // Send original amount (before discount) to backend - backend will apply discount
+      const originalAmountInPaise = Math.round(baseAmount * 100);
 
-      if (amountInPaise <= 0) {
+      if (originalAmountInPaise <= 0) {
         setMessage({ type: 'error', text: 'Invalid amount. Please check your dates and number of guests.' });
         setSubmitting(false);
         return;
@@ -194,8 +254,9 @@ export const BookYourStayPage = (): JSX.Element => {
           "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
-          amount: amountInPaise,
-          currency: "INR"
+          amount: originalAmountInPaise,
+          currency: "INR",
+          promo_code_id: promoCodeData?.valid ? promoCodeData.promo_code_id : null
         }),
       });
 
@@ -214,6 +275,7 @@ export const BookYourStayPage = (): JSX.Element => {
         return;
       }
 
+
       const formatPhoneNumber = (phone: string): string => {
         const digits = phone.replace(/\D/g, '');
         if (digits.length === 10) {
@@ -230,7 +292,7 @@ export const BookYourStayPage = (): JSX.Element => {
       
       const options = {
         key: RAZORPAY_KEY_ID,
-        amount: order.amount,
+        amount: order.amount, // This is already the discounted amount in paise from backend
         currency: order.currency || "INR",
         name: "MEHR Stay",
         description: description,
@@ -346,6 +408,9 @@ export const BookYourStayPage = (): JSX.Element => {
               notes: `Room Type: ${ROOM_TYPES[roomType as RoomType].name}, Check-in: ${checkIn}, Check-out: ${checkOut}, Nights: ${nights}, Adults: ${adults}${promoCode ? `, Promo Code: ${promoCode}` : ''}`,
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
+              promo_code_id: order.promo_code_id || (promoCodeData?.valid ? promoCodeData.promo_code_id : null),
+              discount_amount: order.discount_amount || (promoCodeData?.valid ? promoCodeData.discount_amount : null),
+              original_amount: order.original_amount || (promoCodeData?.valid ? baseAmount : null),
             };
 
             const bookingResponse = await fetch(CREATE_BOOKING_FUNCTION_URL, {
@@ -579,18 +644,55 @@ export const BookYourStayPage = (): JSX.Element => {
               <label className="block text-white text-xs sm:text-sm font-medium mb-1.5 [font-family:'Poppins',Helvetica]">
                 Promo Code
               </label>
-              <input
-                type="text"
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value)}
-                placeholder="Enter promo code"
-                className="w-full px-3 py-3 bg-white rounded-lg text-[#24312e] text-sm [font-family:'Poppins',Helvetica] focus:outline-none focus:ring-2 focus:ring-[#ab4b28]"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                  placeholder="Enter promo code"
+                  className="w-full px-3 py-3 bg-white rounded-lg text-[#24312e] text-sm [font-family:'Poppins',Helvetica] focus:outline-none focus:ring-2 focus:ring-[#ab4b28]"
+                />
+                {validatingPromo && (
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#ab4b28]"></div>
+                  </div>
+                )}
+              </div>
+              {promoCodeData?.valid && discountAmount > 0 && (
+                <div className="mt-1 text-xs text-green-300 [font-family:'Poppins',Helvetica]">
+                  ✓ Discount: ₹{discountAmount.toFixed(2)}
+                </div>
+              )}
+              {promoCodeData && !promoCodeData.valid && promoCode && (
+                <div className="mt-1 text-xs text-red-300 [font-family:'Poppins',Helvetica]">
+                  {promoCodeData.error}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col items-start lg:items-end gap-2 w-full lg:w-auto lg:min-w-[180px]">
               <div className="text-white text-xs sm:text-sm [font-family:'Poppins',Helvetica]">
-                {totalAmount > 0 && roomType ? `₹${totalAmount.toLocaleString('en-IN')} (${nights} night${nights > 1 ? 's' : ''})` : roomType ? `₹${pricePerNight.toLocaleString('en-IN')}/night` : 'Select room type'}
+                {totalAmount > 0 && roomType ? (
+                  <div className="text-right">
+                    {discountAmount > 0 && (
+                      <div className="line-through text-gray-300 text-xs">
+                        ₹{baseAmount.toLocaleString('en-IN')}
+                      </div>
+                    )}
+                    <div className="font-semibold">
+                      ₹{totalAmount.toLocaleString('en-IN')} ({nights} night{nights > 1 ? 's' : ''})
+                    </div>
+                    {discountAmount > 0 && (
+                      <div className="text-green-300 text-xs">
+                        You save ₹{discountAmount.toFixed(2)}
+                      </div>
+                    )}
+                  </div>
+                ) : roomType ? (
+                  `₹${pricePerNight.toLocaleString('en-IN')}/night`
+                ) : (
+                  'Select room type'
+                )}
               </div>
               {availabilityMessage.text && (
                 <div
@@ -885,6 +987,18 @@ export const BookYourStayPage = (): JSX.Element => {
                   <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Adults:</span>
                   <span className="font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">{adults}</span>
                 </div>
+                {discountAmount > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Original Amount:</span>
+                    <span className="text-sm line-through text-gray-500 [font-family:'Poppins',Helvetica]">₹{baseAmount.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+                {discountAmount > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600 [font-family:'Poppins',Helvetica]">Discount:</span>
+                    <span className="text-sm font-semibold text-green-600 [font-family:'Poppins',Helvetica]">-₹{discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between items-center pt-2 border-t border-gray-300">
                   <span className="text-base font-semibold text-[#24312e] [font-family:'Poppins',Helvetica]">Total Amount:</span>
                   <span className="text-xl font-bold text-[#ab4b28] [font-family:'Poppins',Helvetica]">₹{totalAmount.toLocaleString('en-IN')}</span>

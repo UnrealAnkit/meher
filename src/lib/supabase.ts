@@ -8,6 +8,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export const CREATE_ORDER_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-order";
 export const VERIFY_PAYMENT_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/verify-payment";
 export const CREATE_BOOKING_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/create-booking";
+export const VALIDATE_PROMO_CODE_FUNCTION_URL = "https://zejmgbkizasnkxivobte.supabase.co/functions/v1/validate-promo-code";
 
 export interface CalendarEvent {
   id: string;

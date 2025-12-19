@@ -36,6 +36,7 @@ import { AdminUsersPage } from "./pages/admin/AdminUsersPage";
 import { AdminBookingsPage } from "./pages/admin/AdminBookingsPage";
 import { AdminRoomBookingsPage } from "./pages/admin/AdminRoomBookingsPage";
 import { AdminBlogsPage } from "./pages/admin/AdminBlogsPage";
+import { AdminOffersPage } from "./pages/admin/AdminOffersPage";
 import { supabase } from "./lib/supabase";
 
 const AdminWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -228,6 +229,22 @@ function App() {
                 }}
               >
                 <AdminRoomBookingsPage />
+              </AdminLayout>
+            </AdminWrapper>
+          }
+        />
+        <Route
+          path="/admin/offers"
+          element={
+            <AdminWrapper>
+              <AdminLayout
+                onLogout={async () => {
+                  await supabase.auth.signOut();
+                  setShowAdmin(false);
+                  window.location.href = "/";
+                }}
+              >
+                <AdminOffersPage />
               </AdminLayout>
             </AdminWrapper>
           }

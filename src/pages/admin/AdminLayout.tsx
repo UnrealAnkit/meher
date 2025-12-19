@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LogOut, Calendar, Users, BookOpen, ClipboardList, Home, Bed } from 'lucide-react';
+import { LogOut, Calendar, Users, BookOpen, ClipboardList, Home, Bed, Tag } from 'lucide-react';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -18,6 +18,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
     { path: '/admin/users', icon: Users, label: 'Users' },
     { path: '/admin/bookings', icon: ClipboardList, label: 'Bookings' },
     { path: '/admin/room-bookings', icon: Bed, label: 'Room Bookings' },
+    { path: '/admin/offers', icon: Tag, label: 'Offers' },
     { path: '/admin/blogs', icon: BookOpen, label: 'Blogs' },
   ];
 
