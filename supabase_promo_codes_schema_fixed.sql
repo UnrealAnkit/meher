@@ -94,13 +94,19 @@ CREATE TRIGGER trigger_update_promo_codes_updated_at
 -- Enable Row Level Security
 ALTER TABLE promo_codes ENABLE ROW LEVEL SECURITY;
 
--- Policy: Allow authenticated users to read active promo codes
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Allow public read of active promo codes" ON promo_codes;
+DROP POLICY IF EXISTS "Allow authenticated users to manage promo codes" ON promo_codes;
+DROP POLICY IF EXISTS "Allow admins to manage promo codes" ON promo_codes;
+
+-- Policy: Allow public to read active promo codes (for validation)
 CREATE POLICY "Allow public read of active promo codes"
   ON promo_codes FOR SELECT
   USING (is_active = true AND NOW() >= valid_from AND NOW() <= valid_until);
 
 -- Policy: Allow authenticated users to manage promo codes
--- Note: You may want to add additional role checking based on your auth setup
+-- This allows any authenticated user to manage. If you need admin-only access,
+-- you'll need to implement role checking in your application layer or use a different auth method
 CREATE POLICY "Allow authenticated users to manage promo codes"
   ON promo_codes FOR ALL
   USING (auth.role() = 'authenticated')

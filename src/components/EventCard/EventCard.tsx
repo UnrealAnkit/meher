@@ -116,10 +116,16 @@ export const EventCard: React.FC<EventCardProps> = ({
 
         <div className="flex-1 flex flex-col p-2 sm:p-4 relative min-h-0 min-w-0 overflow-hidden">
           
-          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10">
+          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 flex flex-col items-end gap-1">
+            {!isExpanded && expandedDescription && (
+              <span className="[font-family:'Poppins',Helvetica] text-[8px] sm:text-[10px] text-[#ab4b28] font-medium">
+                Know more
+              </span>
+            )}
             <button 
               onClick={toggleExpand}
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#ab4b28] flex items-center justify-center hover:bg-[#ab4b28] active:bg-[#ab4b28] transition-all duration-300 group touch-manipulation bg-white"
+              aria-label={isExpanded ? "Show less" : "Know more"}
             >
               <ChevronDown 
                 className={`w-4 h-4 sm:w-5 sm:h-5 text-[#ab4b28] group-hover:text-white transition-all duration-300 ${
