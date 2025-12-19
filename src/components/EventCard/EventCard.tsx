@@ -25,6 +25,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<string>('');
+  const [quantity, setQuantity] = useState<number>(1);
   const [showBookingModal, setShowBookingModal] = useState(false);
 
   const parts = dateTime.split('|').map(part => part.trim());
@@ -91,24 +92,42 @@ export const EventCard: React.FC<EventCardProps> = ({
           </div>
 
           {isExpanded && (
-            <div className="p-2 sm:p-4 pt-3 animate-fadeIn w-full">
-              <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-xs sm:text-base font-semibold mb-2">
-                Pick a slot:
-              </p>
-              <div className="flex flex-col gap-2">
-                {timeSlots.map((slot, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleSlotSelect(slot)}
-                    className={`[font-family:'Poppins',Helvetica] text-xs sm:text-base font-normal px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-left transition-colors touch-manipulation ${
-                      selectedSlot === slot
-                        ? 'bg-[#ab4b28] text-white'
-                        : 'bg-gray-100 text-[#ab4b28] hover:bg-gray-200 active:bg-gray-200'
-                    }`}
-                  >
-                    {slot}
-                  </button>
-                ))}
+            <div className="p-2 sm:p-4 pt-3 animate-fadeIn w-full space-y-3">
+              <div>
+                <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-xs sm:text-base font-semibold mb-2">
+                  Pick a slot:
+                </p>
+                <div className="flex flex-col gap-2">
+                  {timeSlots.map((slot, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSlotSelect(slot)}
+                      className={`[font-family:'Poppins',Helvetica] text-xs sm:text-base font-normal px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-left transition-colors touch-manipulation ${
+                        selectedSlot === slot
+                          ? 'bg-[#ab4b28] text-white'
+                          : 'bg-gray-100 text-[#ab4b28] hover:bg-gray-200 active:bg-gray-200'
+                      }`}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="[font-family:'Poppins',Helvetica] text-[#24312e] text-xs sm:text-base font-semibold mb-2">
+                  No. of tickets:
+                </p>
+                <select
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  className="w-full px-3 py-2 rounded-lg border-2 border-[#ab4b28] text-[#24312e] text-xs sm:text-base bg-white focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica]"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    <option key={num} value={num}>
+                      {num}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           )}
@@ -174,24 +193,40 @@ export const EventCard: React.FC<EventCardProps> = ({
             )}
 
             {!isExpanded && (
-              <div className="[font-family:'Poppins',Helvetica] text-[10px] sm:text-sm mb-1 sm:mb-2">
-                <span className="text-[#24312e] font-normal">Pick a slot: </span>
-                <div className="flex flex-wrap gap-1 sm:gap-2 mt-0.5">
-                  {timeSlots.map((slot, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSlotSelect(slot)}
-                      className={`text-[9px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors touch-manipulation ${
-                        selectedSlot === slot
-                          ? 'bg-[#ab4b28] text-white'
-                          : 'bg-gray-100 text-[#ab4b28] hover:bg-gray-200 active:bg-gray-200'
-                      }`}
-                    >
-                      {slot}
-                    </button>
-                  ))}
+              <>
+                <div className="[font-family:'Poppins',Helvetica] text-[10px] sm:text-sm mb-1 sm:mb-2">
+                  <span className="text-[#24312e] font-normal">Pick a slot: </span>
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mt-0.5">
+                    {timeSlots.map((slot, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSlotSelect(slot)}
+                        className={`text-[9px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded transition-colors touch-manipulation ${
+                          selectedSlot === slot
+                            ? 'bg-[#ab4b28] text-white'
+                            : 'bg-gray-100 text-[#ab4b28] hover:bg-gray-200 active:bg-gray-200'
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+                <div className="[font-family:'Poppins',Helvetica] text-[10px] sm:text-sm mb-1 sm:mb-2">
+                  <span className="text-[#24312e] font-normal">No. of tickets: </span>
+                  <select
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                    className="ml-1 px-2 py-1 rounded border border-[#ab4b28] text-[#24312e] text-[10px] sm:text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#ab4b28] [font-family:'Poppins',Helvetica]"
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <option key={num} value={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
             )}
           </div>
 
@@ -224,11 +259,13 @@ export const EventCard: React.FC<EventCardProps> = ({
         onClose={() => {
           setShowBookingModal(false);
           setSelectedSlot('');
+          setQuantity(1);
         }}
         eventTitle={title}
         eventDate={formatDateForBooking()}
         selectedSlot={selectedSlot || (timeSlots.length > 0 ? timeSlots[0] : '')}
         price={price}
+        quantity={quantity}
         eventId={eventId}
       />
     </div>

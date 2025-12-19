@@ -34,6 +34,7 @@ interface BookingModalProps {
   eventDate: string;
   selectedSlot: string;
   price: string;
+  quantity?: number;
   eventId?: string;
 }
 
@@ -44,6 +45,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   eventDate,
   selectedSlot,
   price,
+  quantity = 1,
   eventId,
 }) => {
   const navigate = useNavigate();
@@ -63,7 +65,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     return 0;
   };
 
-  const amount = extractPrice(price);
+  const unitPrice = extractPrice(price);
+  const amount = unitPrice * quantity;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -80,16 +83,21 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
     try {
       
+      const totalPriceText = quantity > 1 
+        ? `${price} × ${quantity} = ₹${amount.toLocaleString('en-IN')}`
+        : price;
+
       const bookingData = {
         event_id: eventId || null,
         event_title: eventTitle,
         event_date: eventDate,
         selected_slot: selectedSlot,
-        price: price,
+        price: totalPriceText,
         customer_name: formData.name,
         customer_email: formData.email,
         customer_phone: formData.phoneNumber,
         status: 'pending',
+        notes: quantity > 1 ? `Quantity: ${quantity} tickets` : null,
       };
 
       const { error: directInsertError } = await supabase.from('bookings').insert([bookingData]);
@@ -196,12 +204,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         return phone.startsWith('+') ? phone : `+91${digits}`;
       };
 
+      const description = quantity > 1 
+        ? `${eventTitle} - ${selectedSlot} (${quantity} tickets)`
+        : `${eventTitle} - ${selectedSlot}`;
+
       const options = {
         key: RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency || "INR",
         name: "MEHR Events",
-        description: `${eventTitle} - ${selectedSlot}`,
+        description: description,
         order_id: order.id,
         handler: async function (response: any) {
           try {
@@ -257,17 +269,23 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               return;
             }
 
+            const totalPriceText = quantity > 1 
+              ? `${price} × ${quantity} = ₹${amount.toLocaleString('en-IN')}`
+              : price;
+
             const bookingData = {
               event_id: eventId || null,
               event_title: eventTitle,
               event_date: eventDate,
               selected_slot: selectedSlot,
-              price: price,
+              price: totalPriceText,
               customer_name: formData.name,
               customer_email: formData.email,
               customer_phone: formData.phoneNumber,
               status: 'confirmed',
-              notes: `Payment ID: ${response.razorpay_payment_id}`,
+              notes: quantity > 1 
+                ? `Quantity: ${quantity} tickets | Payment ID: ${response.razorpay_payment_id}`
+                : `Payment ID: ${response.razorpay_payment_id}`,
               payment_id: response.razorpay_payment_id,
               order_id: response.razorpay_order_id,
             };
@@ -437,17 +455,44 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </div>
               </div>
 
+              {quantity > 1 && (
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 p-1.5 bg-[#ab4b28]/10 rounded-lg">
+                    <span className="[font-family:'Poppins',Helvetica] text-[#ab4b28] font-bold text-xs">#</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="[font-family:'Poppins',Helvetica] text-xs font-semibold text-gray-600 uppercase tracking-wide mb-0.5">
+                      Quantity
+                    </p>
+                    <p className="[font-family:'Poppins',Helvetica] text-base font-medium text-[#24312e]">
+                      {quantity} tickets
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-start gap-3 pt-2 border-t border-[#ab4b28]/20">
                 <div className="mt-0.5 p-1.5 bg-[#ab4b28]/20 rounded-lg">
                   <IndianRupee className="w-4 h-4 text-[#ab4b28]" />
                 </div>
                 <div className="flex-1">
                   <p className="[font-family:'Poppins',Helvetica] text-xs font-semibold text-gray-600 uppercase tracking-wide mb-0.5">
-                    Price
+                    {quantity > 1 ? 'Total Price' : 'Price'}
                   </p>
-                  <p className="[font-family:'Poppins',Helvetica] text-lg font-bold text-[#ab4b28]">
-                    {price}
-                  </p>
+                  {quantity > 1 ? (
+                    <div>
+                      <p className="[font-family:'Poppins',Helvetica] text-sm text-gray-600 mb-1">
+                        {price} × {quantity} tickets
+                      </p>
+                      <p className="[font-family:'Poppins',Helvetica] text-lg font-bold text-[#ab4b28]">
+                        ₹{amount.toLocaleString('en-IN')}
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="[font-family:'Poppins',Helvetica] text-lg font-bold text-[#ab4b28]">
+                      {price}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
