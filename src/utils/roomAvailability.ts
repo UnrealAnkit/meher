@@ -27,9 +27,9 @@ export interface RoomInfo {
 export const ROOM_TYPES: Record<RoomType, RoomInfo> = {
   'earth-and-clay': {
     id: 'earth-and-clay',
-    name: 'Earth & Clay',
+    name: 'Stone and Fog',
     slug: 'earth-and-clay',
-    price: 3200,
+    price: 2500,
     category: 'classic',
   },
   'bloom-and-herbs': {
@@ -41,9 +41,9 @@ export const ROOM_TYPES: Record<RoomType, RoomInfo> = {
   },
   'stone-and-fog': {
     id: 'stone-and-fog',
-    name: 'Stone and Fog',
+    name: 'Earth & Clay',
     slug: 'stone-and-fog',
-    price: 2500,
+    price: 3200,
     category: 'deluxe',
   },
   'golden-grasslands': {

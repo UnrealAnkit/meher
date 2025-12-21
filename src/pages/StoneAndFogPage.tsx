@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavbarSection } from "../screens/Mehr/sections/NavbarSection";
 import { FooterSection } from "../screens/Mehr/sections/FooterSection";
@@ -31,6 +31,7 @@ declare global {
 
 export const StoneAndFogPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -43,6 +44,23 @@ export const StoneAndFogPage = (): JSX.Element => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 10) {
+        video.currentTime = 0; 
+      }
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+    };
   }, []);
 
   async function handlePayment() {
@@ -308,13 +326,18 @@ export const StoneAndFogPage = (): JSX.Element => {
 
       <section className="relative w-full bg-white">
         <video
-          src="https://meher.b-cdn.net/Bloom%20%26%20Herbs.mp4"
+          ref={videoRef}
+          className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] object-cover"
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] object-cover"
-        />
+          preload="auto"
+          style={{ backgroundColor: '#ab4b28' }}
+        >
+          <source src="https://meher.b-cdn.net/Earth%20%26%20Clay.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </section>
 
       <section className="relative w-full flex justify-center py-8 sm:py-12 md:py-16 lg:py-20 bg-white px-4 sm:px-6 md:px-8">
@@ -366,13 +389,17 @@ export const StoneAndFogPage = (): JSX.Element => {
               />
             </div>
 
-            <div className="relative w-full h-full rounded-lg overflow-hidden">
-              <img
-                src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(26).png"
-                alt="Stone and Fog Room View 2"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+            <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 h-full">
+              
+              <div className="relative w-full flex-1 rounded-lg overflow-hidden">
+                <img
+                  src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(26).png"
+                  alt="Stone and Fog Room View 2"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+
             </div>
           </div>
         </div>
@@ -484,4 +511,3 @@ export const StoneAndFogPage = (): JSX.Element => {
     </div>
   );
 };
-

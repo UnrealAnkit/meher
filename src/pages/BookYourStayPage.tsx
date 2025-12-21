@@ -622,9 +622,9 @@ export const BookYourStayPage = (): JSX.Element => {
                   required
                 >
                   <option value="">Select Room Type</option>
-                  <option value="earth-and-clay">Earth & Clay - ₹3,200/night</option>
+                  <option value="earth-and-clay">Stone and Fog - ₹2,500/night</option>
                   <option value="bloom-and-herbs">Bloom and Herbs - ₹3,200/night</option>
-                  <option value="stone-and-fog">Stone and Fog - ₹2,500/night</option>
+                  <option value="stone-and-fog">Earth & Clay - ₹3,200/night</option>
                   <option value="golden-grasslands">Golden Grasslands - ₹3,000/night</option>
                   <option value="forest-bathing">Forest Bathing - ₹3,200/night</option>
                   <option value="water-and-sky">Water and Sky - ₹2,500/night</option>
@@ -737,22 +737,22 @@ export const BookYourStayPage = (): JSX.Element => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
             
-            <Link to="/book-stay/earth-and-clay" className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+            <Link to="/book-stay/stone-and-fog" className="flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York%20(2).png"
-                  alt="Earth & Clay Classic Room"
+                  alt="Stone and Fog Classic Room"
                   className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
                 />
               </div>
               <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
-                EARTH & CLAY
+                STONE AND FOG
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 2500
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
-                Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
+                Masculine, meditative, and minimal — inspired by mountain stillness and misty mornings. Charcoal hues, stone textures, and simple linen bring quiet clarity — perfect for contemplation and grounding energy.
               </p>
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>
@@ -790,22 +790,22 @@ export const BookYourStayPage = (): JSX.Element => {
               </div>
             </Link>
 
-            <Link to="/book-stay/stone-and-fog" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
+            <Link to="/book-stay/earth-and-clay" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
                   src="https://meher.b-cdn.net/DSC00969.jpg"
-                  alt="Stone and Fog Room"
+                  alt="Earth & Clay Room"
                   className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
                 />
               </div>
               <h3 className="text-[#ab4b28] font-bold text-xl sm:text-2xl mb-2 [font-family:'Poppins',Helvetica] uppercase text-center">
-                STONE AND FOG
+                EARTH & CLAY
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 2500
+                At Rs. 3200
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
-                Masculine, meditative, and minimal — inspired by mountain stillness and misty mornings. Charcoal hues, stone textures, and simple linen bring quiet clarity — perfect for contemplation and grounding energy.
+                Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
               </p>
               <div className="flex justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-[#ab4b28]"></div>

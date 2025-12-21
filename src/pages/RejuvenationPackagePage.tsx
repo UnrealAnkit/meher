@@ -4,9 +4,9 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { RejuvenationBookingModal } from "../components/RejuvenationBookingModal/RejuvenationBookingModal";
 
 export const RejuvenationPackagePage = (): JSX.Element => {
-  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(4).png";
+  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(42).png";
   const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(5).png";
-  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(40).png";
+  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(43).png";
 
   const [showBookingModal, setShowBookingModal] = useState(false);
 

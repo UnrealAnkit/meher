@@ -116,3 +116,4 @@ CREATE POLICY "Allow authenticated users to manage promo codes"
 GRANT SELECT ON promo_codes TO anon;
 GRANT ALL ON promo_codes TO authenticated;
 
+
