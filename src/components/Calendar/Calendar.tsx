@@ -5,21 +5,46 @@ import { Button } from '../ui/button';
 
 interface CalendarProps {
   onDateSelect?: (date: Date) => void;
+  onMonthChange?: (month: Date) => void;
   initialDate?: Date;
+  monthEvents?: Map<string, any[]>;
+  currentMonth?: Date;
+  selectedDate?: Date | null;
 }
 
-export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate }) => {
+export const Calendar: React.FC<CalendarProps> = ({ 
+  onDateSelect, 
+  onMonthChange,
+  initialDate,
+  monthEvents,
+  currentMonth: externalCurrentMonth,
+  selectedDate: externalSelectedDate
+}) => {
   const initDate = initialDate || new Date();
-  const [currentDate, setCurrentDate] = useState(new Date(initDate.getFullYear(), initDate.getMonth(), 1));
+  const [currentDate, setCurrentDate] = useState(() => {
+    if (externalCurrentMonth) {
+      return new Date(externalCurrentMonth.getFullYear(), externalCurrentMonth.getMonth(), 1);
+    }
+    return new Date(initDate.getFullYear(), initDate.getMonth(), 1);
+  });
   const [view, setView] = useState<'upcoming' | 'past'>('upcoming');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(initDate);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(externalSelectedDate || null);
+  
+  // Sync with external selectedDate prop
+  useEffect(() => {
+    setSelectedDate(externalSelectedDate || null);
+  }, [externalSelectedDate]);
+
+  // Don't auto-select initial date - let user click to select
 
   useEffect(() => {
-    if (initialDate && onDateSelect) {
-      onDateSelect(initialDate);
+    if (externalCurrentMonth) {
+      const newDate = new Date(externalCurrentMonth.getFullYear(), externalCurrentMonth.getMonth(), 1);
+      if (newDate.getTime() !== currentDate.getTime()) {
+        setCurrentDate(newDate);
+      }
     }
-    
-  }, []);
+  }, [externalCurrentMonth]);
 
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
   const startingDayIndex = firstDayOfMonth.getDay();
@@ -32,11 +57,19 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate })
   const currentYear = currentDate.getFullYear();
 
   const prevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1);
+    setCurrentDate(newDate);
+    if (onMonthChange) {
+      onMonthChange(newDate);
+    }
   };
 
   const nextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+    setCurrentDate(newDate);
+    if (onMonthChange) {
+      onMonthChange(newDate);
+    }
   };
 
   const handleDateClick = (day: number) => {
@@ -45,6 +78,21 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate })
     if (onDateSelect) {
       onDateSelect(selectedDate);
     }
+  };
+
+  const hasEventsForDate = (day: number): boolean => {
+    if (!monthEvents) return false;
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const dayStr = String(day).padStart(2, '0');
+    const dateKey = `${year}-${month}-${dayStr}`;
+    
+    // Check for November 1st, 2025 hardcoded events
+    if (day === 1 && currentDate.getMonth() === 10 && currentDate.getFullYear() === 2025) {
+      return true;
+    }
+    
+    return monthEvents.has(dateKey) && monthEvents.get(dateKey)!.length > 0;
   };
 
   const generateCalendarDays = () => {
@@ -66,16 +114,24 @@ export const Calendar: React.FC<CalendarProps> = ({ onDateSelect, initialDate })
           selectedDate?.getMonth() === currentDate.getMonth() && 
           selectedDate?.getFullYear() === currentDate.getFullYear();
 
+        const hasEvents = hasEventsForDate(day);
+
         days.push(
           <button
             key={day}
             onClick={() => handleDateClick(day)}
-            className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full text-xs sm:text-sm [font-family:'Poppins',Helvetica] touch-manipulation
+            className={`w-8 h-8 sm:w-9 sm:h-9 flex flex-col items-center justify-center rounded-full text-xs sm:text-sm [font-family:'Poppins',Helvetica] touch-manipulation relative
               ${isToday ? 'bg-[#ab4b28] text-white' : ''}
               ${isSelected ? 'bg-[#ab4b28] text-white' : 'hover:bg-[#ab4b28] hover:text-white active:bg-[#ab4b28] active:text-white'}
               transition-colors duration-200`}
           >
-            {day}
+            <span>{day}</span>
+            {hasEvents && !isSelected && (
+              <span className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-[#ab4b28] rounded-full"></span>
+            )}
+            {hasEvents && isSelected && (
+              <span className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></span>
+            )}
           </button>
         );
       }
