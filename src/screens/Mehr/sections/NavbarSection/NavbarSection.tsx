@@ -103,7 +103,7 @@ export const NavbarSection = (): JSX.Element => {
             </div>
           ))}
           <Link
-            to="/about"
+            to="/calendar"
             className="px-6 py-2 rounded-full bg-transparent border border-white text-white hover:bg-white hover:text-[#ab4b28] transition-colors"
           >
             EXPLORE MORE
@@ -170,7 +170,7 @@ export const NavbarSection = (): JSX.Element => {
               ))}
               <div className="px-4 py-4">
                 <Link
-                  to="/about"
+                  to="/calendar"
                   className="block w-full px-6 py-2 rounded-full bg-transparent border border-white text-white hover:bg-white hover:text-[#ab4b28] transition-colors text-center [font-family:'Poppins']"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
