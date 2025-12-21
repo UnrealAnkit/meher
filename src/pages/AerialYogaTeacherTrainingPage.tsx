@@ -4,9 +4,9 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { YogaTeacherTrainingBookingModal } from "../components/YogaTeacherTrainingBookingModal/YogaTeacherTrainingBookingModal";
 
 export const AerialYogaTeacherTrainingPage = (): JSX.Element => {
-  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(12).png";
-  const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(13).png";
-  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(14).png";
+  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(44).png";
+  const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(45).png";
+  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(46).png";
 
   const [showBookingModal, setShowBookingModal] = useState(false);
 
