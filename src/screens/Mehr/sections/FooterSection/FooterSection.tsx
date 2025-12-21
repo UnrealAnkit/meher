@@ -104,6 +104,15 @@ export const FooterSection = (): JSX.Element => {
 
               <div className="flex flex-col gap-[14px]">
                 <div className="[font-family:'Raleway',Helvetica] font-bold text-white text-sm tracking-[0] leading-4 whitespace-nowrap">
+                  Address
+                </div>
+                <div className="[font-family:'Raleway',Helvetica] font-normal text-white/90 text-sm tracking-[0] leading-5">
+                  MEHR, D3-Riverside Sultanat, Lane G, Behind Liberty Society, Koregaon Park, Pune - 411001
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-[14px]">
+                <div className="[font-family:'Raleway',Helvetica] font-bold text-white text-sm tracking-[0] leading-4 whitespace-nowrap">
                   Find us on
                 </div>
                 <a
