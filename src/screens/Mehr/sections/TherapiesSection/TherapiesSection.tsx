@@ -17,35 +17,35 @@ const therapyData: TherapyCard[] = [
     title: "Medical Consultations",
     description: "Expert medical consultations with experienced healthcare professionals, providing comprehensive health assessments and personalized treatment plans.",
     defaultImage: "/Therapies-Programs.png",
-    activeImage: "/therapies-programs-2.png"
+    activeImage: "https://meher.b-cdn.net/Medical%20Consultations-min.jpg"
   },
   {
     id: 2,
     title: "Diagnostics",
     description: "State-of-the-art diagnostic services utilizing advanced technology for accurate health evaluations and early detection of potential health concerns.",
     defaultImage: "/Therapies-Programs.png",
-    activeImage: "/therapies-programs-3.jpg"
+    activeImage: "https://meher.b-cdn.net/Diagnostics-min.jpg"
   },
   {
     id: 3,
     title: "Naturopathy Treatments",
     description: "Holistic naturopathy treatments that harness the healing power of nature, promoting natural healing and overall wellness through traditional methods.",
     defaultImage: "/Therapies-Programs.png",
-    activeImage: "/therapies-programs-4.jpg"
+    activeImage: "https://meher.b-cdn.net/Naturopathy%20Treatmentscopy-min-min.jpg"
   },
   {
     id: 4,
     title: "Emotional Wellness",
     description: "Comprehensive emotional wellness programs designed to nurture mental health, reduce stress, and promote emotional balance through therapeutic approaches.",
     defaultImage: "/Therapies-Programs.png",
-    activeImage: "/therapies-programs-2.png"
+    activeImage: "https://meher.b-cdn.net/Emotional%20Wellness-min-min.JPG"
   },
   {
     id: 5,
     title: "Creative Therapies",
     description: "Innovative creative therapy sessions that combine artistic expression with healing, helping you discover new ways to express, heal, and grow.",
     defaultImage: "/Therapies-Programs.png",
-    activeImage: "/therapies-programs-3.jpg"
+    activeImage: "https://meher.b-cdn.net/Creative%20Therapies-min-min.jpg"
   }
 ];
 
