@@ -844,7 +844,7 @@ export const BookYourStayPage = (): JSX.Element => {
             <Link to="/book-stay/forest-bathing" className="flex flex-col md:border-r md:border-gray-300 md:pr-8 lg:pr-12 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" style={{ borderRightWidth: '1px', borderRightColor: 'rgba(0, 0, 0, 0.1)' }}>
               <div className="overflow-hidden rounded-lg mb-6">
                 <img 
-                  src="https://meher.b-cdn.net/DSC00829.jpg"
+                  src="https://meher.b-cdn.net/Experience%20Menla%20Retreat%20and%20Dewa%20Spa%20in%20Phoenicia%2C%20New%20York%20(3).png"
                   alt="Forest Bathing Room"
                   className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
                 />
