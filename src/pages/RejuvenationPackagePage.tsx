@@ -75,14 +75,6 @@ export const RejuvenationPackagePage = (): JSX.Element => {
                 <div className="flex flex-col sm:flex-row sm:items-start gap-6 lg:gap-8">
                   
                   <div className="flex items-center -space-x-4 sm:-space-x-6 lg:-space-x-8 flex-shrink-0">
-                    <div className="relative z-30 w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[160px] lg:h-[160px] rounded-full overflow-hidden border-4 border-white shadow-lg">
-                      <img
-                        src="https://meher.b-cdn.net/janie.png"
-                        alt="Janie"
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
                     <div className="relative z-20 w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[160px] lg:h-[160px] rounded-full overflow-hidden border-4 border-white shadow-lg">
                       <img
                         src="https://meher.b-cdn.net/viineeta.png"
