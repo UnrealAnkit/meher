@@ -1,4 +1,4 @@
--- Promo Codes Table
+
 CREATE TABLE IF NOT EXISTS promo_codes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   code VARCHAR(50) UNIQUE NOT NULL,
@@ -115,5 +115,6 @@ CREATE POLICY "Allow authenticated users to manage promo codes"
 -- Grant permissions
 GRANT SELECT ON promo_codes TO anon;
 GRANT ALL ON promo_codes TO authenticated;
+
 
 

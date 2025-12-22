@@ -24,7 +24,7 @@ export const RejuvenationPage = (): JSX.Element => {
           </div>
           <div className="flex-1 w-full">
             <img 
-              src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(16).png"
+              src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(42).png"
               alt="Experience a Rejuvenation" 
               className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover"
             />
