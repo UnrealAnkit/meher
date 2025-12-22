@@ -4,9 +4,9 @@ import { FooterSection } from "../screens/Mehr/sections/FooterSection";
 import { SoundHealingBookingModal } from "../components/SoundHealingBookingModal/SoundHealingBookingModal";
 
 export const SoundHealingPage = (): JSX.Element => {
-  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(39).png";
-  const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(40).png";
-  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(41).png";
+  const image1 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(50).png";
+  const image2 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(48).png";
+  const image3 = "https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(49).png";
 
   const [showBookingModal, setShowBookingModal] = useState(false);
 
@@ -18,28 +18,6 @@ export const SoundHealingPage = (): JSX.Element => {
       </div>
 
       <div className="flex-grow bg-white w-full overflow-x-hidden pt-0 sm:pt-0 lg:pt-12">
-        
-        <div className="hidden lg:flex flex-row flex-nowrap w-full justify-center items-center gap-12 px-16">
-          
-          <div className="w-[660px] flex-shrink-0 h-[534px] flex items-center justify-center animate-fadeInSlide">
-            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image1} alt="Sound Healing Training Image 1" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
-            </div>
-          </div>
-          
-          <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
-            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image2} alt="Sound Healing Training Image 2" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
-            </div>
-          </div>
-          
-          <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
-            <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
-              <img src={image3} alt="Sound Healing Training Image 3" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
-            </div>
-          </div>
-        </div>
-
         <div className="w-full mt-0 px-4 sm:px-6 lg:px-16 py-6 sm:py-8 lg:py-16">
           <div className="text-left">
             <h1 className="[font-family:'Poppins'] font-normal text-[#A0522D] text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] leading-tight mb-4">
@@ -64,30 +42,6 @@ export const SoundHealingPage = (): JSX.Element => {
               </p>
             </div>
 
-            <div className="mt-12 lg:mt-16">
-              <h2 className="[font-family:'Poppins'] font-semibold text-[#A0522D] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-tight mb-6 lg:mb-8">
-                About Janie
-              </h2>
-              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
-                
-                <div className="flex-shrink-0 w-full lg:w-[300px]">
-                  <img 
-                    src="https://meher.b-cdn.net/janie.png" 
-                    alt="Janie Everett" 
-                    className="w-full lg:w-[300px] h-auto rounded-full object-cover"
-                  />
-                </div>
-                
-                <div className="flex-1">
-                  <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px] mb-4">
-                    <span className="font-semibold text-[#A0522D]">Janie Everett</span> — Sound Practitioner | Reiki Master | Frequency Medicine Expert
-                  </p>
-                  <p className="[font-family:'Poppins'] font-extralight text-[#1E1E1E] text-[18px] sm:text-[20px] lg:text-[22px] leading-[26px] sm:leading-[28px] lg:leading-[30px]">
-                    Janie Everett is an internationally recognised healer known for her neuroscience-informed, deeply immersive sound journeys. Her work is shaped by her personal healing – recovering from a brain tumour and severe burnout, which guided her into the world of frequency medicine and trauma-informed healing. A classically trained musician and intuitive channel, she integrates sound therapy, biofield tuning, meditation, Reiki, yoga, breathwork, and astrology to support personal evolution and trauma healing. Based in South Goa, she is expanding her sound shala into a wellness resort while leading global retreats and workshops. Her book The Healing Power of Sound (2024) builds on her work presented at international festivals such as Wanderlust and Lost Village.
-                  </p>
-                </div>
-              </div>
-            </div>
 
             <div className="lg:hidden mt-8">
               
@@ -149,6 +103,28 @@ export const SoundHealingPage = (): JSX.Element => {
                   Level 1 Certification upon completion of the workshop
                 </li>
               </ul>
+            </div>
+
+            <div className="hidden lg:flex flex-row flex-nowrap w-full justify-center items-center gap-12 px-16 py-12" style={{ minHeight: 'calc(100vh - 200px)' }}>
+              <div className="flex flex-row flex-nowrap justify-center items-center gap-12">
+                <div className="w-[660px] flex-shrink-0 h-[534px] flex items-center justify-center animate-fadeInSlide">
+                  <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
+                    <img src={image1} alt="Sound Healing Training Image 1" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+                  </div>
+                </div>
+                
+                <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.2s' }}>
+                  <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
+                    <img src={image2} alt="Sound Healing Training Image 2" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+                  </div>
+                </div>
+                
+                <div className="w-[300px] flex-shrink-0 h-[527px] flex items-center justify-center animate-fadeInSlide" style={{ animationDelay: '0.4s' }}>
+                  <div className="w-full h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98]">
+                    <img src={image3} alt="Sound Healing Training Image 3" className="w-full h-full object-contain block m-0 p-0 max-w-full transition-transform duration-700 hover:scale-105" loading="lazy" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="mt-12 lg:mt-16">
