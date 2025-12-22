@@ -106,7 +106,7 @@ export const NavbarSection = (): JSX.Element => {
             to="/calendar"
             className="px-6 py-2 rounded-full bg-transparent border border-white text-white hover:bg-white hover:text-[#ab4b28] transition-colors"
           >
-            EXPLORE MORE
+            BOOK NOW
           </Link>
         </div>
 
@@ -174,7 +174,7 @@ export const NavbarSection = (): JSX.Element => {
                   className="block w-full px-6 py-2 rounded-full bg-transparent border border-white text-white hover:bg-white hover:text-[#ab4b28] transition-colors text-center [font-family:'Poppins']"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  EXPLORE MORE
+                  BOOK NOW
                 </Link>
               </div>
             </div>

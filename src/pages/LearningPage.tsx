@@ -158,7 +158,7 @@ export const LearningPage = (): JSX.Element => {
               
               <div className="h-[200px] sm:h-[250px] lg:h-[300px]">
                 <img 
-                  src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(39).png"
+                  src="https://meher.b-cdn.net/Group%20Yoga%20class%20Marbella%20(50).png"
                   alt="Sound Healing Training Workshop"
                   className="w-full h-full object-cover"
                 />
