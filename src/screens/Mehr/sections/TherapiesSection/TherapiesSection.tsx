@@ -55,35 +55,15 @@ const TherapiesSection: React.FC = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const preloadImages = async () => {
-      const imageUrls = [
-        '/Therapies-Programs.png',
-        ...therapyData.map(therapy => therapy.activeImage)
-      ].filter(url => url && url.trim() !== ''); 
-
-      const loadImage = (url: string): Promise<void> =>
-        new Promise((resolve) => {
-          
-          if (!url || url.trim() === '' || url === 'undefined' || url === 'null') {
-            console.warn('Skipping invalid image URL:', url);
-            resolve();
-            return;
-          }
-
-          const img = new Image();
-          img.onload = () => resolve();
-          img.onerror = () => {
-            console.warn('Failed to load image:', url);
-            resolve(); 
-          };
-          img.src = url;
-        });
-
-      await Promise.all(imageUrls.map(loadImage));
-      setIsLoaded(true);
+    // Only preload the default image, let others load on demand
+    const preloadDefaultImage = () => {
+      const img = new Image();
+      img.onload = () => setIsLoaded(true);
+      img.onerror = () => setIsLoaded(true); // Show default even if image fails
+      img.src = '/Therapies-Programs.png';
     };
 
-    preloadImages();
+    preloadDefaultImage();
   }, []);
 
   return (
@@ -109,6 +89,8 @@ const TherapiesSection: React.FC = () => {
                      src="/Therapies-Programs.png"
                      alt="Background"
                      className="w-full h-full object-cover"
+                     loading="eager"
+                     decoding="async"
                    />
                  </motion.div>
 
@@ -124,6 +106,8 @@ const TherapiesSection: React.FC = () => {
                        src={therapy.activeImage}
                        alt={therapy.title}
                        className="w-full h-full object-cover"
+                       loading="lazy"
+                       decoding="async"
                      />
                    </motion.div>
                  ))}

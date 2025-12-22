@@ -543,6 +543,8 @@ export const BookYourStayPage = (): JSX.Element => {
               src="https://meher.b-cdn.net/DSC00893%20copy.jpg"
               alt="Book Your Stay" 
               className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover"
+              loading="eager"
+              decoding="async"
             />
           </div>
         </div>

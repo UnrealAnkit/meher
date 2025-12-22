@@ -36,6 +36,8 @@ export const LaunchSection = (): JSX.Element => {
                 className={`w-full h-[395px] ${card.imageClasses} transition-transform duration-500 hover:scale-110`}
                 alt={card.title}
                 src={card.image}
+                loading="lazy"
+                decoding="async"
               />
             </div>
 

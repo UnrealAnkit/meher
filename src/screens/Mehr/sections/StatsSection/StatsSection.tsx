@@ -7,6 +7,8 @@ export const StatsSection = (): JSX.Element => {
         className="absolute top-0 left-0 w-full h-full object-cover"
         alt="Rectangle"
         src="/rectangle-1.png"
+        loading="lazy"
+        decoding="async"
       />
 
       <div className="absolute top-0 left-0 w-full h-full flex flex-col gap-3 sm:gap-4 md:gap-[19px] bg-[linear-gradient(0deg,rgba(73,73,73,0.5)_8%,rgba(73,73,73,0.36)_41%,rgba(248,254,237,0)_92%),linear-gradient(0deg,rgba(0,0,0,0.46)_0%,rgba(0,0,0,0.46)_100%)]">

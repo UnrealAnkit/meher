@@ -28,6 +28,8 @@ export const AboutUsSection = (): JSX.Element => {
           className="absolute inset-0 w-full h-full object-cover"
           alt="Therapies and programs background"
           src="/rectangle-2.png"
+          loading="lazy"
+          decoding="async"
         />
 
         <div className="relative h-full grid grid-cols-5">

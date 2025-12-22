@@ -117,7 +117,7 @@ export const Mehr = (): JSX.Element => {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           style={{ backgroundColor: '#ab4b28' }}
         >
           <source src="https://meher.b-cdn.net/Meher%20Spaces%20Walk%20Through%20Vid.MP4" type="video/mp4" />
@@ -174,116 +174,23 @@ export const Mehr = (): JSX.Element => {
               className="w-full h-full object-cover"
               alt="Not just a stay"
               src="/not just a stay.png"
+              loading="lazy"
             />
           </div>
 
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 1"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.7,
-                mixBlendMode: 'overlay'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 2"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.5,
-                mixBlendMode: 'multiply'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 3"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.4,
-                mixBlendMode: 'soft-light'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 4"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.3,
-                mixBlendMode: 'color-burn'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 5"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.25,
-                mixBlendMode: 'hard-light'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 6"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.2,
-                mixBlendMode: 'darken'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 7"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.18,
-                mixBlendMode: 'screen'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 8"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.15,
-                mixBlendMode: 'color-dodge'
-              }}
-            />
-          </div>
-
-          <div className="absolute inset-0">
-            <img
-              className="w-full h-full object-cover"
-              alt="Gradient overlay 9"
-              src="/not just a stay gradient.png"
-              style={{
-                opacity: 0.12,
-                mixBlendMode: 'exclusion'
-              }}
-            />
-          </div>
+          {/* Optimized: Single gradient image with CSS filters for multiple blend effects */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'url("/not just a stay gradient.png")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              mixBlendMode: 'overlay',
+              opacity: 0.5,
+              filter: 'brightness(1.1) contrast(1.05)',
+            }}
+            aria-hidden="true"
+          />
 
           <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-10 md:py-12 lg:py-16">
             <div className="max-w-4xl mx-auto w-full">
@@ -385,6 +292,7 @@ export const Mehr = (): JSX.Element => {
                    className="w-full sm:w-4/5 lg:w-4/5 h-auto lg:h-[120%] max-h-[300px] sm:max-h-[400px] lg:max-h-none object-cover rounded-tl-[12px] rounded-tr-[12px] lg:shadow-lg lg:translate-y-[-8%]"
                     alt="Wellness Session"
                     src="https://meher.b-cdn.net/Rectangle%203.png"
+                    loading="lazy"
                     style={{ marginBottom: '0' }}
                 />
               </div>
@@ -488,17 +396,19 @@ export const Mehr = (): JSX.Element => {
                 alt="MEHR Pune Launch"
                 className="w-full h-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
-            <div className="absolute inset-0">
-              <img
-                src="/Pseudo__after+Gradient.png"
-                alt="Gradient Overlay"
-                className="w-full h-full object-cover opacity-70"
-                loading="lazy"
-              />
-            </div>
+            <div 
+              className="absolute inset-0 opacity-70"
+              style={{
+                backgroundImage: 'url("/Pseudo__after+Gradient.png")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+              aria-hidden="true"
+            />
 
             <div className="absolute inset-0 flex flex-col justify-center items-start pl-6 sm:pl-8 md:pl-12 lg:pl-16">
               <h2 className="[font-family:'Poppins',Helvetica] font-bold text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-2 sm:mb-3 drop-shadow-lg">

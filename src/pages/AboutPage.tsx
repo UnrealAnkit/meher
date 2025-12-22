@@ -27,6 +27,8 @@ export const AboutPage = (): JSX.Element => {
               src="/About us card.png"
               alt="MEHR Wellness Center" 
               className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover"
+              loading="eager"
+              decoding="async"
             />
           </div>
         </div>
