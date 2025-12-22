@@ -37,7 +37,7 @@ export const NavbarSection = (): JSX.Element => {
   };
 
   return (
-    <nav className="w-full bg-[#ab4b28]">
+    <nav className="fixed top-0 left-0 right-0 w-full bg-[#ab4b28] z-50">
       <div className="max-w-[1440px] mx-auto h-24 flex items-center justify-between px-4 lg:px-[149px]">
         
         <div className="flex-shrink-0 flex items-center">

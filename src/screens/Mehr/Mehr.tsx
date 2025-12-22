@@ -109,7 +109,7 @@ export const Mehr = (): JSX.Element => {
     <div className="bg-white overflow-hidden w-full relative">
       <NavbarSection />
 
-      <section className="relative w-full bg-white">
+      <section className="relative w-full bg-white pt-24">
         <video
           ref={videoRef}
           className="w-full h-[600px] object-cover"
