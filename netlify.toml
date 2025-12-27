@@ -4,8 +4,8 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "https://vercel.com/"
+  status = 302
 
 [build.environment]
   NODE_VERSION = "18"
