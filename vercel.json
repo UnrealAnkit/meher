@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "http://localhost:5173.com"
+      "destination": "https://vercel.com/"
     }
   ],
   "headers": [
