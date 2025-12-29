@@ -2,11 +2,6 @@
   publish = "dist"
   command = "npm run build"
 
-[[redirects]]
-  from = "/*"
-  to = "https://vercel.com/"
-  status = 302
-
 [build.environment]
   NODE_VERSION = "18"
 

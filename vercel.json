@@ -1,17 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "destination": "https://vercel.com/",
-      "permanent": false
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "https://vercel.com/"
-    }
-  ],
   "headers": [
     {
       "source": "/static/(.*)",
