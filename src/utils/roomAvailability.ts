@@ -36,14 +36,14 @@ export const ROOM_TYPES: Record<RoomType, RoomInfo> = {
     id: 'bloom-and-herbs',
     name: 'Bloom and Herbs',
     slug: 'bloom-and-herbs',
-    price: 3200,
+    price: 3000,
     category: 'deluxe',
   },
   'stone-and-fog': {
     id: 'stone-and-fog',
     name: 'Earth & Clay',
     slug: 'stone-and-fog',
-    price: 3200,
+    price: 3000,
     category: 'deluxe',
   },
   'golden-grasslands': {
@@ -57,14 +57,14 @@ export const ROOM_TYPES: Record<RoomType, RoomInfo> = {
     id: 'forest-bathing',
     name: 'Forest Bathing',
     slug: 'forest-bathing',
-    price: 3200,
+    price: 3000,
     category: 'deluxe',
   },
   'water-and-sky': {
     id: 'water-and-sky',
     name: 'Water and Sky',
     slug: 'water-and-sky',
-    price: 2500,
+    price: 3000,
     category: 'deluxe',
   },
 };

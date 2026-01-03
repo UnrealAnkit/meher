@@ -625,11 +625,11 @@ export const BookYourStayPage = (): JSX.Element => {
                 >
                   <option value="">Select Room Type</option>
                   <option value="earth-and-clay">Stone and Fog - ₹2,500/night</option>
-                  <option value="bloom-and-herbs">Bloom and Herbs - ₹3,200/night</option>
-                  <option value="stone-and-fog">Earth & Clay - ₹3,200/night</option>
+                  <option value="bloom-and-herbs">Bloom and Herbs - ₹3,000/night</option>
+                  <option value="stone-and-fog">Earth & Clay - ₹3,000/night</option>
                   <option value="golden-grasslands">Golden Grasslands - ₹3,000/night</option>
-                  <option value="forest-bathing">Forest Bathing - ₹3,200/night</option>
-                  <option value="water-and-sky">Water and Sky - ₹2,500/night</option>
+                  <option value="forest-bathing">Forest Bathing - ₹3,000/night</option>
+                  <option value="water-and-sky">Water and Sky - ₹3,000/night</option>
                 </select>
                 <svg
                   className="absolute right-2.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
@@ -782,7 +782,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 BLOOM AND HERBS
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 3000
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Soft, feminine, and therapeutic — where the scent of lavender meets the calm of sage. Blush and cream tones with herbal accents awaken gentle rejuvenation — a reminder that healing can be tender.
@@ -804,7 +804,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 EARTH & CLAY
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 3000
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Warm, grounding, and nurturing — this space embraces the calm strength of terracotta and soft clay tones. Mud-textured walls, linen drapes, and jute details create a cocoon of warmth and stillness — a gentle return to your roots.
@@ -853,7 +853,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 FOREST BATHING
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 3200
+                At Rs. 3000
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Calm, reflective, and immersive – inspired by the serenity of the woods. Shades of moss, fern, and bark brown bring the forest indoors, inviting you to slow down, breathe deeper, and reconnect with nature's rhythm.
@@ -875,7 +875,7 @@ export const BookYourStayPage = (): JSX.Element => {
                 WATER AND SKY
               </h3>
               <p className="text-[#ab4b28] font-normal text-lg mb-4 [font-family:'Poppins',Helvetica] text-center">
-                At Rs. 2500
+                At Rs. 3000
               </p>
               <p className="text-[#1E1E1E] font-light text-sm sm:text-base leading-relaxed mb-6 [font-family:'Poppins',Helvetica] text-center">
                 Cool, serene, and fluid – this room mirrors the clarity of open skies and flowing rivers. Indigo and mist tones with light blue drapes create a space that soothes the mind, balances emotions, and restores inner flow.

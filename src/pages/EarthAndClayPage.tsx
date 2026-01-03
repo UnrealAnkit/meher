@@ -39,7 +39,7 @@ export const EarthAndClayPage = (): JSX.Element => {
     email: '',
     phone: '',
   });
-  const price = 3200;
+  const price = 3000;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -329,7 +329,7 @@ export const EarthAndClayPage = (): JSX.Element => {
             <div className="flex-shrink-0">
               <div className="bg-[#f9d2a3] rounded-lg px-4 py-2 border-2 border-[#ab4b28] inline-block">
                 <div className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-lg sm:text-xl">
-                  ₹ 3200
+                  ₹ 3000
                 </div>
               </div>
             </div>

@@ -39,7 +39,7 @@ export const WaterAndSkyPage = (): JSX.Element => {
     email: '',
     phone: '',
   });
-  const price = 2500;
+  const price = 3000;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -328,7 +328,7 @@ export const WaterAndSkyPage = (): JSX.Element => {
             <div className="flex-shrink-0">
               <div className="bg-[#f9d2a3] rounded-lg px-4 py-2 border-2 border-[#ab4b28] inline-block">
                 <div className="[font-family:'Poppins',Helvetica] font-semibold text-[#ab4b28] text-lg sm:text-xl">
-                  ₹ 2500
+                  ₹ 3000
                 </div>
               </div>
             </div>
